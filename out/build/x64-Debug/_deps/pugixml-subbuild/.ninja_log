@@ -1,0 +1,18 @@
+# ninja log v5
+1	981	612358164	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-mkdir	739ec6dca7bb2f29
+981	11346	612358174	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-download	59be99f8d13214d5
+11359	11671	612358175	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-patch	130f69511dd6c11d
+11346	11751	0	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-update	8bf3fbd16ee6c6b9
+11751	12013	612358175	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-configure	1c0e50700cb1c8a2
+12013	12261	612358175	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-build	b56bf77698c8bc83
+12261	12531	612358175	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-install	252da632fb70484c
+12531	12801	612358176	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-test	72b34c1bb9779b32
+12801	13179	612358176	CMakeFiles/pugixml-populate-complete	77c206a380cefa7a
+12801	13179	612358176	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-done	77c206a380cefa7a
+0	405	0	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-update	8bf3fbd16ee6c6b9
+405	701	612358690	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-configure	1c0e50700cb1c8a2
+701	1043	612358690	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-build	b56bf77698c8bc83
+1043	1390	612358690	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-install	252da632fb70484c
+1390	1722	612358691	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-test	72b34c1bb9779b32
+1723	2266	612358691	CMakeFiles/pugixml-populate-complete	77c206a380cefa7a
+1723	2266	612358691	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-done	77c206a380cefa7a

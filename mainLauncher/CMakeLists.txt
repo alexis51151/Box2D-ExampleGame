@@ -1,7 +1,7 @@
 
 add_executable(mainLauncher mainLauncher.cpp)
 
-target_link_libraries(mainLauncher PUBLIC src pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(mainLauncher PUBLIC src box2d pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
 add_custom_target(copy-resources ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/resources)
 file(GLOB RESOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/resources/*.*)
