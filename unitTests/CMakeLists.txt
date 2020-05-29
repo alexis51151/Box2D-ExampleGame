@@ -38,9 +38,7 @@ endif()
 # Now simply link against gtest or gtest_main as needed. Eg
 enable_testing()
 add_executable(unitTests unitTests.cpp)
-add_executable(helloWorld doctest.h hello_world.cpp)
 target_link_libraries(unitTests gtest_main)
 target_link_libraries(unitTests src box2d pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
-target_link_libraries(helloWorld src box2d pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
 add_test(NAME that-test-I-made COMMAND unitTests)

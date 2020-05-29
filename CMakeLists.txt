@@ -35,6 +35,7 @@ FetchContent_MakeAvailable(box2d)
 add_subdirectory(mainLauncher)
 add_subdirectory(src)
 add_subdirectory(unitTests)
+add_subdirectory(HelloWorld)
 
 
 

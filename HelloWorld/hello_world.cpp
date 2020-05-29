@@ -22,16 +22,15 @@
 
 #include "box2d/box2d.h"
 #include <stdio.h>
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+#include <assert.h>
 
 // This is a simple example of building and running a simulation
 // using Box2D. Here we create a large ground box and a small dynamic
 // box.
 // There are no graphics for this example. Box2D is meant to be used
 // with your rendering engine in your game engine.
-DOCTEST_TEST_CASE("hello world")
+
+int main()
 {
 	// Define the gravity vector.
 	b2Vec2 gravity(0.0f, -10.0f);
@@ -107,7 +106,7 @@ DOCTEST_TEST_CASE("hello world")
 	// When the world destructor is called, all bodies and joints are freed. This can
 	// create orphaned pointers, so be careful about your world management.
 
-	CHECK(b2Abs(position.x) < 0.01f);
-	CHECK(b2Abs(position.y - 1.01f) < 0.01f);
-	CHECK(b2Abs(angle) < 0.01f);
+	assert(b2Abs(position.x) < 0.01f);
+	assert(b2Abs(position.y - 1.01f) < 0.01f);
+	assert(b2Abs(angle) < 0.01f);
 }
