@@ -32,7 +32,7 @@ b2Body* create_ground_body(b2World& world) {
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.type = b2_staticBody;
-	groundBodyDef.position.Set(0.0f, -10.0f);
+	groundBodyDef.position.Set(0.0f, -50.0f);
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).

@@ -79,7 +79,7 @@ int myMain() {
 	
 	//Partie initialisation Box2D
 	// Define the gravity vector.
-	b2Vec2 gravity(0.0f, 0.0f);
+	b2Vec2 gravity(0.0f, 10.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
@@ -98,12 +98,16 @@ int myMain() {
 
 	
 	sf::CircleShape c(10);
+	c.setOrigin(5, 5);
 	c.setFillColor(sf::Color::Green);
 
 	sf::RectangleShape r1(sf::Vector2f(500,10));
 	r1.setFillColor(sf::Color::Red);
+	r1.setOrigin(250, 5);
+	r1.setPosition(400, 400);
 
 	sf::RectangleShape r2(sf::Vector2f(100*2, 100*2));
+	r2.setOrigin(100,100);
 	r2.setFillColor(sf::Color::Red);
 	
 	b2Vec2 position;
@@ -157,13 +161,12 @@ int myMain() {
 				position = BodyIterator->GetPosition();
 				c.setPosition(10 * position.x, 10 * position.y);
 				window.draw(c);
-				printf("%4.2f %4.2f\n", position.x, position.y);
 				BodyCount++;
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
 				position = BodyIterator->GetPosition();
-				r2.setPosition(position.x *10 - 90 , position.y*10 - 90);
+				r2.setPosition(position.x *10, position.y*10);
 				window.draw(r2);
 			}
 		}
