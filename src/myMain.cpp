@@ -70,10 +70,43 @@ int myMain() {
 	visageXML.close();
 
 	// Dessin des éléments
-	init.affichage(0,0,window);
+	//init.affichage(0,0,window);
+	//window.display();
+
+	//Test pour relier Box2DEngine à SFML 
+	
+	//Partie initialisation Box2D
+	// Define the gravity vector.
+	b2Vec2 gravity(0.0f, -10.0f);
+
+	// Construct a world object, which will hold and simulate the rigid bodies.
+	b2World world(gravity);
+
+	// Define the ground body.
+	b2Body* groundBody = create_ground_body(world);
+
+	// Define the dynamic body. We set its position and call the body factory.
+	b2Body* body = create_body(world);
+	// Prepare for simulation. Typically we use a time step of 1/60 of a
+	// second (60Hz) and 10 iterations. This provides a high quality simulation
+	// in most game scenarios.
+	float timeStep = 1.0f / 60.0f;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+
+	b2Vec2 position = body->GetPosition();
+
+	//Partie initialisation SFML
+	sf::CircleShape c(10);
+	c.setPosition(10*position.x, 10*position.y);
+	c.setFillColor(sf::Color::Green);
+	window.draw(c);
 	window.display();
+	
+
 
 	// Boucle d'événements SFML
+	window.setFramerateLimit(60);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -82,6 +115,14 @@ int myMain() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+		world.Step(timeStep, velocityIterations, positionIterations);
+		position = body->GetPosition();
+		printf("%4.2f %4.2f\n", position.x, position.y);
+		c.setPosition(10* position.x, 10 * position.y);
+		window.clear(sf::Color::White);
+		window.draw(c);
+		window.display();
+
 	}
 
 	return 0;

@@ -9,6 +9,9 @@
 #include <string>  // pour copier visage.xml
 #include <sstream> //std::stringstream
 #include <SFML/Graphics.hpp>
+#include <box2d/box2d.h>
+#include "Box2DEngine.h"
+
 
 
 int myMain();
