@@ -96,14 +96,9 @@ int myMain() {
 
 	b2Vec2 position = body->GetPosition();
 
-	//Partie initialisation SFML
-	sf::CircleShape c(10);
-	c.setPosition(10*position.x, 10*position.y);
-	c.setFillColor(sf::Color::Green);
-	window.draw(c);
-	window.display();
 	
-
+	sf::CircleShape c(10);
+	c.setFillColor(sf::Color::Green);
 
 	// Boucle d'événements SFML
 	window.setFramerateLimit(60);
@@ -114,12 +109,29 @@ int myMain() {
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				int MouseX = sf::Mouse::getPosition(window).x;
+				int MouseY = sf::Mouse::getPosition(window).y;
+				create_body_with_pose(world, MouseX / 10, MouseY / 10);
+			}
 		}
-		world.Step(timeStep, velocityIterations, positionIterations);
-		position = body->GetPosition();
-		printf("%4.2f %4.2f\n", position.x, position.y);
-		c.setPosition(10* position.x, 10 * position.y);
+		
 		window.clear(sf::Color::White);
+		world.Step(timeStep, velocityIterations, positionIterations);
+		int BodyCount = 0;
+		for (b2Body* BodyIterator = world.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
+		{
+			if (BodyIterator->GetType() == b2_dynamicBody)
+			{
+				position = BodyIterator->GetPosition();
+				c.setPosition(10 * position.x, 10 * position.y);
+				window.draw(c);
+				printf("%4.2f %4.2f\n", position.x, position.y);
+				BodyCount++;
+			}
+		}
+		
 		window.draw(c);
 		window.display();
 
@@ -127,3 +139,4 @@ int myMain() {
 
 	return 0;
 }
+
