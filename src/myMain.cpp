@@ -86,7 +86,7 @@ int myMain() {
 	b2Body* groundBody = create_ground_body(world);
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* body = create_body(world);
+	b2Body* player = create_body(world);
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
@@ -94,12 +94,12 @@ int myMain() {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	b2Vec2 position = body->GetPosition();
-
 	
 	sf::CircleShape c(10);
+	sf::RectangleShape r(sf::Vector2f(50,10));
+	r.setFillColor(sf::Color::Red);
 	c.setFillColor(sf::Color::Green);
-
+	b2Vec2 position;
 	// Boucle d'événements SFML
 	window.setFramerateLimit(60);
 	while (window.isOpen())
@@ -114,6 +114,22 @@ int myMain() {
 				int MouseX = sf::Mouse::getPosition(window).x;
 				int MouseY = sf::Mouse::getPosition(window).y;
 				create_body_with_pose(world, MouseX / 10, MouseY / 10);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				player->ApplyLinearImpulseToCenter(b2Vec2(-100, 0), true);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				player->ApplyLinearImpulseToCenter(b2Vec2(100, 0), true);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			{
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, 100), true);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			{
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, -100), true);
 			}
 		}
 		
@@ -130,9 +146,11 @@ int myMain() {
 				printf("%4.2f %4.2f\n", position.x, position.y);
 				BodyCount++;
 			}
+			if (BodyIterator->GetType() == b2_staticBody)
+			{
+				window.draw(r);
+			}
 		}
-		
-		window.draw(c);
 		window.display();
 
 	}
