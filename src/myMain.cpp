@@ -103,7 +103,7 @@ int myMain() {
 	sf::RectangleShape r1(sf::Vector2f(500,10));
 	r1.setFillColor(sf::Color::Red);
 
-	sf::RectangleShape r2(sf::Vector2f(100, 100));
+	sf::RectangleShape r2(sf::Vector2f(100*2, 100*2));
 	r2.setFillColor(sf::Color::Red);
 	
 	b2Vec2 position;
@@ -118,14 +118,14 @@ int myMain() {
 				window.close();
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				int MouseX = sf::Mouse::getPosition(window).x;
-				int MouseY = sf::Mouse::getPosition(window).y;
+				float MouseX = sf::Mouse::getPosition(window).x;
+				float MouseY = sf::Mouse::getPosition(window).y;
 				create_body_with_pose(world, MouseX / 10, MouseY / 10);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
-				int MouseX = sf::Mouse::getPosition(window).x;
-				int MouseY = sf::Mouse::getPosition(window).y;
+				float MouseX = sf::Mouse::getPosition(window).x;
+				float MouseY = sf::Mouse::getPosition(window).y;
 				create_platforme(world, MouseX / 10, MouseY / 10);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -163,7 +163,7 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
 				position = BodyIterator->GetPosition();
-				r2.setPosition(10 *position.x,10 * position.y);
+				r2.setPosition(position.x *10 - 90 , position.y*10 - 90);
 				window.draw(r2);
 			}
 		}

@@ -65,7 +65,7 @@ b2Body* create_platforme(b2World& world, float posx , float posy) {
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(10.0f, 5.0f);
+	groundBox.SetAsBox(10.0f, 10.0f);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
