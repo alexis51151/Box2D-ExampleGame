@@ -79,7 +79,7 @@ int myMain() {
 	
 	//Partie initialisation Box2D
 	// Define the gravity vector.
-	b2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, 0.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
@@ -103,7 +103,7 @@ int myMain() {
 	sf::RectangleShape r1(sf::Vector2f(500,10));
 	r1.setFillColor(sf::Color::Red);
 
-	sf::RectangleShape r2(sf::Vector2f(100, 50));
+	sf::RectangleShape r2(sf::Vector2f(100, 100));
 	r2.setFillColor(sf::Color::Red);
 	
 	b2Vec2 position;
