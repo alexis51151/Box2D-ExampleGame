@@ -50,6 +50,29 @@ b2Body* create_ground_body(b2World& world) {
 	return groundBody;
 }
 
+b2Body* create_platforme(b2World& world, float posx , float posy) {
+	// Define the ground body.
+	b2BodyDef platformeBodyDef;
+	platformeBodyDef.type = b2_staticBody;
+	platformeBodyDef.position.Set(posx, posy);
+
+	// Call the body factory which allocates memory for the ground body
+	// from a pool and creates the ground box shape (also from a pool).
+	// The body is also added to the world.
+	b2Body* groundBody = world.CreateBody(&platformeBodyDef);
+
+	// Define the ground box shape.
+	b2PolygonShape groundBox;
+
+	// The extents are the half-widths of the box.
+	groundBox.SetAsBox(10.0f, 5.0f);
+
+	// Add the ground fixture to the ground body.
+	groundBody->CreateFixture(&groundBox, 0.0f);
+	return groundBody;
+}
+
+
 b2Body* create_body_with_pose(b2World& world,float x , float y ) {
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;

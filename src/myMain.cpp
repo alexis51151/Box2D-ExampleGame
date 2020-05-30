@@ -1,5 +1,7 @@
 #include "myMain.h"
-
+#define WIDTH 1920
+#define HEIGHT 1080
+#define SCALE 10
 sf::Color toSFMLColor(std::string color) {
 	if (color == "Black") {
 		return sf::Color::Black;
@@ -55,7 +57,7 @@ Group arborescence(std::string s) {
 
 int myMain() {
 	// Initialisation SFML
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Outil de visualisation"); // Variable globale pour la fenêtre 
+	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Outil de visualisation"); // Variable globale pour la fenêtre 
 	window.clear(sf::Color::White);
 
 	// Lecture du fichier XML
@@ -96,9 +98,14 @@ int myMain() {
 
 	
 	sf::CircleShape c(10);
-	sf::RectangleShape r(sf::Vector2f(50,10));
-	r.setFillColor(sf::Color::Red);
 	c.setFillColor(sf::Color::Green);
+
+	sf::RectangleShape r1(sf::Vector2f(500,10));
+	r1.setFillColor(sf::Color::Red);
+
+	sf::RectangleShape r2(sf::Vector2f(100, 50));
+	r2.setFillColor(sf::Color::Red);
+	
 	b2Vec2 position;
 	// Boucle d'événements SFML
 	window.setFramerateLimit(60);
@@ -114,6 +121,12 @@ int myMain() {
 				int MouseX = sf::Mouse::getPosition(window).x;
 				int MouseY = sf::Mouse::getPosition(window).y;
 				create_body_with_pose(world, MouseX / 10, MouseY / 10);
+			}
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+			{
+				int MouseX = sf::Mouse::getPosition(window).x;
+				int MouseY = sf::Mouse::getPosition(window).y;
+				create_platforme(world, MouseX / 10, MouseY / 10);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
@@ -136,6 +149,7 @@ int myMain() {
 		window.clear(sf::Color::White);
 		world.Step(timeStep, velocityIterations, positionIterations);
 		int BodyCount = 0;
+		window.draw(r1);
 		for (b2Body* BodyIterator = world.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
@@ -148,7 +162,9 @@ int myMain() {
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
-				window.draw(r);
+				position = BodyIterator->GetPosition();
+				r2.setPosition(10 *position.x,10 * position.y);
+				window.draw(r2);
 			}
 		}
 		window.display();

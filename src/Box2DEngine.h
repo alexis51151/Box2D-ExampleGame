@@ -6,4 +6,5 @@
 
 b2Body* create_body(b2World&);
 b2Body* create_ground_body(b2World&);
+b2Body* create_platforme(b2World& world, float posx, float posy);
 b2Body* create_body_with_pose(b2World& world, float x, float y);
