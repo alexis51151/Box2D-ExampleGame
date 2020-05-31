@@ -65,14 +65,14 @@ int myMain() {
 	//b2Body* groundBody = create_ground_body(world);
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player = create_body(world,10,10);
+	b2Body* player = create_body(world,10*RATIO,10*RATIO);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
-	sf::CircleShape c(1*RATIO);
+	sf::CircleShape c(1.0f*RATIO);
 	c.setFillColor(sf::Color::Green);
-	sf::RectangleShape r(sf::Vector2f(10* RATIO, 10 * RATIO));
+	sf::RectangleShape r(sf::Vector2f(10.0f*2* RATIO, 10.0f *2* RATIO));
 	r.setFillColor(sf::Color::Red);
 	b2Vec2 position;
 
@@ -122,14 +122,15 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
 				position = BodyIterator->GetPosition();
-				c.setPosition(position.x * RATIO, position.y * RATIO);
+				c.setPosition((position.x-1) * RATIO, (position.y-1 ) * RATIO); //devrais etre -1 mais pas centrer 
+
 				window.draw(c);
 				BodyCount++;
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
 				position = BodyIterator->GetPosition();
-				r.setPosition(position.x * RATIO, position.y* RATIO);
+				r.setPosition((position.x-10) * RATIO, (position.y-10)* RATIO);
 				window.draw(r);
 			}
 		}
