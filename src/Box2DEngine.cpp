@@ -1,7 +1,7 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 
-b2Body* create_platforme(b2World& world, float posx , float posy) {
+b2Body* create_platform(b2World& world, float posx , float posy) {
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
 	platformeBodyDef.type = b2_staticBody;
@@ -16,7 +16,7 @@ b2Body* create_platforme(b2World& world, float posx , float posy) {
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(10.0f, 10.0f);
+	groundBox.SetAsBox(8.0f, 1.0f);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
@@ -29,7 +29,7 @@ b2Body* create_body(b2World& world,float x , float y ) {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(x*UNRATIO, y*UNRATIO);
-	printf("tail : %f , %f ; %f ,%f ", x, y, x * UNRATIO, y * UNRATIO);
+	printf("taille : %f , %f ; %f ,%f ", x, y, x * UNRATIO, y * UNRATIO);
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	// Define another box shape for our dynamic body.

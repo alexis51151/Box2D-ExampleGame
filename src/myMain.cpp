@@ -53,16 +53,13 @@ Group arborescence(std::string s) {
 
 int myMain() {
 	// Initialisation SFML
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Outil de visualisation"); // Variable globale pour la fenêtre 
+	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Test reliant SFML à Box2D"); // Variable globale pour la fenêtre 
 	window.clear(sf::Color::White);
 
-	b2Vec2 gravity(0.0f, 0.0f);
+	b2Vec2 gravity(0.0f, 10.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
-
-	// Define the ground body.
-	//b2Body* groundBody = create_ground_body(world);
 
 	// Define the dynamic body. We set its position and call the body factory.
 	b2Body* player = create_body(world,10*RATIO,10*RATIO);
@@ -72,7 +69,7 @@ int myMain() {
 	int32 positionIterations = 2;
 	sf::CircleShape c(1.0f*RATIO);
 	c.setFillColor(sf::Color::Green);
-	sf::RectangleShape r(sf::Vector2f(10.0f*2* RATIO, 10.0f *2* RATIO));
+	sf::RectangleShape r(sf::Vector2f(8.0f*2* RATIO, 1.0f *2* RATIO));
 	r.setFillColor(sf::Color::Red);
 	b2Vec2 position;
 
@@ -94,7 +91,7 @@ int myMain() {
 			{
 				float MouseX = sf::Mouse::getPosition(window).x;
 				float MouseY = sf::Mouse::getPosition(window).y;
-				create_platforme(world, MouseX, MouseY);
+				create_platform(world, MouseX, MouseY);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
@@ -130,7 +127,7 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
 				position = BodyIterator->GetPosition();
-				r.setPosition((position.x-10) * RATIO, (position.y-10)* RATIO);
+				r.setPosition((position.x-8) * RATIO, (position.y-1)* RATIO);
 				window.draw(r);
 			}
 		}
