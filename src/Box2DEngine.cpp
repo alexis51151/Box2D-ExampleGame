@@ -4,7 +4,7 @@
 sf::RenderWindow* Box2dEngine::app;
 b2World* Box2dEngine::physicsWorld;
 
-Box2dEngine::Box2dEngine()
+Box2dEngine::Box2dEngine(): resHeigth(HEIGHT),resWidgth(WIDTH)
 {
 }
 
