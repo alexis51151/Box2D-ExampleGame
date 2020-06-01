@@ -4,6 +4,7 @@
 
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
 	sf::Event event;
+	float impulse = player->GetMass() * 10;
 	while (window->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
 			window->close();
@@ -33,7 +34,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			player->ApplyLinearImpulseToCenter(b2Vec2(0, -10), true);
+			player->ApplyLinearImpulseToCenter(b2Vec2(0, -impulse), true);
 		}
 	}
 }
