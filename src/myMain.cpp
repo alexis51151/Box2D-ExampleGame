@@ -8,8 +8,8 @@ int myMain() {
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
 	sf::RenderWindow* window = gameController.getApp();
-	//MyContactListener myContactListenerInstance;
-	//world->SetContactListener(&myContactListenerInstance);
+	MyContactListener myContactListenerInstance;
+	world->SetContactListener(&myContactListenerInstance);
 
 	b2Body* player = gameController.addDynamicBox(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO, Material::DEFAULT);
 

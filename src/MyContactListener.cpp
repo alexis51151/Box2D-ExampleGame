@@ -21,3 +21,11 @@ void MyContactListener::EndContact(b2Contact* contact) {
     if ((int)fixtureUserData == 3)
         numFootContact--;
 }
+
+MyContactListener::MyContactListener()
+{
+}
+
+MyContactListener::~MyContactListener()
+{
+}
