@@ -22,7 +22,6 @@ Box2DEngine::~Box2DEngine()
 {
 }
 
-
 b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 {
 	// Define the ground body.
@@ -45,6 +44,7 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	return groundBody;
 }
+
 b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Material material)
 {
 	// Define the dynamic body. We set its position and call the body factory.
@@ -70,4 +70,33 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	return body;
 }
 
+b2Body* Box2DEngine::addbodyplayer(int x, int y, float height, float width) {
+	b2BodyDef myBodyDef;
+	myBodyDef.type = b2_dynamicBody;
+	myBodyDef.fixedRotation = true;
+
+	
+	//shape definition for main fixture
+	b2PolygonShape polygonShape;
+	polygonShape.SetAsBox(height*UNRATIO, width*UNRATIO); 
+
+	//fixture definition
+	b2FixtureDef myFixtureDef;
+	myFixtureDef.shape = &polygonShape;
+	myFixtureDef.density = 1;
+
+	//create dynamic body
+	myBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
+	b2Body * m_body = physicsWorld->CreateBody(&myBodyDef);
+
+	//add main fixture
+	m_body->CreateFixture(&myFixtureDef);
+
+	//add foot sensor fixture
+	polygonShape.SetAsBox(0.3, 0.3, b2Vec2(0, -width), 0);
+	myFixtureDef.isSensor = true;
+	b2Fixture* footSensorFixture = m_body->CreateFixture(&myFixtureDef);
+	footSensorFixture->SetUserData((void*)3);
+	return m_body;
+}
 

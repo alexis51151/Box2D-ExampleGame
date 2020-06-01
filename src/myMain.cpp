@@ -3,7 +3,6 @@
 #include "Draw.h"
 #include "Events.h"
 
-
 int myMain() {
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -22,7 +21,6 @@ int myMain() {
 	// Platform shape
 	sf::RectangleShape r(sf::Vector2f(8.0f*2* RATIO, 1.0f *2* RATIO));
 	r.setFillColor(sf::Color::Red);
-
 
 	while (window->isOpen())
 	{
@@ -46,7 +44,6 @@ int myMain() {
 		}
 		window->display();
 	}
-
 	return 0;
 }
 
