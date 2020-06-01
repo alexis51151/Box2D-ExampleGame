@@ -15,10 +15,10 @@ private:
 
 };
 
-MyContactListener::MyContactListener()
+inline MyContactListener::MyContactListener()
 {
 }
 
-MyContactListener::~MyContactListener()
+inline MyContactListener::~MyContactListener()
 {
 }
