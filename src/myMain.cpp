@@ -10,7 +10,7 @@ int myMain() {
 	b2World* world = gameController.getPhysicsWorld();
 	sf::RenderWindow* window = gameController.getApp();
 
-	b2Body* player = gameController.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO,Material::DEFAULT);
+	b2Body* player = gameController.addDynamicBox(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO, Material::DEFAULT);
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
@@ -20,7 +20,7 @@ int myMain() {
 	sf::CircleShape c(1.0f*RATIO);
 	c.setFillColor(sf::Color::Green);
 	// Platform shape
-	sf::RectangleShape r(sf::Vector2f(8.0f*2* RATIO, 1.0f *2* RATIO));
+	sf::RectangleShape r(sf::Vector2f(8.0f*2*RATIO, 1.0f*2*RATIO)); // *2 because box2D takes mid-height and mid-width 
 	r.setFillColor(sf::Color::Red);
 
 
@@ -31,7 +31,6 @@ int myMain() {
 	
 		window->clear(sf::Color::White);
 		world->Step(timeStep, velocityIterations, positionIterations);
-		int BodyCount = 0;
 		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)

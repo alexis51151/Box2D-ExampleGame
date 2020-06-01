@@ -4,11 +4,11 @@
 sf::RenderWindow* Box2DEngine::app;
 b2World* Box2DEngine::physicsWorld;
 
-Box2DEngine::Box2DEngine(): resHeight(HEIGHT),resWidth(WIDTH)
+Box2DEngine::Box2DEngine(): resHeight(HEIGHT), resWidth(WIDTH)
 {
 }
 
-Box2DEngine::Box2DEngine(int width, int height): resWidth(width) , resHeight(height) {
+Box2DEngine::Box2DEngine(int width, int height): resWidth(width), resHeight(height) {
 	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(width, height), "My_word");
 	temp->setFramerateLimit(60);
 	temp->setVerticalSyncEnabled(true);
