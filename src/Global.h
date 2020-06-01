@@ -13,4 +13,3 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 
-int numFootContact=0;  // =0 a ajouter a un constructeur de jeu 

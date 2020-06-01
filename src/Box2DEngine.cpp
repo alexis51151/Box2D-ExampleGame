@@ -93,7 +93,7 @@ b2Body* Box2DEngine::addbodyplayer(int x, int y, float height, float width) {
 	m_body->CreateFixture(&myFixtureDef);
 
 	//add foot sensor fixture
-	polygonShape.SetAsBox(0.3, 0.3, b2Vec2(0, -width), 0);
+	polygonShape.SetAsBox(0.3, 0.3, b2Vec2(0, -height), 0);
 	myFixtureDef.isSensor = true;
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&myFixtureDef);
 	footSensorFixture->SetUserData((void*)3);

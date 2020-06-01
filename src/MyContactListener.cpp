@@ -1,7 +1,6 @@
-#include "Mycontactlisner.h"
-#include"Global.h"
+#include "MyContactListener.h"
 
-void Mycontactlisner::BeginContact(b2Contact* contact) {
+void MyContactListener::BeginContact(b2Contact* contact) {
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     if ((int)fixtureUserData == 3)
@@ -12,7 +11,7 @@ void Mycontactlisner::BeginContact(b2Contact* contact) {
         numFootContact++;
 }
 
-void Mycontactlisner::EndContact(b2Contact* contact) {
+void MyContactListener::EndContact(b2Contact* contact) {
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     if ((int)fixtureUserData == 3)

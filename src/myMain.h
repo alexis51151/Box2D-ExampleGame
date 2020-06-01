@@ -12,6 +12,11 @@
 #include <box2d/box2d.h>
 #include "Box2DEngine.h"
 #include <cmath>
+#include "Global.h"
+#include "Draw.h"
+#include "Events.h"
+//#include "MyContactListener.h"
+
 
 
 

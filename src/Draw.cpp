@@ -1,5 +1,4 @@
 #include <Draw.h>
-#include <SFML/Graphics.hpp>
 
 
 
