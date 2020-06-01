@@ -54,16 +54,12 @@ Group arborescence(std::string s) {
 
 int myMain() {
 	// Initialisation SFML
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Test reliant SFML à Box2D"); // Variable globale pour la fenêtre 
-	window.clear(sf::Color::White);
-
-	b2Vec2 gravity(0.0f, 10.0f);
-
-	// Construct a world object, which will hold and simulate the rigid bodies.
-	b2World world(gravity);
+	Box2dEngine gamecontroleur(WIDTH, HEIGHT);
+	b2World* world = gamecontroleur.getPhysicsWorld();
+	sf::RenderWindow* window = gamecontroleur.getApp();
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player = create_body(world,10*RATIO,10*RATIO);
+	b2Body* player =gamecontroleur.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO,Material::DEFAULT);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
@@ -73,58 +69,58 @@ int myMain() {
 	sf::RectangleShape r(sf::Vector2f(8.0f*2* RATIO, 1.0f *2* RATIO));
 	r.setFillColor(sf::Color::Red);
 
-	window.setFramerateLimit(60);
-	while (window.isOpen())
+
+	while (window->isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (window->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				window.close();
+				window->close();
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				float MouseX = sf::Mouse::getPosition(window).x;
-				float MouseY = sf::Mouse::getPosition(window).y;
-				create_body(world, MouseX, MouseY);
+				float MouseX = sf::Mouse::getPosition(*window).x;
+				float MouseY = sf::Mouse::getPosition(*window).y;
+				gamecontroleur.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO,Material::WOOD);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
-				float MouseX = sf::Mouse::getPosition(window).x;
-				float MouseY = sf::Mouse::getPosition(window).y;
-				create_platform(world, MouseX, MouseY);
+				float MouseX = sf::Mouse::getPosition(*window).x;
+				float MouseY = sf::Mouse::getPosition(*window).y;
+				gamecontroleur.addStaticBox(MouseX, MouseY, 8.0f * RATIO, 2.0f * RATIO);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(-100, 0), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(100, 0), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(0, 100), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, 10), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(0, -100), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, -10), true);
 			}
 		}
 		
-		window.clear(sf::Color::White);
-		world.Step(timeStep, velocityIterations, positionIterations);
-		for (b2Body* BodyIterator = world.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
+		(*window).clear(sf::Color::White);
+		(*world).Step(timeStep, velocityIterations, positionIterations);
+		for (b2Body* BodyIterator = (*world).GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
-				DrawShape(BodyIterator, &c, window);
+				DrawShape(BodyIterator, &c, *window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
-				DrawShape(BodyIterator, &r, window);
+				DrawShape(BodyIterator, &r, *window);
 			}
 		}
-		window.display();
+		window->display();
 	}
 
 	return 0;
