@@ -17,7 +17,7 @@ public:
 	b2World* getPhysicsWorld() { return physicsWorld; }
 	sf::RenderWindow* getApp() { return app; }
 	
-	b2Body* addDynamicBox(int x, int y, float heigth, float widgth);
+	b2Body* addDynamicBox(int x, int y, float heigth, float widgth ,Material material);
 	b2Body* addStaticBox(int x, int y, float heigth, float widgth);
 
 

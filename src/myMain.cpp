@@ -58,7 +58,7 @@ int myMain() {
 	sf::RenderWindow* window = gamecontroleur.getApp();
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player =gamecontroleur.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO);
+	b2Body* player =gamecontroleur.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO,Material::DEFAULT);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
@@ -81,7 +81,7 @@ int myMain() {
 			{
 				float MouseX = sf::Mouse::getPosition(*window).x;
 				float MouseY = sf::Mouse::getPosition(*window).y;
-				gamecontroleur.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO);
+				gamecontroleur.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO,Material::WOOD);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{

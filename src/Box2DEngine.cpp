@@ -45,7 +45,7 @@ b2Body* Box2dEngine::addStaticBox(int x, int y, float heigth, float widgth)
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	return groundBody;
 }
-b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth)
+b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth, Material material)
 {
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
@@ -60,12 +60,10 @@ b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth)
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-
-	// Set the box density to be non-zero, so it will be dynamic.
-	fixtureDef.density = 1.0f;
-
-	// Override the default friction.
-	fixtureDef.friction = 0.3f;
+	fixtureDef.density = material.getDensity();
+	fixtureDef.friction = material.getFriction();
+	fixtureDef.restitution = material.getRestitution();
+	
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
