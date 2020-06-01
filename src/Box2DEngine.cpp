@@ -1,7 +1,29 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 
-b2Body* create_platform(b2World& world, float posx , float posy) {
+sf::RenderWindow* Box2dEngine::app;
+b2World* Box2dEngine::physicsWorld;
+
+Box2dEngine::Box2dEngine()
+{
+}
+
+Box2dEngine::Box2dEngine(int widgth, int heigth): resWidgth(widgth) , resHeigth(heigth) {
+	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(widgth, heigth), "My_word");
+	temp->setFramerateLimit(60);
+	temp->setVerticalSyncEnabled(true);
+	Box2dEngine::app = temp;
+
+	b2World* world = new b2World(b2Vec2(0.0f, 10.0f)); //gravity and sleep bodies
+	Box2dEngine::physicsWorld = world;
+}
+
+Box2dEngine::~Box2dEngine()
+{
+}
+
+
+b2Body* Box2dEngine::create_platform(float posx , float posy) {
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
 	platformeBodyDef.type = b2_staticBody;
@@ -10,7 +32,7 @@ b2Body* create_platform(b2World& world, float posx , float posy) {
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
-	b2Body* groundBody = world.CreateBody(&platformeBodyDef);
+	b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
 
 	// Define the ground box shape.
 	b2PolygonShape groundBox;
@@ -24,13 +46,12 @@ b2Body* create_platform(b2World& world, float posx , float posy) {
 }
 
 
-b2Body* create_body(b2World& world,float x , float y ) {
+b2Body* Box2dEngine:: create_body(float x , float y ) {
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(x*UNRATIO, y*UNRATIO);
-	printf("taille : %f , %f ; %f ,%f ", x, y, x * UNRATIO, y * UNRATIO);
-	b2Body* body = world.CreateBody(&bodyDef);
+	b2Body* body = physicsWorld->CreateBody(&bodyDef);
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
@@ -50,3 +71,5 @@ b2Body* create_body(b2World& world,float x , float y ) {
 	body->CreateFixture(&fixtureDef);
 	return body;
 }
+
+

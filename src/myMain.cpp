@@ -53,16 +53,12 @@ Group arborescence(std::string s) {
 
 int myMain() {
 	// Initialisation SFML
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Test reliant SFML à Box2D"); // Variable globale pour la fenêtre 
-	window.clear(sf::Color::White);
-
-	b2Vec2 gravity(0.0f, 10.0f);
-
-	// Construct a world object, which will hold and simulate the rigid bodies.
-	b2World world(gravity);
+	Box2dEngine gamecontroleur(WIDTH, HEIGHT);
+	b2World* world = gamecontroleur.getPhysicsWorld();
+	sf::RenderWindow* window = gamecontroleur.getApp();
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player = create_body(world,10*RATIO,10*RATIO);
+	b2Body* player =gamecontroleur.create_body(10*RATIO,10*RATIO);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
@@ -73,25 +69,25 @@ int myMain() {
 	r.setFillColor(sf::Color::Red);
 	b2Vec2 position;
 
-	window.setFramerateLimit(60);
-	while (window.isOpen())
+
+	while (window->isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (window->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				window.close();
+				window->close();
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				float MouseX = sf::Mouse::getPosition(window).x;
-				float MouseY = sf::Mouse::getPosition(window).y;
-				create_body(world, MouseX, MouseY);
+				float MouseX = sf::Mouse::getPosition(*window).x;
+				float MouseY = sf::Mouse::getPosition(*window).y;
+				gamecontroleur.create_body(MouseX, MouseY);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
-				float MouseX = sf::Mouse::getPosition(window).x;
-				float MouseY = sf::Mouse::getPosition(window).y;
-				create_platform(world, MouseX, MouseY);
+				float MouseX = sf::Mouse::getPosition(*window).x;
+				float MouseY = sf::Mouse::getPosition(*window).y;
+				gamecontroleur.create_platform(MouseX, MouseY);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
@@ -111,17 +107,17 @@ int myMain() {
 			}
 		}
 		
-		window.clear(sf::Color::White);
-		world.Step(timeStep, velocityIterations, positionIterations);
+		window->clear(sf::Color::White);
+		world->Step(timeStep, velocityIterations, positionIterations);
 		int BodyCount = 0;
-		for (b2Body* BodyIterator = world.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
+		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
 				position = BodyIterator->GetPosition();
 				c.setPosition((position.x-1) * RATIO, (position.y-1 ) * RATIO); //devrais etre -1 mais pas centrer 
 
-				window.draw(c);
+				window->draw(c);
 				BodyCount++;
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
@@ -137,10 +133,10 @@ int myMain() {
 				}
 				position = BodyIterator->GetPosition();
 				r.setPosition((position.x-width/2) * RATIO, (position.y-height/2)* RATIO);
-				window.draw(r);
+				window->draw(r);
 			}
 		}
-		window.display();
+		window->display();
 	}
 
 	return 0;
