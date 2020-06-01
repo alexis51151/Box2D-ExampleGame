@@ -2,12 +2,14 @@
 #include "Global.h"
 #include "Draw.h"
 #include "Events.h"
-
+#include "Mycontactlisner.h"
 int myMain() {
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
 	sf::RenderWindow* window = gameController.getApp();
+	Mycontactlisner myContactListenerInstance;
+	world->SetContactListener(&myContactListenerInstance);
 
 	b2Body* player = gameController.addDynamicBox(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO, Material::DEFAULT);
 
@@ -34,6 +36,12 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
 				// Draw.cpp : draw box2D fixtures with SFML
+				if (numFootContact > 1) {
+					c.setFillColor(sf::Color::Blue);
+				}
+				else {
+					c.setFillColor(sf::Color::Green);
+				}
 				DrawShape(BodyIterator, &c, window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
