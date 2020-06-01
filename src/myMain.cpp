@@ -8,6 +8,7 @@ int myMain() {
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
 	sf::RenderWindow* window = gameController.getApp();
+	
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
