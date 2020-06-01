@@ -14,6 +14,39 @@ Circle::Circle(std::string label, int x, int y,  int r, std::string color) :
 	Shape(x,y, label), r(r), color(color) {
 }
 
+
+sf::Color toSFMLColor(std::string color) {
+	if (color == "Black") {
+		return sf::Color::Black;
+	}
+	if (color == "White") {
+		return sf::Color::White;
+	}
+	if (color == "Red") {
+		return sf::Color::Red;
+	}
+	if (color == "Green") {
+		return sf::Color::Green;
+	}
+	if (color == "Blue") {
+		return sf::Color::Blue;
+	}
+	if (color == "Yellow") {
+		return sf::Color::Yellow;
+	}
+	if (color == "Magenta") {
+		return sf::Color::Magenta;
+	}
+	if (color == "Cyan") {
+		return sf::Color::Magenta;
+	}
+	if (color == "Transparent") {
+		return sf::Color::Magenta;
+	}
+	else {
+		return sf::Color::White; // Si on ne reconnait pas la couleur
+	}
+}
 void Circle::arborescence(int absX, int absY, int& i) {
 	std::cout << "#" << i << " Circle " << '"' << label << '"' << '/' 
 	<< " absolute=(" << (absX + x) << ',' << (absY + y) << ')'

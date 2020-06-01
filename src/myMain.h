@@ -16,5 +16,3 @@
 
 
 int myMain();
-Group arborescence(std::string s);
-sf::Color toSFMLColor(std::string color);

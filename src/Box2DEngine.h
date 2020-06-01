@@ -6,13 +6,13 @@
 #include <stdlib.h>
 #include <Material.h>
 
-class Box2dEngine
+class Box2DEngine
 {
 public:
-	Box2dEngine();
-	Box2dEngine(int widgth, int heigth);
+	Box2DEngine();
+	Box2DEngine(int widgth, int heigth);
 
-	~Box2dEngine();
+	~Box2DEngine();
 
 	b2World* getPhysicsWorld() { return physicsWorld; }
 	sf::RenderWindow* getApp() { return app; }

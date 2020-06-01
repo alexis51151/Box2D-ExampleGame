@@ -1,29 +1,29 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 
-sf::RenderWindow* Box2dEngine::app;
-b2World* Box2dEngine::physicsWorld;
+sf::RenderWindow* Box2DEngine::app;
+b2World* Box2DEngine::physicsWorld;
 
-Box2dEngine::Box2dEngine(): resHeight(HEIGHT),resWidth(WIDTH)
+Box2DEngine::Box2DEngine(): resHeight(HEIGHT),resWidth(WIDTH)
 {
 }
 
-Box2dEngine::Box2dEngine(int width, int height): resWidth(width) , resHeight(height) {
+Box2DEngine::Box2DEngine(int width, int height): resWidth(width) , resHeight(height) {
 	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(width, height), "My_word");
 	temp->setFramerateLimit(60);
 	temp->setVerticalSyncEnabled(true);
-	Box2dEngine::app = temp;
+	Box2DEngine::app = temp;
 
 	b2World* world = new b2World(b2Vec2(0.0f, 10.0f)); //gravity and sleep bodies
-	Box2dEngine::physicsWorld = world;
+	Box2DEngine::physicsWorld = world;
 }
 
-Box2dEngine::~Box2dEngine()
+Box2DEngine::~Box2DEngine()
 {
 }
 
 
-b2Body* Box2dEngine::addStaticBox(int x, int y, float height, float width)
+b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 {
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
@@ -45,7 +45,7 @@ b2Body* Box2dEngine::addStaticBox(int x, int y, float height, float width)
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	return groundBody;
 }
-b2Body* Box2dEngine::addDynamicBox(int x, int y, float height, float width, Material material)
+b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Material material)
 {
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
