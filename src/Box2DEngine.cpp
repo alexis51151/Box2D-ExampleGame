@@ -70,7 +70,7 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	return body;
 }
 
-b2Body* Box2DEngine::addbodyplayer(int x, int y, float height, float width) {
+b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;

@@ -19,7 +19,7 @@ public:
 	
 	b2Body* addDynamicBox(int x, int y, float heigth, float widgth, Material material);
 	b2Body* addStaticBox(int x, int y, float heigth, float widgth);
-	b2Body* addbodyplayer(int x, int y, float height, float width);
+	b2Body* addBodyPlayer(int x, int y, float height, float width);
 
 private:
 	static b2World* physicsWorld;
