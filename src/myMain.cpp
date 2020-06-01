@@ -55,12 +55,12 @@ Group arborescence(std::string s) {
 
 int myMain() {
 	// Initialisation SFML
-	Box2dEngine gamecontroleur(WIDTH, HEIGHT);
-	b2World* world = gamecontroleur.getPhysicsWorld();
-	sf::RenderWindow* window = gamecontroleur.getApp();
+	Box2dEngine gameController(WIDTH, HEIGHT);
+	b2World* world = gameController.getPhysicsWorld();
+	sf::RenderWindow* window = gameController.getApp();
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player =gamecontroleur.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO,Material::DEFAULT);
+	b2Body* player =gameController.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO,Material::DEFAULT);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
@@ -82,13 +82,13 @@ int myMain() {
 			{
 				float MouseX = sf::Mouse::getPosition(*window).x;
 				float MouseY = sf::Mouse::getPosition(*window).y;
-				gamecontroleur.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO,Material::WOOD);
+				gameController.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO,Material::WOOD);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
 				float MouseX = sf::Mouse::getPosition(*window).x;
 				float MouseY = sf::Mouse::getPosition(*window).y;
-				gamecontroleur.addStaticBox(MouseX, MouseY, 8.0f * RATIO, 2.0f * RATIO);
+				gameController.addStaticBox(MouseX, MouseY, 8.0f * RATIO, 2.0f * RATIO);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
@@ -115,11 +115,11 @@ int myMain() {
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
-				DrawShape(BodyIterator, &c, *window);
+				DrawShape(BodyIterator, &c, window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
-				DrawShape(BodyIterator, &r, *window);
+				DrawShape(BodyIterator, &r, window);
 			}
 		}
 		window->display();

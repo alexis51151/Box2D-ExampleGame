@@ -24,8 +24,8 @@ public:
 private:
 	static b2World* physicsWorld;
 	static sf::RenderWindow* app;
-	int resWidgth;
-	int resHeigth;
+	int resWidth;
+	int resHeight;
 };
 
 

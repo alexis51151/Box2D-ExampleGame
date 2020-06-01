@@ -7,4 +7,4 @@
 #include "Global.h"
 
 
-void DrawShape(b2Body* body, sf::Shape* shape, sf::RenderWindow& window);
+void DrawShape(b2Body* body, sf::Shape* shape, sf::RenderWindow* window);

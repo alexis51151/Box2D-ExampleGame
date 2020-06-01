@@ -4,12 +4,12 @@
 sf::RenderWindow* Box2dEngine::app;
 b2World* Box2dEngine::physicsWorld;
 
-Box2dEngine::Box2dEngine(): resHeigth(HEIGHT),resWidgth(WIDTH)
+Box2dEngine::Box2dEngine(): resHeight(HEIGHT),resWidth(WIDTH)
 {
 }
 
-Box2dEngine::Box2dEngine(int widgth, int heigth): resWidgth(widgth) , resHeigth(heigth) {
-	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(widgth, heigth), "My_word");
+Box2dEngine::Box2dEngine(int width, int height): resWidth(width) , resHeight(height) {
+	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(width, height), "My_word");
 	temp->setFramerateLimit(60);
 	temp->setVerticalSyncEnabled(true);
 	Box2dEngine::app = temp;
@@ -23,7 +23,7 @@ Box2dEngine::~Box2dEngine()
 }
 
 
-b2Body* Box2dEngine::addStaticBox(int x, int y, float heigth, float widgth)
+b2Body* Box2dEngine::addStaticBox(int x, int y, float height, float width)
 {
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
@@ -39,13 +39,13 @@ b2Body* Box2dEngine::addStaticBox(int x, int y, float heigth, float widgth)
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(heigth * UNRATIO, widgth * UNRATIO);
+	groundBox.SetAsBox(height * UNRATIO, width * UNRATIO);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	return groundBody;
 }
-b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth, Material material)
+b2Body* Box2dEngine::addDynamicBox(int x, int y, float height, float width, Material material)
 {
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
@@ -55,7 +55,7 @@ b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth, Mat
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(heigth * UNRATIO, widgth * UNRATIO);
+	dynamicBox.SetAsBox(height * UNRATIO, width * UNRATIO);
 
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;
