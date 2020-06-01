@@ -127,8 +127,19 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
 				position = BodyIterator->GetPosition();
-				r.setPosition((position.x-8) * RATIO, (position.y-1)* RATIO);
-				window.draw(r);
+				b2Fixture* fixture = BodyIterator->GetFixtureList();
+				b2Shape::Type shapeType = fixture->GetType();
+				if (shapeType == b2Shape::e_polygon)
+				{
+					b2PolygonShape* polygonShape = (b2PolygonShape*)fixture->GetShape();
+					int32 vertexCount = polygonShape->GetChildCount();
+					for (int i = 0; i < vertexCount; i++) {
+						polygonShape->m_vertices[i];
+					}
+			
+					r.setPosition((position.x - 8) * RATIO, (position.y - 1) * RATIO);
+					window.draw(r);
+				}
 			}
 		}
 		window.display();
