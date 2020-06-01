@@ -23,11 +23,12 @@ Box2dEngine::~Box2dEngine()
 }
 
 
-b2Body* Box2dEngine::create_platform(float posx , float posy) {
+b2Body* Box2dEngine::addStaticBox(int x, int y, float heigth, float widgth)
+{
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
 	platformeBodyDef.type = b2_staticBody;
-	platformeBodyDef.position.Set(posx*UNRATIO, posy*UNRATIO);
+	platformeBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -38,15 +39,14 @@ b2Body* Box2dEngine::create_platform(float posx , float posy) {
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(8.0f, 1.0f);
+	groundBox.SetAsBox(heigth * UNRATIO, widgth * UNRATIO);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	return groundBody;
 }
-
-
-b2Body* Box2dEngine:: create_body(float x , float y ) {
+b2Body* Box2dEngine::addDynamicBox(int x, int y, float heigth, float widgth)
+{
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -55,7 +55,7 @@ b2Body* Box2dEngine:: create_body(float x , float y ) {
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
+	dynamicBox.SetAsBox(heigth * UNRATIO, widgth * UNRATIO);
 
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;

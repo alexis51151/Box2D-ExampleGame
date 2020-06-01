@@ -17,8 +17,8 @@ public:
 	b2World* getPhysicsWorld() { return physicsWorld; }
 	sf::RenderWindow* getApp() { return app; }
 	
-	b2Body* create_platform(float posx, float posy);
-	b2Body* create_body( float x, float y);
+	b2Body* addDynamicBox(int x, int y, float heigth, float widgth);
+	b2Body* addStaticBox(int x, int y, float heigth, float widgth);
 
 
 private:

@@ -58,7 +58,7 @@ int myMain() {
 	sf::RenderWindow* window = gamecontroleur.getApp();
 
 	// Define the dynamic body. We set its position and call the body factory.
-	b2Body* player =gamecontroleur.create_body(10*RATIO,10*RATIO);
+	b2Body* player =gamecontroleur.addDynamicBox( 10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO);
 	
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
@@ -81,29 +81,29 @@ int myMain() {
 			{
 				float MouseX = sf::Mouse::getPosition(*window).x;
 				float MouseY = sf::Mouse::getPosition(*window).y;
-				gamecontroleur.create_body(MouseX, MouseY);
+				gamecontroleur.addDynamicBox(MouseX, MouseY, 1.0f * RATIO, 1.0f * RATIO);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
 				float MouseX = sf::Mouse::getPosition(*window).x;
 				float MouseY = sf::Mouse::getPosition(*window).y;
-				gamecontroleur.create_platform(MouseX, MouseY);
+				gamecontroleur.addStaticBox(MouseX, MouseY, 8.0f * RATIO, 2.0f * RATIO);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(-100, 0), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(100, 0), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(0, 100), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, 10), true);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				player->ApplyLinearImpulseToCenter(b2Vec2(0, -100), true);
+				player->ApplyLinearImpulseToCenter(b2Vec2(0, -10), true);
 			}
 		}
 		
