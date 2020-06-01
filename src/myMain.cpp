@@ -11,8 +11,8 @@ int myMain() {
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	b2Body* player = gameController.addDynamicBox(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO, Material::DEFAULT);
-
+	//b2Body* player = gameController.addDynamicBox(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO, Material::DEFAULT);
+	b2Body* player = gameController.addBodyPlayer(10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
