@@ -1,5 +1,6 @@
 #include "myMain.h"
 #include "Global.h"
+#include "Draw.h"
 
 sf::Color toSFMLColor(std::string color) {
 	if (color == "Black") {
@@ -71,7 +72,6 @@ int myMain() {
 	c.setFillColor(sf::Color::Green);
 	sf::RectangleShape r(sf::Vector2f(8.0f*2* RATIO, 1.0f *2* RATIO));
 	r.setFillColor(sf::Color::Red);
-	b2Vec2 position;
 
 	window.setFramerateLimit(60);
 	while (window.isOpen())
@@ -113,31 +113,15 @@ int myMain() {
 		
 		window.clear(sf::Color::White);
 		world.Step(timeStep, velocityIterations, positionIterations);
-		int BodyCount = 0;
 		for (b2Body* BodyIterator = world.GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
-				position = BodyIterator->GetPosition();
-				c.setPosition((position.x-1) * RATIO, (position.y-1 ) * RATIO); //devrais etre -1 mais pas centrer 
-
-				window.draw(c);
-				BodyCount++;
+				DrawShape(BodyIterator, &c, window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
-				float width = 0;
-				float height = 0;
-				b2Fixture* fixture = BodyIterator->GetFixtureList();
-				if (fixture->GetType() == b2Shape::e_polygon) {
-					b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-					std::cout << "Structure du tableau\n";
-					width = sqrt(pow((poly->m_vertices[1].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[1].y - poly->m_vertices[0].y), 2));
-					height = sqrt(pow((poly->m_vertices[3].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[3].y - poly->m_vertices[0].y), 2));
-				}
-				position = BodyIterator->GetPosition();
-				r.setPosition((position.x-width/2) * RATIO, (position.y-height/2)* RATIO);
-				window.draw(r);
+				DrawShape(BodyIterator, &r, window);
 			}
 		}
 		window.display();

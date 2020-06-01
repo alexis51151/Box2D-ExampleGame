@@ -18,4 +18,3 @@
 int myMain();
 Group arborescence(std::string s);
 sf::Color toSFMLColor(std::string color);
-void options(Group& init, sf::RenderWindow& window);
