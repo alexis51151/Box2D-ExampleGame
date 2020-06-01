@@ -52,6 +52,7 @@ Group arborescence(std::string s) {
 	return draw;
 }
 
+
 int myMain() {
 	// Initialisation SFML
 	Box2dEngine gamecontroleur(WIDTH, HEIGHT);
@@ -107,9 +108,10 @@ int myMain() {
 			}
 		}
 		
-		(*window).clear(sf::Color::White);
-		(*world).Step(timeStep, velocityIterations, positionIterations);
-		for (b2Body* BodyIterator = (*world).GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
+		window->clear(sf::Color::White);
+		world->Step(timeStep, velocityIterations, positionIterations);
+		int BodyCount = 0;
+		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
