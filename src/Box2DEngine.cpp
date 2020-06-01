@@ -74,8 +74,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
-
-	
+		
 	//shape definition for main fixture
 	b2PolygonShape polygonShape;
 	polygonShape.SetAsBox(height*UNRATIO, width*UNRATIO); 
@@ -91,11 +90,16 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
-
+	
+	b2PolygonShape npolygonShape;
 	//add foot sensor fixture
-	polygonShape.SetAsBox(0.3, 0.3, b2Vec2(0, -height), 0);
-	myFixtureDef.isSensor = true;
-	b2Fixture* footSensorFixture = m_body->CreateFixture(&myFixtureDef);
+	npolygonShape.SetAsBox(0.1, 0.1, b2Vec2(0, -height), 0);
+	b2FixtureDef mynFixtureDef;
+	
+	mynFixtureDef.isSensor = true;
+	mynFixtureDef.shape = &npolygonShape;
+	b2Fixture* footSensorFixture = m_body->CreateFixture(&mynFixtureDef);
+	
 	footSensorFixture->SetUserData((void*)3);
 	return m_body;
 }

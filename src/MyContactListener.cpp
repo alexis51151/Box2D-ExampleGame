@@ -1,17 +1,20 @@
 #include "MyContactListener.h"
 #include <iostream>
-
 void MyContactListener::BeginContact(b2Contact* contact) {
     //check if fixture A was the foot sensor
+    printf("tringer sensor1\n");
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    std::cout << "Valeur de UserData:" << (int)fixtureUserData << std::endl;
-
-    if ((int)fixtureUserData == 3)
+    if ((int)fixtureUserData == 3) {
         numFootContact++;
+        printf("tringer sensor\n");
+    }
+        
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    if ((int)fixtureUserData == 3)
+    if ((int)fixtureUserData == 3) {
         numFootContact++;
+        printf("tringer sensor\n");
+    }
 }
 
 void MyContactListener::EndContact(b2Contact* contact) {
