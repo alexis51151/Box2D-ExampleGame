@@ -28,3 +28,10 @@ void MyContactListener::EndContact(b2Contact* contact) {
         numFootContact--;
 }
 
+MyContactListener::MyContactListener()
+{
+}
+
+MyContactListener::~MyContactListener()
+{
+}
