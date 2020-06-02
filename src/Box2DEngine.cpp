@@ -90,6 +90,11 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
+	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
+	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, foot);
+	playerFixture->SetUserData((void*)dataPlayer);
+
+
 	
 	//add foot sensor fixture
 	b2PolygonShape footpolygonShape;
@@ -98,16 +103,19 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	footFixtureDef.isSensor = true;
 	footFixtureDef.shape = &footpolygonShape;
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
-	footSensorFixture->SetUserData((void*)foot);
+	FixtureData* dataFoot = new FixtureData(sf::Color::Green, foot);
+	footSensorFixture->SetUserData((void*)dataFoot);
+
+
 	//add hand sensor
-	
 	b2PolygonShape handpolygonShape;
 	handpolygonShape.SetAsBox( 0.1,0.1 , b2Vec2(width*UNRATIO, 0), 0);
 	b2FixtureDef handfixture;
 	handfixture.isSensor = true;
 	handfixture.shape = &handpolygonShape;
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
-	handSensorFixture->SetUserData((void*)hand);
+	FixtureData* dataHand = new FixtureData(sf::Color::Green, hand);
+	handSensorFixture->SetUserData((void*)dataHand);
 	
 	return m_body;
 }

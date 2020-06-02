@@ -1,28 +1,32 @@
 #include <FixtureData.h>
 #include <Global.h>
 
-/*
+
 FixtureData::FixtureData(sf::Color color) : color(color) {
 
 }
+
+FixtureData::FixtureData(sf::Color color, int dataType) : color(color), dataType(dataType) {
+
+}
+
 
 FixtureData::~FixtureData() {
 
 }
 
-FixtureData::getColor() {
+sf::Color FixtureData::getColor() {
 	return color;
 }
 
-FixtureData::setColor(sf::Color color) {
-	this.color = color;
+void FixtureData::setColor(sf::Color color) {
+	FixtureData::color = color;
 }
 
 int FixtureData::getDataType() {
 	return dataType;
 }
 
-FixtureData:setDataType(int dataType) {
-	this.dataType = dataType;
+void FixtureData::setDataType(int dataType) {
+	FixtureData::dataType = dataType;
 }
-*/

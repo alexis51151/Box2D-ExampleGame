@@ -1,18 +1,19 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-/*
+#include <Global.h>
+
 class FixtureData
 {
 public:
-	FixtureData(Sf::Color color);
+	FixtureData(sf::Color color);
+	FixtureData(sf::Color color, int dataType);
 	~FixtureData();
 	sf::Color getColor();
-	setColor(sf::Color color);
+	void setColor(sf::Color color);
 	int getDataType();
-	//setDataType(int dataType);
+	void setDataType(int dataType);
 private:
-	int dataType = 0;
+	int dataType = end;
 	sf::Color color;
 };
-*/
