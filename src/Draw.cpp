@@ -4,9 +4,10 @@
 
 // Function for drawing a shape using SFML 
 // Only implements box2D fixtures that are rectangles (ie fixtures initialized using b2Fixture::setAsBox)
-void DrawShape(b2Body* body, sf::Shape* shape, sf::RenderWindow* window) {
+void DrawShape(b2Body* body, sf::RenderWindow* window) {
 	float width = 0;
 	float height = 0;
+	sf::Shape* shape;
 	b2Fixture* fixture = body->GetFixtureList();
 	switch (fixture->GetType()) {
 	case b2Shape::e_polygon: {
