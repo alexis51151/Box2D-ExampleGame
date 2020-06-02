@@ -3,6 +3,7 @@
 #include"Global.h"
 
 extern int numFootContact;
+extern int numhandContact;
 
 class MyContactListener : public b2ContactListener
 {
