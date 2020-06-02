@@ -1,8 +1,10 @@
 #include <Events.h>
-
+#include "myMain.h"
 
 
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
+	extern int numFootContact;
+	extern int m_jumpTimeout;
 	sf::Event event;
 	float impulse = player->GetMass() * 10;
 	while (window->pollEvent(event)) {
@@ -34,7 +36,10 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
+			if (numFootContact < 1) break;
+			if (m_jumpTimeout > 0) break;
 			player->ApplyLinearImpulseToCenter(b2Vec2(0, -impulse), true);
+			m_jumpTimeout = 15;
 		}
 	}
 }

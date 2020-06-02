@@ -1,7 +1,7 @@
 #include "myMain.h"
 
 int numFootContact = 0;  // =0 a ajouter a un constructeur de jeu 
-
+int m_jumpTimeout;
 
 int myMain() {
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
@@ -31,6 +31,7 @@ int myMain() {
 		HookEvents(window, &gameController, player);
 	
 		window->clear(sf::Color::White);
+		m_jumpTimeout--;
 		world->Step(timeStep, velocityIterations, positionIterations);
 		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
