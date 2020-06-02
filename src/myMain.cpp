@@ -1,6 +1,7 @@
 #include "myMain.h"
 
 int numFootContact = 0;  // =0 a ajouter a un constructeur de jeu 
+int numhandContact = 0;
 int m_jumpTimeout;
 
 int myMain() {
@@ -42,6 +43,9 @@ int myMain() {
 				
 				if (numFootContact >= 1) {
 					c.setFillColor(sf::Color::Blue);
+				}
+				if (numhandContact>= 1) {
+					c.setFillColor(sf::Color::Red);
 				}
 				else {
 					c.setFillColor(sf::Color::Green);

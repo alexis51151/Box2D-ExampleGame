@@ -1,19 +1,20 @@
 #include "MyContactListener.h"
 #include <iostream>
 void MyContactListener::BeginContact(b2Contact* contact) {
-    //check if fixture A was the foot sensor
-    printf("tringer sensor1\n");
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    if ((int)fixtureUserData == 3) {
+    if ((int)fixtureUserData == 3) { //foot sensor 
         numFootContact++;
-        printf("tringer sensor\n");
     }
-        
+    if ((int)fixtureUserData == 4) { //hand sensor 
+        numhandContact++;
+    }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
     if ((int)fixtureUserData == 3) {
         numFootContact++;
-        printf("tringer sensor\n");
+    }
+    if ((int)fixtureUserData == 4) {
+        numhandContact++;
     }
 }
 
@@ -22,10 +23,16 @@ void MyContactListener::EndContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     if ((int)fixtureUserData == 3)
         numFootContact--;
+    if ((int)fixtureUserData == 4) {
+        numhandContact--;
+    }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
     if ((int)fixtureUserData == 3)
         numFootContact--;
+    if ((int)fixtureUserData == 4) {
+        numhandContact--;
+    }
 }
 
 MyContactListener::MyContactListener()
