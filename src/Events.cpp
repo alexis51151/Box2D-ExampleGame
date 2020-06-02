@@ -21,7 +21,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		{
 			float MouseX = sf::Mouse::getPosition(*window).x;
 			float MouseY = sf::Mouse::getPosition(*window).y;
-			gameController->addStaticBox(MouseX, MouseY, 8.0f * RATIO, 2.0f * RATIO);
+			gameController->addStaticBox(MouseX, MouseY, 8.0f * RATIO, 1.0f * RATIO);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{

@@ -44,13 +44,16 @@ int myMain() {
 				
 				if (numFootContact >= 1) {
 					c.setFillColor(sf::Color::Blue);
+				}else{
+					if (numhandContact>= 1) {
+						c.setFillColor(sf::Color::Red);
+					}
+					else
+					{
+						c.setFillColor(sf::Color::Green);
+					}
 				}
-				if (numhandContact>= 1) {
-					c.setFillColor(sf::Color::Red);
-				}
-				else {
-					c.setFillColor(sf::Color::Green);
-				}
+			
 				
 				DrawShape(BodyIterator, &c, window);
 			}
