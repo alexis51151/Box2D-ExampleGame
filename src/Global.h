@@ -14,4 +14,5 @@
 #define HEIGHT 1080
 
 // Enumeration for UserData in box2D
-enum DataType {foot, hand};
+enum DataType {start, foot, hand, end};
+
