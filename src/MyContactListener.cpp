@@ -2,18 +2,18 @@
 #include <iostream>
 void MyContactListener::BeginContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    if ((int)fixtureUserData == 3) { //foot sensor 
+    if ((int)fixtureUserData == foot) { //foot sensor 
         numFootContact++;
     }
-    if ((int)fixtureUserData == 4) { //hand sensor 
+    if ((int)fixtureUserData == hand) { //hand sensor 
         numhandContact++;
     }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    if ((int)fixtureUserData == 3) {
+    if ((int)fixtureUserData == foot) {
         numFootContact++;
     }
-    if ((int)fixtureUserData == 4) {
+    if ((int)fixtureUserData == hand) {
         numhandContact++;
     }
 }
@@ -21,16 +21,16 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 void MyContactListener::EndContact(b2Contact* contact) {
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    if ((int)fixtureUserData == 3)
+    if ((int)fixtureUserData == foot)
         numFootContact--;
-    if ((int)fixtureUserData == 4) {
+    if ((int)fixtureUserData == hand) {
         numhandContact--;
     }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    if ((int)fixtureUserData == 3)
+    if ((int)fixtureUserData == foot)
         numFootContact--;
-    if ((int)fixtureUserData == 4) {
+    if ((int)fixtureUserData == hand) {
         numhandContact--;
     }
 }

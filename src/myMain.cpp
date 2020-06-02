@@ -44,7 +44,7 @@ int myMain() {
 				if (numFootContact >= 1) {
 					c.setFillColor(sf::Color::Blue);
 				}else{
-					if (numhandContact>= 1) {
+					if (numhandContact >= 1) {
 						c.setFillColor(sf::Color::Red);
 					}
 					else

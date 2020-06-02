@@ -98,7 +98,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	footFixtureDef.isSensor = true;
 	footFixtureDef.shape = &footpolygonShape;
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
-	footSensorFixture->SetUserData((void*)3);
+	footSensorFixture->SetUserData((void*)foot);
 	//add hand sensor
 	
 	b2PolygonShape handpolygonShape;
@@ -107,7 +107,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	handfixture.isSensor = true;
 	handfixture.shape = &handpolygonShape;
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
-	handSensorFixture->SetUserData((void*)4);
+	handSensorFixture->SetUserData((void*)hand);
 	
 	return m_body;
 }
