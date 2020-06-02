@@ -1,10 +1,11 @@
 #include <Events.h>
 #include "myMain.h"
 
+extern int m_jumpTimeout;
 
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
 	extern int numFootContact;
-	extern int m_jumpTimeout;
+
 	extern int numhandContact;
 	sf::Event event;
 	float impulse = player->GetMass() * 10;
@@ -25,22 +26,76 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
+			actionplayerLeftKey(player);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
+			actionplayerRightKey(player);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			player->ApplyLinearImpulseToCenter(b2Vec2(0, 10), true);
+			actionplayerDownKey(player);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			if (numFootContact < 1 && numhandContact<1) break;
-			if (m_jumpTimeout > 0) break;
-			player->ApplyLinearImpulseToCenter(b2Vec2(0, -impulse), true);
-			m_jumpTimeout = 15;
+			actionplayerUpKey(player);
 		}
 	}
+}
+void actionplayerRightKey(b2Body* player)
+{
+	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+		if (player->GetLinearVelocity().x >= 5) {
+			player->SetLinearVelocity(b2Vec2(10, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
+		}
+
+	}else{
+		if (player->GetLinearVelocity().x >= 10) {
+			player->SetLinearVelocity(b2Vec2(20, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(20, 0), true);
+		}
+	}
+}
+
+void actionplayerLeftKey(b2Body* player)
+{
+	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+		if (player->GetLinearVelocity().x <= -5) {
+			player->SetLinearVelocity(b2Vec2(-10, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
+		}
+
+	}
+	else {
+		if (player->GetLinearVelocity().x <= -10) {
+			player->SetLinearVelocity(b2Vec2(-20, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(-20, 0), true);
+		}
+	}
+}
+
+void actionplayerDownKey(b2Body* player)
+{
+	//nothingtodo ,
+}
+
+void actionplayerUpKey(b2Body* player)
+{
+	if (numFootContact < 1 && numhandContact < 1) return;
+	if (m_jumpTimeout > 0) return;
+	player->ApplyLinearImpulseToCenter(b2Vec2(0, -player->GetMass() * 10), true);
+	m_jumpTimeout = 15;
 }

@@ -109,7 +109,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 
 	//add hand sensor
 	b2PolygonShape handpolygonShape;
-	handpolygonShape.SetAsBox( 0.1,0.1 , b2Vec2(width*UNRATIO, 0), 0);
+	handpolygonShape.SetAsBox(width * UNRATIO+0.1,0.1 , b2Vec2(0, 0), 0);
 	b2FixtureDef handfixture;
 	handfixture.isSensor = true;
 	handfixture.shape = &handpolygonShape;
