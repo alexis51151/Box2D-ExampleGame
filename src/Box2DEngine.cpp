@@ -91,7 +91,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
-	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, foot);
+	FixtureData* dataPlayer = new FixtureData(sf::Color::Green);
 	playerFixture->SetUserData((void*)dataPlayer);
 
 
