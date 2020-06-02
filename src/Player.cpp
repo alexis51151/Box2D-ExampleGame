@@ -2,7 +2,7 @@
 
 
 
-Player::Player(Box2DEngine* gameController) : gameController(gameController)
+Player::Player(Box2DEngine* gameController)
 {
 	body = gameController->addBodyPlayer(10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
 }

@@ -11,6 +11,5 @@ public:
 	b2Body* getBody();
 
 private:
-	Box2DEngine* gameController;
 	b2Body* body;
 };
