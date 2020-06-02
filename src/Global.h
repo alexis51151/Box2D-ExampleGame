@@ -1,4 +1,5 @@
 #pragma once 
+#include <SFML/Graphics.hpp>
 
 #define RATIO 30.0f
 #define PIXELS_PER_METER RATIO
