@@ -16,7 +16,7 @@
 #include "Draw.h"
 #include "Events.h"
 #include "MyContactListener.h"
-
+#include "Player.h"
 
 
 

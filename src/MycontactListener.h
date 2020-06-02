@@ -1,6 +1,6 @@
 #pragma once
 #include <box2d/box2d.h>
-#include"Global.h"
+#include "Global.h"
 
 extern int numFootContact;
 extern int numhandContact;
