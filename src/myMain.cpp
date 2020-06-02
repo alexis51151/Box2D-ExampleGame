@@ -12,7 +12,9 @@ int myMain() {
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	b2Body* player = gameController.addBodyPlayer(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO);
+	//b2Body* player_body = gameController.addBodyPlayer(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO);
+	Player* player = new Player(&gameController);
+	b2Body* player_body = player->getBody();
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
@@ -28,7 +30,7 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, player);
+		HookEvents(window, &gameController, player_body);
 	
 		window->clear(sf::Color::White);
 		m_jumpTimeout--;
