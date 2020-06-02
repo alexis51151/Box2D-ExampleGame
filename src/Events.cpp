@@ -2,6 +2,7 @@
 #include "myMain.h"
 
 extern int m_jumpTimeout;
+
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
 	extern int numFootContact;
 
@@ -43,23 +44,46 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 }
 void actionplayerRightKey(b2Body* player)
 {
-	if (player->GetLinearVelocity().x > 10) {
-		player->SetLinearVelocity(b2Vec2(20, player->GetLinearVelocity().y));
-	}
-	else
-	{
-		player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
+	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+		if (player->GetLinearVelocity().x >= 5) {
+			player->SetLinearVelocity(b2Vec2(10, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(10, 0), true);
+		}
+
+	}else{
+		if (player->GetLinearVelocity().x >= 10) {
+			player->SetLinearVelocity(b2Vec2(20, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(20, 0), true);
+		}
 	}
 }
 
 void actionplayerLeftKey(b2Body* player)
 {
-	if (player->GetLinearVelocity().x < -10) {
-		player->SetLinearVelocity(b2Vec2(-20, player->GetLinearVelocity().y));
+	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+		if (player->GetLinearVelocity().x <= -5) {
+			player->SetLinearVelocity(b2Vec2(-10, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
+		}
+
 	}
-	else
-	{
-		player->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
+	else {
+		if (player->GetLinearVelocity().x <= -10) {
+			player->SetLinearVelocity(b2Vec2(-20, player->GetLinearVelocity().y));
+		}
+		else
+		{
+			player->ApplyLinearImpulseToCenter(b2Vec2(-20, 0), true);
+		}
 	}
 }
 
