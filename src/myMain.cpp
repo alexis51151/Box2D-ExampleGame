@@ -12,7 +12,6 @@ int myMain() {
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	//b2Body* player_body = gameController.addBodyPlayer(10 * RATIO , 10 * RATIO , 1.0f * RATIO, 1.0f * RATIO);
 	Player* player = new Player(&gameController);
 	b2Body* player_body = player->getBody();
 
