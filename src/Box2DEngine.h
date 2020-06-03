@@ -6,27 +6,25 @@
 #include <stdlib.h>
 #include <Material.h>
 #include <FixtureData.h>
+#include <memory>
 
 class Box2DEngine
 {
 public:
-	Box2DEngine();
-	Box2DEngine(int widgth, int heigth);
+	Box2DEngine(int width, int heigth);
 
 	~Box2DEngine();
 
-	b2World* getPhysicsWorld() { return physicsWorld; }
-	sf::RenderWindow* getApp() { return app; }
+	b2World* getPhysicsWorld() { return physicsWorld.get(); }
+	sf::RenderWindow* getApp() { return app.get(); }
 	
 	b2Body* addDynamicBox(int x, int y, float heigth, float widgth, Material material);
 	b2Body* addStaticBox(int x, int y, float heigth, float widgth);
 	b2Body* addBodyPlayer(int x, int y, float height, float width);
 
 private:
-	static b2World* physicsWorld;
-	static sf::RenderWindow* app;
-	int resWidth;
-	int resHeight;
+	std::unique_ptr<b2World> physicsWorld;
+	std::unique_ptr<sf::RenderWindow> app;
 };
 
 

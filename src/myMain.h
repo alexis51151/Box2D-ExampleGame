@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Group.h"
-#include "Circle.h"
-#include "Shape.h"
 #include <pugixml.hpp>
 #include <iostream> // Pour cout
 #include <fstream> // Pour lire visage.xml
@@ -17,6 +14,7 @@
 #include "Events.h"
 #include "MyContactListener.h"
 #include "Player.h"
+#include <memory>
 
 
 

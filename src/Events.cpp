@@ -89,7 +89,7 @@ void actionplayerLeftKey(b2Body* player)
 
 void actionplayerDownKey(b2Body* player)
 {
-	//nothingtodo ,
+	//nothingtodo
 }
 
 void actionplayerUpKey(b2Body* player)

@@ -9,12 +9,12 @@ int myMain() {
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
 	sf::RenderWindow* window = gameController.getApp();
-	
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	Player* player = new Player(&gameController);
+	std::unique_ptr<Player> player(new Player(&gameController));
 	b2Body* player_body = player->getBody();
+
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;

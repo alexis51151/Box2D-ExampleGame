@@ -1,21 +1,15 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 
-sf::RenderWindow* Box2DEngine::app;
-b2World* Box2DEngine::physicsWorld;
 
-Box2DEngine::Box2DEngine(): resHeight(HEIGHT), resWidth(WIDTH)
+
+Box2DEngine::Box2DEngine(int width, int height) 
 {
-}
-
-Box2DEngine::Box2DEngine(int width, int height): resWidth(width), resHeight(height) {
-	sf::RenderWindow* temp = new sf::RenderWindow(sf::VideoMode(width, height), "My_word");
-	temp->setFramerateLimit(60);
-	temp->setVerticalSyncEnabled(true);
-	Box2DEngine::app = temp;
-
-	b2World* world = new b2World(b2Vec2(0.0f, 10.0f)); //gravity and sleep bodies
-	Box2DEngine::physicsWorld = world;
+	Box2DEngine::app = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(width, height), "My_word"));
+	Box2DEngine::app->setFramerateLimit(60);
+	Box2DEngine::app->setVerticalSyncEnabled(true);
+	//Box2DEngine::physicsWorld = new b2World(b2Vec2(0.0f, 10.0f)); //gravity and sleep bodies
+	Box2DEngine::physicsWorld = std::unique_ptr<b2World>(new b2World(b2Vec2(0.0f, 10.0f)));
 }
 
 Box2DEngine::~Box2DEngine()
@@ -32,8 +26,8 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
+	//b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
 	b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
-
 	// Define the ground box shape.
 	b2PolygonShape groundBox;
 
@@ -51,6 +45,7 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(x*UNRATIO, y*UNRATIO);
+	//b2Body* body = physicsWorld->CreateBody(&bodyDef);
 	b2Body* body = physicsWorld->CreateBody(&bodyDef);
 
 	// Define another box shape for our dynamic body.
@@ -86,8 +81,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 
 	//create dynamic body
 	myBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
-	b2Body * m_body = physicsWorld->CreateBody(&myBodyDef);
-
+	b2Body* m_body = physicsWorld->CreateBody(&myBodyDef);
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
