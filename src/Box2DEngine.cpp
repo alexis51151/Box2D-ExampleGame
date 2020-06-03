@@ -35,7 +35,11 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	groundBox.SetAsBox(height * UNRATIO, width * UNRATIO);
 
 	// Add the ground fixture to the ground body.
-	groundBody->CreateFixture(&groundBox, 0.0f);
+	b2Fixture* StaticFixture = groundBody->CreateFixture(&groundBox, 0.0f);
+	// Add the Fixturedata
+	FixtureData* data = new FixtureData(sf::Color::Red, platform);
+	StaticFixture->SetUserData((void*)data);
+
 	return groundBody;
 }
 
@@ -60,8 +64,12 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	fixtureDef.restitution = material.getRestitution();
 	
 
-	// Add the shape to the body.
-	body->CreateFixture(&fixtureDef);
+	// Add the shape to the body and store the fixture addr.
+	b2Fixture* DynamicFixture = body->CreateFixture(&fixtureDef);
+	// Add the Fixturedata
+	FixtureData* data = new FixtureData(sf::Color::Green, default);
+	DynamicFixture->SetUserData((void*)data);
+
 	return body;
 }
 
@@ -85,7 +93,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
-	FixtureData* dataPlayer = new FixtureData(sf::Color::Green);
+	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, player);
 	playerFixture->SetUserData((void*)dataPlayer);
 
 

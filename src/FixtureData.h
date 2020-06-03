@@ -14,6 +14,6 @@ public:
 	int getDataType();
 	void setDataType(int dataType);
 private:
-	int dataType = end;
+	int dataType = default;
 	sf::Color color;
 };
