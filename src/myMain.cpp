@@ -11,7 +11,6 @@ int myMain() {
 	std::unique_ptr<Player> player1(new Player(&gameController));
 	b2Body* player_body = player1->getBody();
 
-
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;

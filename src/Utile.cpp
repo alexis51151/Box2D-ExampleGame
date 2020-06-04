@@ -13,7 +13,6 @@ void getvalue(b2Body* player1, int* footcount, int* handcount, int* jumptimout) 
 			break;
 		case hand:
 			*handcount = ((HandData*)userdata)->GetNumhandContact();
-			printf("hancount mis a jours, %f \n", ((HandData*)userdata)->GetNumhandContact());
 			break;
 		case player:
 			*jumptimout = ((PlayerData*)userdata)->GetJumpTimeout();

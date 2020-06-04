@@ -107,11 +107,10 @@ void actionplayerUpKey(b2Body* player)
 	int jumptimout;
 	getvalue(player, &footcount, &handcount, &jumptimout);
 	PlayerData* playerdata = (PlayerData*)player->GetFixtureList()->GetUserData();
-	if (footcount < 1 && handcount < 1) {
-		printf("foot: %f,handcount : %f \n", footcount, handcount);
+	if (footcount < 1 ) {
 		return;
 	}
 	if (jumptimout > 0) return;
 	player->ApplyLinearImpulseToCenter(b2Vec2(0, -player->GetMass() * 10), true);
-	playerdata->SetJumpTimeout(15);
+	playerdata->SetJumpTimeout(30);
 }

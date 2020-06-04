@@ -9,7 +9,6 @@ void MyContactListener::BeginContact(b2Contact* contact) {
         }
         if ((int)fixtureData->getDataType() == hand) { //hand sensor 
             ((HandData*)fixtureData)->IncreaceNumhandContact();
-            printf("hand touche \n");
         }
     }
     //check if fixture B was the foot sensor
@@ -21,7 +20,6 @@ void MyContactListener::BeginContact(b2Contact* contact) {
         }
         if ((int)fixtureData->getDataType() == hand) {
             ((HandData*)fixtureData)->IncreaceNumhandContact();
-            printf("hand touche \n");
         }
     }
 }
@@ -35,7 +33,6 @@ void MyContactListener::EndContact(b2Contact* contact) {
             ((FootData*)fixtureData)->DecreaceNumFootContact();
         if ((int)fixtureData->getDataType() == hand) {
             ((HandData*)fixtureData)->DecreaceNumhandContact();
-            printf("hand touche plus \n");
         }
     }
     //check if fixture B was the foot sensor
@@ -46,7 +43,6 @@ void MyContactListener::EndContact(b2Contact* contact) {
             ((FootData*)fixtureData)->DecreaceNumFootContact();
         if ((int)fixtureData->getDataType() == hand) {
             ((HandData*)fixtureData)->DecreaceNumhandContact();
-            printf("hand touche plus \n");
         }
     }
 }
