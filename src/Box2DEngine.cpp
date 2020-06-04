@@ -1,8 +1,6 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 
-
-
 Box2DEngine::Box2DEngine(int width, int height) 
 {
 	Box2DEngine::app = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(width, height), "My_word"));
@@ -62,7 +60,6 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	fixtureDef.friction = material.getFriction();
 	fixtureDef.restitution = material.getRestitution();
 	
-
 	// Add the shape to the body and store the fixture address.
 	b2Fixture* DynamicFixture = body->CreateFixture(&fixtureDef);
 	// Add the Fixture data
@@ -147,9 +144,8 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	footFixtureDef.isSensor = true;
 	footFixtureDef.shape = &footpolygonShape;
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
-	FixtureData* dataFoot = new FixtureData(sf::Color::Green, foot);
+	FootData * dataFoot = new FootData(sf::Color::Green, foot,0);
 	footSensorFixture->SetUserData((void*)dataFoot);
-
 
 	//add hand sensor
 	b2PolygonShape handpolygonShape;
@@ -158,7 +154,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	handfixture.isSensor = true;
 	handfixture.shape = &handpolygonShape;
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
-	FixtureData* dataHand = new FixtureData(sf::Color::Green, hand);
+	HandData* dataHand = new HandData(sf::Color::Green, hand,0);
 	handSensorFixture->SetUserData((void*)dataHand);
 	
 	return m_body;

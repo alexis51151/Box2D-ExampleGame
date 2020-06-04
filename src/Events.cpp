@@ -1,12 +1,7 @@
 #include <Events.h>
 #include "myMain.h"
 
-extern int m_jumpTimeout;
-
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
-	extern int numFootContact;
-
-	extern int numhandContact;
 	sf::Event event;
 	float impulse = player->GetMass() * 10;
 	while (window->pollEvent(event)) {
@@ -42,9 +37,16 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		}
 	}
 }
+
+
 void actionplayerRightKey(b2Body* player)
 {
-	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+	int footcount;
+	int handcount;
+	int jumptimout;
+	getvalue(player, &footcount, &handcount, &jumptimout);
+
+	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair 
 		if (player->GetLinearVelocity().x >= 5) {
 			player->SetLinearVelocity(b2Vec2(10, player->GetLinearVelocity().y));
 		}
@@ -66,7 +68,13 @@ void actionplayerRightKey(b2Body* player)
 
 void actionplayerLeftKey(b2Body* player)
 {
-	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+	int footcount;
+	int handcount;
+	int jumptimout;
+	getvalue(player, &footcount, &handcount, &jumptimout);
+
+	PlayerData* playerdata = (PlayerData*)player->GetUserData();
+	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair
 		if (player->GetLinearVelocity().x <= -5) {
 			player->SetLinearVelocity(b2Vec2(-10, player->GetLinearVelocity().y));
 		}
@@ -92,10 +100,40 @@ void actionplayerDownKey(b2Body* player)
 	//nothingtodo
 }
 
-void actionplayerUpKey(b2Body* player)
+void actionplayerUpKey(b2Body* player1)
 {
-	if (numFootContact < 1 && numhandContact < 1) return;
-	if (m_jumpTimeout > 0) return;
-	player->ApplyLinearImpulseToCenter(b2Vec2(0, -player->GetMass() * 10), true);
-	m_jumpTimeout = 15;
+	PlayerData* playerdata;
+	FootData* footData;
+	HandData* handData;
+	b2Fixture* playerfixtures = player1->GetFixtureList();
+	while (playerfixtures != nullptr) {
+		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
+		int datatype = userdata->getDataType();
+		switch (datatype)
+		{
+		case player:
+			playerdata = ((PlayerData*)userdata);
+			break;
+		case foot:
+			footData= ((FootData*)userdata);
+			break;
+		case hand:
+			handData = ((HandData*)userdata);
+			break;
+		default:
+			printf("attention type de features non prisent en compte ");
+			break;
+		}
+		playerfixtures = playerfixtures->GetNext();
+	}
+	if (footData == nullptr || handData == nullptr)
+		printf("erreur dans la recuperation");
+	if (footData->GetNumFootContact() < 1 && handData->GetNumhandContact()<1 ) {
+		return;
+	}
+	printf("jumptimout %d", playerdata->GetJumpTimeout());
+	if (playerdata->GetJumpTimeout() > 0) return;
+	player1->ApplyLinearImpulseToCenter(b2Vec2(0, -player1->GetMass() * 10), true);
+	playerdata->SetJumpTimeout(15);
+	
 }
