@@ -14,7 +14,7 @@ int myMain() {
 	b2Body* player2_body = player2->getBody();
 
 	// Link the two players with a rope
-	std::unique_ptr<Rope> rope(new Rope(800,400, 0.5 * RATIO, 10, &gameController));
+	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
 	rope->linkPlayers(player1.get(), player2.get(), world);
 
 	// Simulation parameters
@@ -26,7 +26,6 @@ int myMain() {
 	{
 		// Events.cpp : handle mouse and keyboard events
 		HookEvents(window, &gameController, player1_body);
-		//HookEvents(window, &gameController, player2_body);
 	
 		window->clear(sf::Color::White);
 

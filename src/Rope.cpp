@@ -7,7 +7,7 @@ Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController)
 }
 
 
-void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
+void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 	float width = length / nb_links;
 
     b2Body* body_player1 = player1->getBody();
@@ -27,7 +27,7 @@ void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 	world->CreateJoint(&revoluteJointDef);
 
     // Link player2 to endBody
-	revoluteJointDef.bodyA = body_player2;
-	revoluteJointDef.bodyB = endBody;
+	revoluteJointDef.bodyA = endBody;
+	revoluteJointDef.bodyB = body_player2;
 	world->CreateJoint(&revoluteJointDef);
 }

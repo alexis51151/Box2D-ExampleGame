@@ -167,7 +167,6 @@ std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length,
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	//bodyDef.position.Set(x*UNRATIO, y*UNRATIO);
 	b2FixtureDef fixtureDef;
 	fixtureDef.density = 1;
 	b2PolygonShape polygonShape;
@@ -183,8 +182,8 @@ std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length,
 
 	// Joint properties
 	b2RevoluteJointDef revoluteJointDef;
-	revoluteJointDef.localAnchorA.Set(0.8*width*UNRATIO, 0);
-	revoluteJointDef.localAnchorB.Set(-1.2*width*UNRATIO, 0);
+	revoluteJointDef.localAnchorA.Set(width * UNRATIO, 0);
+	revoluteJointDef.localAnchorB.Set(-width*UNRATIO, 0);
 
 	for (int i = 1; i < nb_links; i++) {
 		// Create a new body
