@@ -16,6 +16,8 @@ int myMain() {
 	std::unique_ptr<Player> player(new Player(&gameController));
 	b2Body* player_body = player->getBody();
 
+	std::unique_ptr<Rope> rope(new Rope(800,400, 3.0 * RATIO, 2, &gameController));
+
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;

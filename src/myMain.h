@@ -15,6 +15,7 @@
 #include "MyContactListener.h"
 #include "Player.h"
 #include <memory>
+#include "Rope.h"
 
 
 
