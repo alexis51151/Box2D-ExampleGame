@@ -36,7 +36,7 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 
 	// Add the ground fixture to the ground body.
 	b2Fixture* StaticFixture = groundBody->CreateFixture(&groundBox, 0.0f);
-	// Add the Fixturedata
+	// Add the Fixture data
 	FixtureData* data = new FixtureData(sf::Color::Red, platform);
 	StaticFixture->SetUserData((void*)data);
 
@@ -64,15 +64,59 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	fixtureDef.restitution = material.getRestitution();
 	
 
-	// Add the shape to the body and store the fixture addr.
+	// Add the shape to the body and store the fixture address.
 	b2Fixture* DynamicFixture = body->CreateFixture(&fixtureDef);
-	// Add the Fixturedata
+	// Add the Fixture data
 	FixtureData* data = new FixtureData(sf::Color::Green, default);
 	DynamicFixture->SetUserData((void*)data);
 
 	return body;
 }
+b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
+	b2BodyDef myBodyDef;
+	myBodyDef.type = b2_dynamicBody;
+	myBodyDef.fixedRotation = true;
 
+	//shape definition for main fixture
+	b2PolygonShape polygonShape;
+	polygonShape.SetAsBox(height * UNRATIO, width * UNRATIO);
+
+	//fixture definition
+	b2FixtureDef myFixtureDef;
+	myFixtureDef.shape = &polygonShape;
+	myFixtureDef.density = 1;
+
+	//create dynamic body
+	myBodyDef.position.Set(x * UNRATIO, y * UNRATIO);
+	b2Body* m_body = physicsWorld->CreateBody(&myBodyDef);
+	//add main fixture
+	m_body->CreateFixture(&myFixtureDef);
+	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
+	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, player);
+	playerFixture->SetUserData((void*)dataPlayer);
+
+
+	//add foot sensor fixture
+	b2PolygonShape LfootpolygonShape;
+	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO +0.1f), height * UNRATIO+0.1f), 0);
+	b2FixtureDef LfootFixtureDef;
+	LfootFixtureDef.isSensor = true;
+	LfootFixtureDef.shape = &LfootpolygonShape;
+	b2Fixture* footSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
+	FixtureData* dataLFoot = new FixtureData(sf::Color::Green, MonsterLfoot);
+	footSensorFixture->SetUserData((void*)dataLFoot);
+
+	b2PolygonShape RfootpolygonShape;
+	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO + 0.1f, height * UNRATIO+0.1f), 0);
+	b2FixtureDef RfootFixtureDef;
+	RfootFixtureDef.isSensor = true;
+	RfootFixtureDef.shape = &RfootpolygonShape;
+	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
+	FixtureData* dataRFoot = new FixtureData(sf::Color::Green, MonsterRfoot);
+	footSensorFixture->SetUserData((void*)dataRFoot);
+
+	return m_body;
+}
 b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
@@ -93,9 +137,9 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	//add main fixture
 	m_body->CreateFixture(&myFixtureDef);
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
-	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, player);
-	playerFixture->SetUserData((void*)dataPlayer);
-
+	PlayerData* playerData = new PlayerData(sf::Color::Green, player, 0);
+	//FixtureData* dataPlayer = new FixtureData(sf::Color::Green, player);
+	playerFixture->SetUserData((void*)playerData);
 
 	
 	//add foot sensor fixture
