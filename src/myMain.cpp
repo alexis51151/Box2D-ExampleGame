@@ -20,12 +20,6 @@ int myMain() {
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
-	// Player shape
-	sf::CircleShape c(1.0f*RATIO);
-	c.setFillColor(sf::Color::Green);
-	// Platform shape
-	sf::RectangleShape r(sf::Vector2f(8.0f*2*RATIO, 1.0f*2*RATIO)); // *2 because box2D takes mid-height and mid-width 
-	r.setFillColor(sf::Color::Red);
 
 	while (window->isOpen())
 	{
@@ -40,25 +34,21 @@ int myMain() {
 			if (BodyIterator->GetType() == b2_dynamicBody)
 			{
 				// Draw.cpp : draw box2D fixtures with SFML
-				
+				sf::Color color = sf::Color::Green;
 				if (numFootContact >= 1) {
-					c.setFillColor(sf::Color::Blue);
+					color = sf::Color::Blue;
 				}else{
 					if (numhandContact >= 1) {
-						c.setFillColor(sf::Color::Red);
-					}
-					else
-					{
-						c.setFillColor(sf::Color::Green);
+						color = sf::Color::Red;
 					}
 				}
 			
 				
-				DrawShape(BodyIterator, &c, window);
+				DrawShape(BodyIterator, color, window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)
 			{
-				DrawShape(BodyIterator, &r, window);
+				DrawShape(BodyIterator, sf::Color::Red, window);
 			}
 		}
 		window->display();

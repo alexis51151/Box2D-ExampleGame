@@ -19,11 +19,11 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 		width = sqrt(pow((poly->m_vertices[1].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[1].y - poly->m_vertices[0].y), 2));
 		height = sqrt(pow((poly->m_vertices[3].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[3].y - poly->m_vertices[0].y), 2));
 		printf("width: %f \n", width);
-		printf("heith: %f \n", height);
+		printf("heigth: %f \n", height);
 		break;
 	}
 	default:
-		perror("No drawing available for this fixture type\n");
+		printf("No drawing available for this fixture type\n");
 		return;
 	}
 	b2Vec2 position = body->GetPosition();
@@ -31,27 +31,36 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	FixtureData* fixtureData = (FixtureData*)fixtureUserData;
 
 	if (fixtureData == NULL) {
-		perror("No fixture data linked to that body\n");
+		printf("No fixture data linked to that body\n");
 		return;
 	}
 	int dataType = (int)fixtureData->getDataType();
-	sf::Shape* shape;
+	std::unique_ptr<sf::Shape> shape;
 	switch (dataType) {
-	case (player || default):
+	case player:
 	{
-		sf::CircleShape c(width * RATIO);
-		c.setFillColor(color);
-		shape = &c;
+		std::unique_ptr<sf::CircleShape> c(new sf::CircleShape(width/2 * RATIO));
+		c.get()->setFillColor(color);
+		shape = std::move(c);
+		break;
+	}
+	case default:
+	{
+		std::unique_ptr<sf::CircleShape> c(new sf::CircleShape(width/2 * RATIO));
+		c.get()->setFillColor(color);
+		shape = std::move(c);
+		break;
 	}
 	case platform:
 	{
-		sf::RectangleShape r(sf::Vector2f(8.0f * 2 * RATIO, 1.0f * 2 * RATIO)); // *2 because box2D takes mid-height and mid-width 
-		r.setFillColor(sf::Color::Red);
-		shape = &r;
+		std::unique_ptr<sf::RectangleShape> r(new sf::RectangleShape(sf::Vector2f(width * RATIO, height * RATIO)));
+		r.get()->setFillColor(sf::Color::Red);
+		shape = std::move(r);
+		break;
 	}
 	default:
 	{
-		perror("Not drawable dataType\n");
+		printf("Not drawable dataType : %d\n", dataType);
 		return;
 	}
 	}

@@ -90,8 +90,8 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	//create dynamic body
 	myBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
 	b2Body* m_body = physicsWorld->CreateBody(&myBodyDef);
+
 	//add main fixture
-	m_body->CreateFixture(&myFixtureDef);
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
 	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, player);
 	playerFixture->SetUserData((void*)dataPlayer);

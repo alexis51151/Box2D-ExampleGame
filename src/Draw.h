@@ -9,4 +9,4 @@
 
 
 
-void DrawShape(b2Body* body, sf::Shape* shape, sf::RenderWindow* window);
+void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window);
