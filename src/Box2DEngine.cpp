@@ -160,80 +160,46 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	return m_body;
 }
 
-b2Body* Box2DEngine::addBodyRope(int x, int y, float length, int nb_links) {
+std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb_links) {
 
 	// Link width and height
 	float width = length / nb_links;
-	float height = 4.0f;
 
-	//shape definition for every link
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	//bodyDef.position.Set(x*UNRATIO, y*UNRATIO);
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 1;
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox(width * UNRATIO, height * UNRATIO);
+	polygonShape.SetAsBox(width * UNRATIO, width * UNRATIO);
+	fixtureDef.shape = &polygonShape;
 
-
-	// First body : 
-	b2BodyDef BodyDefA;
-	BodyDefA.type = b2_dynamicBody;
-
-
-	//create dynamic body
-	BodyDefA.position.Set(x * UNRATIO, y * UNRATIO);
-	b2Body* bodyA = physicsWorld->CreateBody(&BodyDefA);
-
-
-	//fixture definition
-	b2FixtureDef FixtureDefA;
-	FixtureDefA.shape = &polygonShape;
-	FixtureDefA.density = 1;
-	
-
-	// Fixture userData
-	b2Fixture* FixtureA = bodyA->CreateFixture(&FixtureDefA);
+	b2Body* link = physicsWorld->CreateBody(&bodyDef);
+	b2Fixture* Fixture = link->CreateFixture(&fixtureDef);
 	FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
-	FixtureA->SetUserData((void*)data);
+	Fixture->SetUserData((void*)data);
 
+	b2Body* initBody = link;
 
-	b2Body* initBody = bodyA;
+	// Joint properties
+	b2RevoluteJointDef revoluteJointDef;
+	revoluteJointDef.localAnchorA.Set(0.8*width*UNRATIO, 0);
+	revoluteJointDef.localAnchorB.Set(-1.2*width*UNRATIO, 0);
 
 	for (int i = 1; i < nb_links; i++) {
-		// Body
-		b2BodyDef BodyDefB;
-		BodyDefB.type = b2_dynamicBody;
-		BodyDefB.position.Set(x * UNRATIO + i*width*2*UNRATIO, y * UNRATIO);
+		// Create a new body
+		b2Body* newLink = physicsWorld->CreateBody(&bodyDef);
+		// add userData
+		b2Fixture* newFixture = newLink->CreateFixture(&fixtureDef);
+		newFixture->SetUserData((void*)data);
 
+		revoluteJointDef.bodyA = link;
+		revoluteJointDef.bodyB = newLink;
+		physicsWorld->CreateJoint(&revoluteJointDef);
 
-		//create dynamic body
-		b2Body* bodyB = physicsWorld->CreateBody(&BodyDefB);
-
-		//fixture definition
-		b2FixtureDef FixtureDefB;
-		FixtureDefB.shape = &polygonShape;
-		FixtureDefB.density = 1;
-
-		// Fixture userData
-		b2Fixture* FixtureB = bodyB->CreateFixture(&FixtureDefB);
-		FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
-		FixtureB->SetUserData((void*)data);
-
-
-		// Link bodyB to bodyA with a revolution joint
-		
-		b2RevoluteJointDef revoluteJointDef;
-		
-		revoluteJointDef.bodyA = bodyA;
-		revoluteJointDef.bodyB = bodyB;
-		revoluteJointDef.collideConnected = false;
-
-		revoluteJointDef.localAnchorA.Set(width*UNRATIO, 0);
-		revoluteJointDef.localAnchorB.Set(-width*UNRATIO, 0);
-				
-		revoluteJointDef.referenceAngle = 0;
-		
-		physicsWorld.get()->CreateJoint(&revoluteJointDef);
-		
-		bodyA = bodyB;
+		link = newLink;
 
 	}
 
-	return initBody;
+	return std::make_pair(initBody, link);
 }

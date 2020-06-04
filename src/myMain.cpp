@@ -9,10 +9,13 @@ int myMain() {
 	world->SetContactListener(&myContactListenerInstance);
 
 	std::unique_ptr<Player> player1(new Player(&gameController));
-	b2Body* player_body = player1->getBody();
+	std::unique_ptr<Player> player2(new Player(&gameController));
+	b2Body* player1_body = player1->getBody();
+	b2Body* player2_body = player2->getBody();
 
-	std::unique_ptr<Rope> rope(new Rope(800,400, 3.0 * RATIO, 2, &gameController));
-
+	// Link the two players with a rope
+	std::unique_ptr<Rope> rope(new Rope(800,400, 0.5 * RATIO, 10, &gameController));
+	rope->linkPlayers(player1.get(), player2.get(), world);
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
@@ -22,11 +25,14 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, player_body);
+		HookEvents(window, &gameController, player1_body);
+		//HookEvents(window, &gameController, player2_body);
 	
 		window->clear(sf::Color::White);
 
-		getPlayerData(player_body)->decreaceJumpTimeout();
+		getPlayerData(player1_body)->decreaseJumpTimeout();
+		getPlayerData(player2_body)->decreaseJumpTimeout();
+
 
 
 		world->Step(timeStep, velocityIterations, positionIterations);

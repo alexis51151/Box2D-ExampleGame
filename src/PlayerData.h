@@ -9,7 +9,7 @@ public:
 	
 	int GetJumpTimeout() const { return m_jumpTimeout; }
 	void SetJumpTimeout(int val) { m_jumpTimeout = val; }
-	void decreaceJumpTimeout() { m_jumpTimeout--; }
+	void decreaseJumpTimeout() { m_jumpTimeout--; }
 
 private:
 	int m_jumpTimeout=0;

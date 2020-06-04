@@ -60,9 +60,9 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	}
 	case rope:
 	{
-		std::unique_ptr<sf::RectangleShape> r(new sf::RectangleShape(sf::Vector2f(width * RATIO, height * RATIO)));
-		r.get()->setFillColor(sf::Color::Red);
-		shape = std::move(r);
+		std::unique_ptr<sf::CircleShape> c(new sf::CircleShape(width / 2 * RATIO));
+		c.get()->setFillColor(sf::Color::Cyan);
+		shape = std::move(c);
 		break;
 	}
 	default:
@@ -74,5 +74,7 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 
 	// Setting position and drawing with SFML
 	shape->setPosition((position.x - width / 2) * RATIO, (position.y - height / 2) * RATIO);
+	shape->rotate(body->GetAngle() * DEGTORAD);
+
 	window->draw(*shape);
 }
