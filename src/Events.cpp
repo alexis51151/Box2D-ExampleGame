@@ -1,12 +1,7 @@
 #include <Events.h>
 #include "myMain.h"
 
-extern int m_jumpTimeout;
-
 void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player) {
-	extern int numFootContact;
-
-	extern int numhandContact;
 	sf::Event event;
 	float impulse = player->GetMass() * 10;
 	while (window->pollEvent(event)) {
@@ -42,9 +37,16 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, b2Body* player)
 		}
 	}
 }
+
+
 void actionplayerRightKey(b2Body* player)
 {
-	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+	int footcount;
+	int handcount;
+	int jumptimout;
+	getvalue(player, &footcount, &handcount, &jumptimout);
+
+	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair 
 		if (player->GetLinearVelocity().x >= 5) {
 			player->SetLinearVelocity(b2Vec2(10, player->GetLinearVelocity().y));
 		}
@@ -66,7 +68,13 @@ void actionplayerRightKey(b2Body* player)
 
 void actionplayerLeftKey(b2Body* player)
 {
-	if (numFootContact < 1 && numhandContact < 1 && m_jumpTimeout) {
+	int footcount;
+	int handcount;
+	int jumptimout;
+	getvalue(player, &footcount, &handcount, &jumptimout);
+
+	PlayerData* playerdata = (PlayerData*)player->GetUserData();
+	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair
 		if (player->GetLinearVelocity().x <= -5) {
 			player->SetLinearVelocity(b2Vec2(-10, player->GetLinearVelocity().y));
 		}
@@ -94,8 +102,16 @@ void actionplayerDownKey(b2Body* player)
 
 void actionplayerUpKey(b2Body* player)
 {
-	if (numFootContact < 1 && numhandContact < 1) return;
-	if (m_jumpTimeout > 0) return;
+	int footcount;
+	int handcount;
+	int jumptimout;
+	getvalue(player, &footcount, &handcount, &jumptimout);
+	PlayerData* playerdata = (PlayerData*)player->GetFixtureList()->GetUserData();
+	if (footcount < 1 && handcount < 1) {
+		printf("foot: %f,handcount : %f \n", footcount, handcount);
+		return;
+	}
+	if (jumptimout > 0) return;
 	player->ApplyLinearImpulseToCenter(b2Vec2(0, -player->GetMass() * 10), true);
-	m_jumpTimeout = 15;
+	playerdata->SetJumpTimeout(15);
 }

@@ -7,6 +7,8 @@
 #include <Material.h>
 #include <FixtureData.h>
 #include "PlayerData.h"
+#include "FootData.h"
+#include "HandData.h"
 #include <memory>
 
 class Box2DEngine

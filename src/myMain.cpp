@@ -1,10 +1,5 @@
 #include "myMain.h"
 
-int numFootContact = 0;  // =0 a ajouter a un constructeur de jeu 
-int numhandContact = 0;
-
-int m_jumpTimeout;
-
 int myMain() {
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -13,8 +8,8 @@ int myMain() {
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	std::unique_ptr<Player> player(new Player(&gameController));
-	b2Body* player_body = player->getBody();
+	std::unique_ptr<Player> player1(new Player(&gameController));
+	b2Body* player_body = player1->getBody();
 
 
 	// Simulation parameters
@@ -28,23 +23,28 @@ int myMain() {
 		HookEvents(window, &gameController, player_body);
 	
 		window->clear(sf::Color::White);
-		m_jumpTimeout--;
+		((PlayerData*)player1->getBody()->GetFixtureList()->GetUserData())->decreaceJumpTimeout(); //decreace du jump 
 		world->Step(timeStep, velocityIterations, positionIterations);
 		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
 			if (BodyIterator->GetType() == b2_dynamicBody)
-			{
-				// Draw.cpp : draw box2D fixtures with SFML
+			{	
 				sf::Color color = sf::Color::Green;
-				if (numFootContact >= 1) {
-					color = sf::Color::Blue;
-				}else{
-					if (numhandContact >= 1) {
-						color = sf::Color::Red;
+				if (((FixtureData*)BodyIterator->GetFixtureList()->GetUserData() != nullptr && ((FixtureData*)BodyIterator->GetFixtureList()->GetUserData())->getDataType()==player)) {
+					// Draw.cpp : draw box2D fixtures with SFML
+					int footcount;
+					int handcount;
+					int jumptimout;
+					getvalue(BodyIterator, &footcount, &handcount, &jumptimout);
+					if (footcount >= 1) {
+						color = sf::Color::Blue;
+					}
+					else {
+						if (handcount >= 1) {
+							color = sf::Color::Red;
+						}
 					}
 				}
-			
-				
 				DrawShape(BodyIterator, color, window);
 			}
 			if (BodyIterator->GetType() == b2_staticBody)

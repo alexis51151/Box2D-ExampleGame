@@ -2,9 +2,10 @@
 #include <box2d/box2d.h>
 #include "Global.h"
 #include <FixtureData.h>
+#include "HandData.h"
+#include "PlayerData.h"
+#include "FootData.h"
 
-extern int numFootContact;
-extern int numhandContact;
 
 class MyContactListener : public b2ContactListener
 {

@@ -5,10 +5,11 @@ void MyContactListener::BeginContact(b2Contact* contact) {
     FixtureData* fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
         if ((int)fixtureData->getDataType() == foot) { //foot sensor 
-            numFootContact++;
+            ((FootData*)fixtureData)->IncreaceNumFootContact();
         }
         if ((int)fixtureData->getDataType() == hand) { //hand sensor 
-            numhandContact++;
+            ((HandData*)fixtureData)->IncreaceNumhandContact();
+            printf("hand touche \n");
         }
     }
     //check if fixture B was the foot sensor
@@ -16,10 +17,11 @@ void MyContactListener::BeginContact(b2Contact* contact) {
     fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
         if ((int)fixtureData->getDataType() == foot) {
-            numFootContact++;
+            ((FootData*)fixtureData)->IncreaceNumFootContact();
         }
         if ((int)fixtureData->getDataType() == hand) {
-            numhandContact++;
+            ((HandData*)fixtureData)->IncreaceNumhandContact();
+            printf("hand touche \n");
         }
     }
 }
@@ -30,9 +32,10 @@ void MyContactListener::EndContact(b2Contact* contact) {
     FixtureData* fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
         if ((int)fixtureData->getDataType() == foot)
-            numFootContact--;
+            ((FootData*)fixtureData)->DecreaceNumFootContact();
         if ((int)fixtureData->getDataType() == hand) {
-            numhandContact--;
+            ((HandData*)fixtureData)->DecreaceNumhandContact();
+            printf("hand touche plus \n");
         }
     }
     //check if fixture B was the foot sensor
@@ -40,9 +43,10 @@ void MyContactListener::EndContact(b2Contact* contact) {
     fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
         if ((int)fixtureData->getDataType() == foot)
-            numFootContact--;
+            ((FootData*)fixtureData)->DecreaceNumFootContact();
         if ((int)fixtureData->getDataType() == hand) {
-            numhandContact--;
+            ((HandData*)fixtureData)->DecreaceNumhandContact();
+            printf("hand touche plus \n");
         }
     }
 }

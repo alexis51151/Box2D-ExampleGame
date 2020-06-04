@@ -18,8 +18,8 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 		
 		width = sqrt(pow((poly->m_vertices[1].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[1].y - poly->m_vertices[0].y), 2));
 		height = sqrt(pow((poly->m_vertices[3].x - poly->m_vertices[0].x), 2) + pow((poly->m_vertices[3].y - poly->m_vertices[0].y), 2));
-		printf("width: %f \n", width);
-		printf("heigth: %f \n", height);
+		//printf("width: %f \n", width);
+		//printf("heigth: %f \n", height);
 		break;
 	}
 	default:
@@ -31,7 +31,7 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	FixtureData* fixtureData = (FixtureData*)fixtureUserData;
 
 	if (fixtureData == NULL) {
-		printf("No fixture data linked to that body\n");
+		//printf("No fixture data linked to that body\n");
 		return;
 	}
 	int dataType = (int)fixtureData->getDataType();
@@ -64,7 +64,7 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 		return;
 	}
 	}
-
+	//printf("00: %f,%f  ", position.x - width / 2, position.y - height / 2);
 	// Setting position and drawing with SFML
 	shape->setPosition((position.x - width / 2) * RATIO, (position.y - height / 2) * RATIO);
 	window->draw(*shape);
