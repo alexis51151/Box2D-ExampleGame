@@ -2,14 +2,15 @@
 #include <Global.h>
 
 
-FixtureData::FixtureData(sf::Color color) : color(color) {
+
+FixtureData::FixtureData(sf::Color color=sf::Color::Black, int dataType=default) : color(color), dataType(dataType) {
 
 }
 
-FixtureData::FixtureData(sf::Color color, int dataType) : color(color), dataType(dataType) {
+FixtureData::FixtureData()
+{
 
 }
-
 
 FixtureData::~FixtureData() {
 

@@ -6,8 +6,8 @@
 class FixtureData
 {
 public:
-	FixtureData(sf::Color color);
 	FixtureData(sf::Color color, int dataType);
+	FixtureData();
 	~FixtureData();
 	sf::Color getColor();
 	void setColor(sf::Color color);

@@ -2,6 +2,7 @@
 
 int numFootContact = 0;  // =0 a ajouter a un constructeur de jeu 
 int numhandContact = 0;
+
 int m_jumpTimeout;
 
 int myMain() {
