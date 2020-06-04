@@ -146,7 +146,6 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	footFixtureDef.isSensor = true;
 	footFixtureDef.shape = &footpolygonShape;
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
-	
 	FootData * dataFoot = new FootData(sf::Color::Green, foot,0);
 	footSensorFixture->SetUserData((void*)dataFoot);
 

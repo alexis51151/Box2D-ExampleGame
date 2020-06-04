@@ -102,25 +102,23 @@ void actionplayerDownKey(b2Body* player)
 
 void actionplayerUpKey(b2Body* player1)
 {
-	int footcount=0;
-	int handcount=0;
-	int jumptimout=0;
+	PlayerData* playerdata;
+	FootData* footData;
+	HandData* handData;
 	b2Fixture* playerfixtures = player1->GetFixtureList();
 	while (playerfixtures != nullptr) {
 		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
-		if (userdata == nullptr)
-			return;
 		int datatype = userdata->getDataType();
 		switch (datatype)
 		{
+		case player:
+			playerdata = ((PlayerData*)userdata);
+			break;
 		case foot:
-			footcount = ((FootData*)userdata)->GetNumFootContact();
+			footData= ((FootData*)userdata);
 			break;
 		case hand:
-			handcount = ((HandData*)userdata)->GetNumhandContact();
-			break;
-		case player:
-			jumptimout = ((PlayerData*)userdata)->GetJumpTimeout();
+			handData = ((HandData*)userdata);
 			break;
 		default:
 			printf("attention type de features non prisent en compte ");
@@ -128,14 +126,14 @@ void actionplayerUpKey(b2Body* player1)
 		}
 		playerfixtures = playerfixtures->GetNext();
 	}
-	PlayerData* playerdata = (PlayerData*)player1->GetFixtureList()->GetUserData();
-	if (footcount < 1 && handcount <1 ) {
+	if (footData == nullptr || handData == nullptr)
+		printf("erreur dans la recuperation");
+	if (footData->GetNumFootContact() < 1 && handData->GetNumhandContact()<1 ) {
 		return;
 	}
-	if (handcount >= 1) {
-		printf("handcount : %d \n ");
-	}
-	if (jumptimout > 0) return;
+	printf("jumptimout %d", playerdata->GetJumpTimeout());
+	if (playerdata->GetJumpTimeout() > 0) return;
 	player1->ApplyLinearImpulseToCenter(b2Vec2(0, -player1->GetMass() * 10), true);
-	playerdata->SetJumpTimeout(30);
+	playerdata->SetJumpTimeout(15);
+	
 }

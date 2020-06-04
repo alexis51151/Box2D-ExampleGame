@@ -22,7 +22,10 @@ int myMain() {
 		HookEvents(window, &gameController, player_body);
 	
 		window->clear(sf::Color::White);
-		((PlayerData*)player1->getBody()->GetFixtureList()->GetUserData())->decreaceJumpTimeout(); //decreace du jump 
+
+		getPlayerData(player_body)->decreaceJumpTimeout();
+
+
 		world->Step(timeStep, velocityIterations, positionIterations);
 		for (b2Body* BodyIterator = world->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
 		{
