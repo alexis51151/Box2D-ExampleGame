@@ -102,9 +102,9 @@ void actionplayerDownKey(b2Body* player)
 
 void actionplayerUpKey(b2Body* player1)
 {
-	PlayerData* playerdata=&PlayerData();
-	FootData* footData=*FootData;
-	HandData* handData=nullptr;
+	PlayerData* playerdata;
+	FootData* footData;
+	HandData* handData;
 	b2Fixture* playerfixtures = player1->GetFixtureList();
 	while (playerfixtures != nullptr) {
 		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
