@@ -1,7 +1,5 @@
 #include <Draw.h>
 
-
-
 // Function for drawing a shape using SFML 
 // Only implements box2D fixtures that are rectangles (ie fixtures initialized using b2Fixture::setAsBox)
 void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
