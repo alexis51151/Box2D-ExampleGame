@@ -3,7 +3,8 @@
 Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController) :
     length(length), nb_links(nb_links), gameController(gameController)
 {
-    Rope::ropeEnds = gameController->addBodyRope(x, y,length, nb_links);
+    //Rope::ropeEnds = gameController->addBodyRope(x, y,length, nb_links);
+    Rope::elements = gameController->addBodyRope(x, y, length, nb_links);
 }
 
 
@@ -12,8 +13,10 @@ void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 
     b2Body* body_player1 = player1->getBody();
     b2Body* body_player2 = player2->getBody();
-    b2Body* beginBody = Rope::getRopeEnds().first;
-    b2Body* endBody = Rope::getRopeEnds().second;
+    //b2Body* beginBody = Rope::getRopeEnds().first;
+   // b2Body* endBody = Rope::getRopeEnds().second;
+    b2Body* beginBody = Rope::getElements()[0];
+    b2Body* endBody = Rope::getElements()[nb_links-1];
 
     // Revolution Joint
 	b2RevoluteJointDef revoluteJointDef;
