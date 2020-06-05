@@ -102,9 +102,9 @@ void actionplayerDownKey(b2Body* player)
 
 void actionplayerUpKey(b2Body* player1)
 {
-	PlayerData* playerdata;
-	FootData* footData;
-	HandData* handData;
+	PlayerData* playerdata=&PlayerData();
+	FootData* footData=*FootData;
+	HandData* handData=nullptr;
 	b2Fixture* playerfixtures = player1->GetFixtureList();
 	while (playerfixtures != nullptr) {
 		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
@@ -126,14 +126,17 @@ void actionplayerUpKey(b2Body* player1)
 		}
 		playerfixtures = playerfixtures->GetNext();
 	}
-	if (footData == nullptr || handData == nullptr)
+	
+	if (footData == nullptr || handData == nullptr||playerdata==nullptr){
 		printf("erreur dans la recuperation");
+		exit(1);
+	}
+
 	if (footData->GetNumFootContact() < 1 && handData->GetNumhandContact()<1 ) {
 		return;
+	
 	}
-	printf("jumptimout %d", playerdata->GetJumpTimeout());
 	if (playerdata->GetJumpTimeout() > 0) return;
 	player1->ApplyLinearImpulseToCenter(b2Vec2(0, -player1->GetMass() * 10), true);
-	playerdata->SetJumpTimeout(15);
-	
+	playerdata->SetJumpTimeout(15);	
 }
