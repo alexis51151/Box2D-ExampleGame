@@ -4,7 +4,7 @@ class Monster
 {
 public:
 	Monster();
-	Monster(Box2DEngine* gameController, int x, int y, float whidth=2.0f, float height=2.0f);
+	Monster(Box2DEngine* gameController, int x, int y, float whidth=1.0f*RATIO, float height=1.0f*RATIO);
 	b2Body* getBody() const { return body; };
 	void setBody(b2Body* val) { body = val; };
 

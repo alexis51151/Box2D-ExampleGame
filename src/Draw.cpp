@@ -63,13 +63,18 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 		shape = std::move(c);
 		break;
 	}
+	case Monstertype: {
+		std::unique_ptr<sf::RectangleShape> r(new sf::RectangleShape(sf::Vector2f(width * RATIO, height * RATIO)));
+		r.get()->setFillColor(sf::Color::Red);
+		shape = std::move(r);
+		break;
+	}
 	default:
 	{
 		printf("Not drawable dataType : %d\n", dataType);
 		return;
 	}
 	}
-
 	// Setting position and drawing with SFML
 	shape->setPosition((position.x - width / 2) * RATIO, (position.y - height / 2) * RATIO);
 	shape->rotate(body->GetAngle() * DEGTORAD);

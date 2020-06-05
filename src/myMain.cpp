@@ -13,7 +13,7 @@ int myMain() {
 	b2Body* player1_body = player1->getBody();
 	b2Body* player2_body = player2->getBody();
 
-	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,20,20));
+	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,100,100));
 	b2Body* monstre_body = premier_monstre->getBody();
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
