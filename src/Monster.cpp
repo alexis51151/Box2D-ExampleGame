@@ -36,14 +36,18 @@ void Monster::updatespeed()
 {
 	int lfootcontact = this->getLeftfootData()->GetNumFootContact();
 	int rfootcontact = this->getRightfootData()->GetNumFootContact();
+	printf("lf : %d , rf: %d \n", lfootcontact, rfootcontact);
 	if (rfootcontact > 1 && lfootcontact > 1) { //deux pied aux sol 
 		return;
 	}
-	if (lfootcontact > 1 && rfootcontact > 1){ //deux piid en l'air 
+	if (lfootcontact < 1 && rfootcontact < 1){ //deux piid en l'air 
 		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 10));
+		return;
 	}
 	if (reverspeed_timout > 0)
 		return;
+	printf("lf : %d , rf: %d \n", lfootcontact,rfootcontact);
+	printf("inversion vitess\n",rfootcontact);
 	body->SetLinearVelocity(b2Vec2(-body->GetLinearVelocity().x, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
