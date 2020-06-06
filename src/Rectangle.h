@@ -7,5 +7,7 @@
 
 
 class Rectangle :Shape {
-	void draw(b2Body*, sf::Color, sf::RenderWindow*);
+	public:
+		Rectangle();
+		void draw(b2Body*, sf::Color, sf::RenderWindow*);
 };

@@ -39,14 +39,14 @@ int myMain() {
 		window->clear(sf::Color::White);
 		
 		world->Step(timeStep, velocityIterations, positionIterations);
-		for (int i = 0; i < players.size; i++) { //gestion des player 
+		for (int i = 0; i < players.size(); i++) { //gestion des player 
 			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joeur 
 			players[i]->draw(sf::Color::Green, window);
 		}
 		//getPlayerData(player1_body)->decreaseJumpTimeout();
 		//getPlayerData(player2_body)->decreaseJumpTimeout();
 
-		for (int i = 0; i < monsters.size; i++) {
+		for (int i = 0; i < monsters.size(); i++) {
 			monsters[i]->decreace_reverspeed_timout();
 			monsters[i]->updatespeed();
 			monsters[i]->draw(sf::Color::Red,window);

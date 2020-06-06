@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Shape.h"
 
+
 class Rope
 {
 public:
@@ -12,7 +13,8 @@ public:
 	int	getNb_links() const { return nb_links; }
 	std::vector<b2Body*> getElements() const { return elements; }
 	void linkPlayers(Player* player1, Player* player2, b2World* world);
-	void draw(sf::Color color, sf::RenderWindow* window);
+	void Rope::draw(sf::Color color, sf::RenderWindow* window);
+private:
 	float length;
 	int nb_links;
 	Box2DEngine* gameController;

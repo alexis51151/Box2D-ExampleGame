@@ -5,7 +5,7 @@
 Player::Player(Box2DEngine* gameController)
 {
 	body = gameController->addBodyPlayer(10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
-	shape = std::unique_ptr<Shape>(new Circle());
+	shape = std::unique_ptr<Circle>(new Circle());
 }
 
 
