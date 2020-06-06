@@ -1,26 +1,56 @@
 #include "MyContactListener.h"
 #include <iostream>
+
+void end_contact_action(FixtureData* fixtureData) {
+	switch (fixtureData->getDataType())
+	{
+	case foot:
+		((FootData*)fixtureData)->DecreaceNumFootContact();
+		break;
+	case MonsterLfoot:
+		((FootData*)fixtureData)->DecreaceNumFootContact();
+		break;
+	case MonsterRfoot:
+		((FootData*)fixtureData)->DecreaceNumFootContact();
+		break;
+	case hand:
+		((HandData*)fixtureData)->DecreaceNumhandContact();
+		break;
+	default:
+		break;
+	}
+}
+
+void BeginContact_action(FixtureData* fixtureData) {
+	switch (fixtureData->getDataType())
+	{
+	case foot:
+		((FootData*)fixtureData)->IncreaceNumFootContact();
+		break;
+	case MonsterLfoot:
+		((FootData*)fixtureData)->IncreaceNumFootContact();
+		break;
+	case MonsterRfoot:
+		((FootData*)fixtureData)->IncreaceNumFootContact();
+		break;
+	case hand:
+		((HandData*)fixtureData)->IncreaceNumhandContact();
+		break;
+	default:
+		break;
+	}
+}
+
 void MyContactListener::BeginContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     FixtureData* fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
-        if ((int)fixtureData->getDataType() == foot) { //foot sensor 
-            ((FootData*)fixtureData)->IncreaceNumFootContact();
-        }
-        if ((int)fixtureData->getDataType() == hand) { //hand sensor 
-            ((HandData*)fixtureData)->IncreaceNumhandContact();
-        }
+		BeginContact_action(fixtureData);
     }
-    //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
     fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
-        if ((int)fixtureData->getDataType() == foot) {
-            ((FootData*)fixtureData)->IncreaceNumFootContact();
-        }
-        if ((int)fixtureData->getDataType() == hand) {
-            ((HandData*)fixtureData)->IncreaceNumhandContact();
-        }
+		BeginContact_action(fixtureData);
     }
 }
 
@@ -29,21 +59,13 @@ void MyContactListener::EndContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     FixtureData* fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
-        if ((int)fixtureData->getDataType() == foot)
-            ((FootData*)fixtureData)->DecreaceNumFootContact();
-        if ((int)fixtureData->getDataType() == hand) {
-            ((HandData*)fixtureData)->DecreaceNumhandContact();
-        }
+        end_contact_action(fixtureData);
     }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
     fixtureData = (FixtureData*)fixtureUserData;
     if (fixtureData != NULL) {
-        if ((int)fixtureData->getDataType() == foot)
-            ((FootData*)fixtureData)->DecreaceNumFootContact();
-        if ((int)fixtureData->getDataType() == hand) {
-            ((HandData*)fixtureData)->DecreaceNumhandContact();
-        }
+        end_contact_action(fixtureData);
     }
 }
 

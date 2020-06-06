@@ -7,13 +7,13 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
-
+	
 	std::unique_ptr<Player> player1(new Player(&gameController));
 	std::unique_ptr<Player> player2(new Player(&gameController));
 	b2Body* player1_body = player1->getBody();
 	b2Body* player2_body = player2->getBody();
 
-	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,100,100));
+	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,300,300));
 	b2Body* monstre_body = premier_monstre->getBody();
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
@@ -64,6 +64,8 @@ int myMain() {
 				DrawShape(BodyIterator, sf::Color::Red, window);
 			}
 		}
+		premier_monstre->updatespeed();
+		premier_monstre->decreace_reverspeed_timout();
 		window->display();
 	}
 	return 0;

@@ -94,23 +94,23 @@ b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
 
 	//add foot sensor fixture
 	b2PolygonShape LfootpolygonShape;
-	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO +0.1f), height * UNRATIO+0.1f), 0);
+	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO ), height * UNRATIO), 0);
 	b2FixtureDef LfootFixtureDef;
 	LfootFixtureDef.isSensor = true;
 	LfootFixtureDef.shape = &LfootpolygonShape;
-	b2Fixture* footSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
+	b2Fixture* LfootSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
 	FootData* dataLFoot = new FootData(sf::Color::Green, MonsterLfoot);
-	footSensorFixture->SetUserData((void*)dataLFoot);
+	LfootSensorFixture->SetUserData((void*)dataLFoot);
 
 	//add foot sensor fixture
 	b2PolygonShape RfootpolygonShape;
-	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO + 0.1f, height * UNRATIO+0.1f), 0);
+	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO , height * UNRATIO), 0);
 	b2FixtureDef RfootFixtureDef;
 	RfootFixtureDef.isSensor = true;
 	RfootFixtureDef.shape = &RfootpolygonShape;
 	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
 	FootData* dataRFoot = new FootData(sf::Color::Green, MonsterRfoot);
-	footSensorFixture->SetUserData((void*)dataRFoot);
+	RfootSensorFixture->SetUserData((void*)dataRFoot);
 
 	return m_body;
 }
