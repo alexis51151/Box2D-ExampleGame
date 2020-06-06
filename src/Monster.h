@@ -1,6 +1,7 @@
 #include "Box2DEngine.h"
 #include "Global.h"
 #include "Shape.h"
+#include "Rectangle.h"
 
 class Monster
 {
