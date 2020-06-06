@@ -12,7 +12,7 @@ Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float 
 FootData* Monster::getLeftfootData() {
 	b2Fixture* fixture = body->GetFixtureList();
 	while (fixture != nullptr) {
-		FixtureData* userdata = ((FixtureData*)fixture->GetUserData());
+		FixtureData* userdata = static_cast<FixtureData*>( fixture->GetUserData() );
 		if (userdata->getDataType()== MonsterLfoot) {
 			return (FootData*)userdata;
 		}
@@ -23,13 +23,13 @@ FootData* Monster::getLeftfootData() {
 FootData* Monster::getRightfootData() {
 	b2Fixture* fixture = body->GetFixtureList();
 	while (fixture != nullptr) {
-		FixtureData* userdata = ((FixtureData*)fixture->GetUserData());
+		FixtureData* userdata = static_cast<FixtureData*>(fixture->GetUserData());
 		if (userdata->getDataType() == MonsterRfoot) {
 			return (FootData*)userdata;
 		}
 		fixture = fixture->GetNext();
 	}
-
+	exit(1);
 }
 
 void Monster::updatespeed()
