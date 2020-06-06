@@ -38,15 +38,19 @@ void Monster::updatespeed()
 	int rfootcontact = this->getRightfootData()->GetNumFootContact();
 
 	if (rfootcontact > 1 && lfootcontact > 1) { //deux pied aux sol 
+		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*10, 0));
+		printf("sol \n");
 		return;
 	}
 	if (lfootcontact < 1 && rfootcontact < 1){ //deux piid en l'air 
 		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 10));
+		printf("air \n");
 		return;
 	}
 	if (reverspeed_timout > 0)
 		return;
-
-	body->SetLinearVelocity(b2Vec2(-body->GetLinearVelocity().x, body->GetLinearVelocity().y));
+	//on doit faire demitour 
+	printf("revers speed \n");
+	body->SetLinearVelocity(b2Vec2(-directionxsigne()*10, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
