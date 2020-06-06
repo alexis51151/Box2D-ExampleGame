@@ -8,7 +8,7 @@ void Rectangle::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 
 	b2Vec2 position = body->GetPosition();
 
-	sf::RectangleShape shape(sf::Vector2f(width * RATIO, height * RATIO))
+	sf::RectangleShape shape(sf::Vector2f(width * RATIO, height * RATIO));
 	shape.setFillColor(color);
 
 

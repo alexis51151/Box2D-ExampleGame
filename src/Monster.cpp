@@ -56,6 +56,6 @@ void Monster::updatespeed()
 	reverspeed_timout = 15;
 }
 
-void Monster::draw(sf::Color color, sf::RenderWindow window) {
+void Monster::draw(sf::Color color, sf::RenderWindow* window) {
 	shape->draw(body, color, window);
 }
