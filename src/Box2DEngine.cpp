@@ -158,6 +158,29 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	HandData* dataHand = new HandData(sf::Color::Green, hand,0);
 	handSensorFixture->SetUserData(static_cast<void*>( dataHand ));
 	
+
+	//add triangular sensor for the player 
+
+	const float radius = 8;
+	const int nbpoint = 3;
+	b2Vec2 vertices[nbpoint];
+	const float min_angle = -45;
+	const float max_angle = 45;
+	float pas = (max_angle - min_angle) / (nbpoint - 1);
+	vertices[0].Set(0, 0);
+	for (int i = 0; i < nbpoint-1; i++) {
+		vertices[i+1].Set(radius * cosf(i * pas*RADTODEG), -radius * sinf(i * pas* RADTODEG));
+	}
+	b2PolygonShape coneshape;
+	coneshape.Set(vertices, nbpoint);
+	myFixtureDef.shape = &polygonShape;
+	b2FixtureDef conefixtures;
+	conefixtures.isSensor = true;
+	conefixtures.shape = &coneshape;
+	//b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
+	FixtureData* consefixturedata = new FixtureData(sf::Color::Green, default);
+	//conseSensorFixture->SetUserData(static_cast<void*>(consefixturedata));
+
 	return m_body;
 }
 
