@@ -194,7 +194,7 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 		b2Body* newLink = physicsWorld->CreateBody(&bodyDef);
 		// add userData
 		b2Fixture* newFixture = newLink->CreateFixture(&fixtureDef);
-		newFixture->SetUserData((void*)data);
+		newFixture->SetUserData(static_cast<void*> ( data ));
 
 		revoluteJointDef.bodyA = link;
 		revoluteJointDef.bodyB = newLink;
