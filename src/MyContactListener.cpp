@@ -5,7 +5,7 @@ void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
 	{
 	case foot:
-		((FootData*)fixtureData)->DecreaceNumFootContact();
+		((FootData*)fixtureData)->DecreaceNumFootContact(); //me laise pas static cast 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->DecreaceNumFootContact();
@@ -43,12 +43,13 @@ void BeginContact_action(FixtureData* fixtureData) {
 
 void MyContactListener::BeginContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    FixtureData* fixtureData = (FixtureData*)fixtureUserData;
+    FixtureData* fixtureData = static_cast<FixtureData*>( fixtureUserData );
     if (fixtureData != NULL) {
 		BeginContact_action(fixtureData);
     }
+
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    fixtureData = (FixtureData*)fixtureUserData;
+    fixtureData = static_cast<FixtureData*>( fixtureUserData );
     if (fixtureData != NULL) {
 		BeginContact_action(fixtureData);
     }
@@ -57,13 +58,13 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 void MyContactListener::EndContact(b2Contact* contact) {
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    FixtureData* fixtureData = (FixtureData*)fixtureUserData;
+	FixtureData* fixtureData = static_cast<FixtureData*>(fixtureUserData);
     if (fixtureData != NULL) {
         end_contact_action(fixtureData);
     }
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    fixtureData = (FixtureData*)fixtureUserData;
+	fixtureData = static_cast<FixtureData*>(fixtureUserData);
     if (fixtureData != NULL) {
         end_contact_action(fixtureData);
     }
