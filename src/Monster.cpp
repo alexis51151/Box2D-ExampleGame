@@ -7,6 +7,7 @@ Monster::Monster()
 Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float whidth)
 {
 	body=gameController->addBodyMonster(x, y, height, whidth );
+	shape = std::unique_ptr<Shape>(new Rectangle());
 }
 
 FootData* Monster::getLeftfootData() {
@@ -53,4 +54,8 @@ void Monster::updatespeed()
 	printf("revers speed \n");
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*10, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
+}
+
+void Monster::draw(sf::Color color, sf::RenderWindow window) {
+	shape->draw(body, color, window);
 }

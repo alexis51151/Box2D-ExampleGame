@@ -23,7 +23,6 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
-	//b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
 	b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
 	// Define the ground box shape.
 	b2PolygonShape groundBox;
