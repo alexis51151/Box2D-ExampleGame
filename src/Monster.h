@@ -7,7 +7,7 @@ public:
 	Monster(Box2DEngine* gameController, int x, int y, float whidth=1.0f*RATIO, float height=1.0f*RATIO);
 	b2Body* getBody() const { return body; };
 	void setBody(b2Body* val) { body = val; };
-
+	int directionxsigne() { return (body->GetLinearVelocity().x > 0) ? 1 : -1; };
 	FootData* Monster::getRightfootData();
 	FootData* Monster::getLeftfootData();
 
