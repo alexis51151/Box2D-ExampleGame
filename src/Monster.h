@@ -13,7 +13,7 @@ public:
 	int directionxsigne() { return (body->GetLinearVelocity().x > 0) ? 1 : -1; };
 	FootData* Monster::getRightfootData();
 	FootData* Monster::getLeftfootData();
-	void draw(sf::Color color, sf::RenderWindow window);
+	void draw(sf::Color color, sf::RenderWindow* window);
 	void updatespeed();
 	void decreace_reverspeed_timout() { reverspeed_timout--; }
 protected:

@@ -1,6 +1,7 @@
 #pragma once
 #include "Box2DEngine.h"
 #include "Global.h"
+#include "Circle.h"
 #include "Shape.h"
 
 class Player
