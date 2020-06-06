@@ -10,6 +10,7 @@
 #include "FootData.h"
 #include "HandData.h"
 #include <memory>
+#include "Shape.h"
 
 class Box2DEngine
 {

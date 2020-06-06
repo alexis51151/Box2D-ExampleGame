@@ -204,7 +204,5 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 		link = newLink;
 
 	}
-
-	//return std::make_pair(initBody, link);
 	return elements;
 }

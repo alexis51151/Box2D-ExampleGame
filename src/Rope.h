@@ -9,14 +9,12 @@ public:
 	Rope(int x, int y, float length, int nb_links, Box2DEngine* gameController);
 	float getLength() const { return length; }
 	int	getNb_links() const { return nb_links; }
-	//std::pair<b2Body*, b2Body*> getRopeEnds() const { return ropeEnds; }
 	std::vector<b2Body*> getElements() const { return elements; }
 	void linkPlayers(Player* player1, Player* player2, b2World* world);
 private:
 	float length;
 	int nb_links;
 	Box2DEngine* gameController;
-	//std::pair<b2Body*, b2Body*> ropeEnds;
 	std::vector<b2Body*> elements;
 
 
