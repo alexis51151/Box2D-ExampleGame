@@ -107,7 +107,7 @@ void actionplayerUpKey(b2Body* player1)
 	HandData* handData;
 	b2Fixture* playerfixtures = player1->GetFixtureList();
 	while (playerfixtures != nullptr) {
-		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
+		FixtureData* userdata = static_cast<FixtureData*>( playerfixtures->GetUserData() );
 		int datatype = userdata->getDataType();
 		switch (datatype)
 		{
