@@ -25,7 +25,7 @@ public:
 	b2Body* addStaticBox(int x, int y, float heigth, float widgth);
 	b2Body* addBodyPlayer(int x, int y, float height, float width);
 	b2Body* addBodyMonster(int x, int y, float height, float width);
-	std::pair<b2Body*, b2Body*>  addBodyRope(int x, int y, float length, int nb_links);
+	std::vector<b2Body*>  addBodyRope(int x, int y, float length, int nb_links);
 
 private:
 	std::unique_ptr<b2World> physicsWorld;

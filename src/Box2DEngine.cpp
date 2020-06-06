@@ -161,10 +161,13 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	return m_body;
 }
 
-std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb_links) {
+std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb_links) {
 
 	// Link width and height
 	float width = length / nb_links;
+
+	// Vector of bodies
+	std::vector<b2Body*> elements;
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -179,7 +182,7 @@ std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length,
 	FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
 	Fixture->SetUserData((void*)data);
 
-	b2Body* initBody = link;
+	elements.push_back(link);
 
 	// Joint properties
 	b2RevoluteJointDef revoluteJointDef;
@@ -196,10 +199,12 @@ std::pair<b2Body*, b2Body*> Box2DEngine::addBodyRope(int x, int y, float length,
 		revoluteJointDef.bodyA = link;
 		revoluteJointDef.bodyB = newLink;
 		physicsWorld->CreateJoint(&revoluteJointDef);
+		elements.push_back(newLink);
 
 		link = newLink;
 
 	}
 
-	return std::make_pair(initBody, link);
+	//return std::make_pair(initBody, link);
+	return elements;
 }
