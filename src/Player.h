@@ -1,7 +1,7 @@
 #pragma once
 #include "Box2DEngine.h"
 #include "Global.h"
-
+#include "Shape.h"
 
 class Player
 {
@@ -12,4 +12,5 @@ public:
 	void draw(sf::Color color, sf::RenderWindow* window);
 private:
 	b2Body* body;
+	std::unique_ptr<Shape> shape;
 };

@@ -2,7 +2,7 @@
 
 
 
-class Platform :Shape {
+class Platform{
 public:
 	Platform();
 private:
