@@ -56,7 +56,7 @@ std::vector<b2Body*>addBodyRope(Box2DEngine* gameController,int x, int y, float 
 }
 
 Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController) :
-    length(length), nb_links(nb_links), gameController(gameController)
+	length(length), nb_links(nb_links)
 {
     Rope::elements = addBodyRope(gameController,x, y, length, nb_links);
     Rope::shape = std::unique_ptr<Circle>(new Circle());
