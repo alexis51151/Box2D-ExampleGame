@@ -6,7 +6,7 @@ Monster::Monster()
 
 Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float whidth)
 {
-	body=gameController->addBodyMonster(x, y, height, whidth );
+	body = gameController->addBodyMonster(x, y, height, whidth );
 	shape = std::unique_ptr<Rectangle>(new Rectangle());
 }
 

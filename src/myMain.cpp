@@ -14,8 +14,8 @@ int myMain() {
 	players.push_back(std::move(player1));
 	players.push_back(std::move(player2));
 
-	b2Body* player1_body = player1->getBody();
-	b2Body* player2_body = player2->getBody();
+	b2Body* player1_body = players[0]->getBody();
+	b2Body* player2_body = players[1]->getBody();
 
 	//creation d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
@@ -25,7 +25,7 @@ int myMain() {
 	b2Body* monstre_body = premier_monstre->getBody();
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
-	rope->linkPlayers(player1.get(), player2.get(), world);
+	rope->linkPlayers(players[0].get(), players[1].get(), world);
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
