@@ -36,9 +36,9 @@ PlayerData* getPlayerData(b2Body* player1) {
 	}
 }
 
-std::pair<int, int> getBodyDimensions(b2Body* body) { // only for polygons right now :Not working:
+std::pair<float, float> getBodyDimensions(b2Body* body) { // only for polygons right now :Not working:
 	b2Fixture* fixture = body->GetFixtureList();
-	int width, height;
+	float width, height;
 	switch (fixture->GetType()) {
 	case b2Shape::e_polygon: {
 		while (fixture->IsSensor() && fixture->GetNext() != NULL)

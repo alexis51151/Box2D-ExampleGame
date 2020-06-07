@@ -88,7 +88,10 @@ void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 }
 
 void Rope::draw(sf::Color color, sf::RenderWindow* window) {
-    for (auto body : elements) {
-        Rope::shape->draw(body, color, window);
-    }
+	
+	for (auto body : elements) {
+		Rope::shape->draw(body, color, window);
+	}
+	
+
 }

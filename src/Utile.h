@@ -6,4 +6,4 @@
 
 void getvalue(b2Body* player, int* footcount, int* handcount, int* jumptimout);
 PlayerData* getPlayerData(b2Body* player1);
-std::pair<int, int> getBodyDimensions(b2Body* body);
+std::pair<float, float> getBodyDimensions(b2Body* body);
