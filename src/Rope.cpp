@@ -7,7 +7,6 @@ Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController)
     Rope::shape = std::unique_ptr<Circle>(new Circle());
 }
 
-
 void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 	float width = length / nb_links;
 
