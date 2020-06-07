@@ -250,6 +250,7 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 	b2RevoluteJointDef revoluteJointDef;
 	revoluteJointDef.localAnchorA.Set(width * UNRATIO, 0);
 	revoluteJointDef.localAnchorB.Set(-width*UNRATIO, 0);
+
 	//filtre 
 	b2Filter link_filter;
 	link_filter.categoryBits = MOVING_OBJECT;
