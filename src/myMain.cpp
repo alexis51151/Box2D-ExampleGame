@@ -47,20 +47,26 @@ int myMain() {
 		window->clear(sf::Color::White);
 		
 		world->Step(timeStep, velocityIterations, positionIterations);
+		//afichage et gestion des monstres 
 		for (int i = 0; i < players.size(); i++) { //gestion des player 
 			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joeur 
 			players[i]->draw(sf::Color::Green, window);
 		}
 		//getPlayerData(player1_body)->decreaseJumpTimeout();
 		//getPlayerData(player2_body)->decreaseJumpTimeout();
-
+		
+		//afichage des monstres et gestion des mouvements 
 		for (int i = 0; i < monsters.size(); i++) {
 			monsters[i]->decreace_reverspeed_timout();
 			monsters[i]->updatespeed();
 			monsters[i]->draw(sf::Color::Red,window);
 		}
+		//affichage des platformes 
 		for (int i = 0; i < platforms.size(); i++)
 			platforms[i]->draw(sf::Color::Red, window);
+		//affichage de la corde 
+
+		rope->draw(sf::Color::Green, window);
 
 		window->display();
 	}
