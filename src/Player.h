@@ -3,12 +3,13 @@
 #include "Global.h"
 #include "Circle.h"
 #include "Shape.h"
+#include <SFML/Graphics.hpp>
 
 class Player
 {
 public:
 	Player(Box2DEngine* gameController);
-	b2Body* getBody();
+	b2Body* getBody() {return Player::body;};
 	void draw(sf::Color color, sf::RenderWindow* window);
 private:
 	b2Body* body;

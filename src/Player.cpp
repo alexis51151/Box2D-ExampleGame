@@ -8,12 +8,6 @@ Player::Player(Box2DEngine* gameController)
 	Player::shape = std::unique_ptr<Circle>(new Circle());
 }
 
-
-b2Body* Player::getBody()
-{
-	return Player::body;
-}
-
 void Player::draw(sf::Color color, sf::RenderWindow* window) {
 	Player::shape->draw(body, color, window);
 }
