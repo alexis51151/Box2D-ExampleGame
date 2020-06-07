@@ -18,9 +18,6 @@ public:
 private:
 	float length;
 	int nb_links;
-	Box2DEngine* gameController;
 	std::vector<b2Body*> elements;
 	std::unique_ptr<Shape> shape; // Same shape for all the elements
-
-
 };
