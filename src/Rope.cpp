@@ -1,9 +1,64 @@
 #include "Rope.h"
 
+std::vector<b2Body*>addBodyRope(Box2DEngine* gameController,int x, int y, float length, int nb_links) {
+	// Link width and height
+	float width = length / nb_links;
+
+	// Vector of bodies
+	std::vector<b2Body*> elements;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 1;
+	b2PolygonShape polygonShape;
+	polygonShape.SetAsBox(width * UNRATIO, width * UNRATIO);
+	fixtureDef.shape = &polygonShape;
+
+	//filter
+	fixtureDef.filter.categoryBits = MOVING_OBJECT;
+	fixtureDef.filter.groupIndex = default;
+
+	b2Body* link = gameController->getPhysicsWorld()->CreateBody(&bodyDef);
+	b2Fixture* Fixture = link->CreateFixture(&fixtureDef);
+	FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
+	Fixture->SetUserData(static_cast<void*>(data));
+
+	elements.push_back(link);
+
+	// Joint properties
+	b2RevoluteJointDef revoluteJointDef;
+	revoluteJointDef.localAnchorA.Set(width * UNRATIO, 0);
+	revoluteJointDef.localAnchorB.Set(-width * UNRATIO, 0);
+	//filtre 
+	b2Filter link_filter;
+	link_filter.categoryBits = MOVING_OBJECT;
+	link_filter.groupIndex = default;
+
+	for (int i = 1; i < nb_links; i++) {
+		// Create a new body
+		b2Body* newLink = gameController->getPhysicsWorld()->CreateBody(&bodyDef);
+		// add userData
+		b2Fixture* newFixture = newLink->CreateFixture(&fixtureDef);
+		newFixture->SetUserData(static_cast<void*> (data));
+
+		newFixture->SetFilterData(link_filter);
+
+		revoluteJointDef.bodyA = link;
+		revoluteJointDef.bodyB = newLink;
+		gameController->getPhysicsWorld()->CreateJoint(&revoluteJointDef);
+		elements.push_back(newLink);
+
+		link = newLink;
+
+	}
+	return elements;
+}
+
 Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController) :
     length(length), nb_links(nb_links), gameController(gameController)
 {
-    Rope::elements = gameController->addBodyRope(x, y, length, nb_links);
+    Rope::elements = addBodyRope(gameController,x, y, length, nb_links);
     Rope::shape = std::unique_ptr<Circle>(new Circle());
 }
 
