@@ -16,5 +16,25 @@
 #define HEIGHT 1080
 
 // Enumeration for UserData in box2D
-enum DataType {start, player, default, rope, platform, foot, hand, Monstertype, MonsterLfoot, MonsterRfoot, end};
+enum DataType {
+	start,
+	player,
+	default,
+	rope,
+	platform,
+	foot, 
+	hand, 
+	Monstertype,
+	MonsterLfoot,
+	MonsterRfoot,
+	end
+};
+enum _entityCategory {
+	DEFAULT = 0x0001,
+	PLATFORM = 0x0002,
+	PLAYER = 0x0003,
+	SENSOR = 0x0004,
+	MOVING_OBJECT = 0x0008,
+	MONSTER = 0x0010,
+};
 

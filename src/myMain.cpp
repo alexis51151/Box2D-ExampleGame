@@ -22,7 +22,7 @@ int myMain() {
 	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,300,300));
 	monsters.push_back(std::move(premier_monstre));
 
-	b2Body* monstre_body = premier_monstre->getBody();
+	b2Body* monstre_body = monsters[0]->getBody();
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);

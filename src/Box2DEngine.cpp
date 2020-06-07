@@ -32,9 +32,16 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 
 	// Add the ground fixture to the ground body.
 	b2Fixture* StaticFixture = groundBody->CreateFixture(&groundBox, 0.0f);
+	
 	// Add the Fixture data
 	FixtureData* data = new FixtureData(sf::Color::Red, platform);
 	StaticFixture->SetUserData(static_cast<void*>( data ));
+	
+	//add the filter 
+	b2Filter temp;
+	temp.categoryBits = PLATFORM;
+	temp.groupIndex = platform;
+	StaticFixture->SetFilterData(temp);
 
 	return groundBody;
 }
@@ -59,12 +66,16 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 	fixtureDef.friction = material.getFriction();
 	fixtureDef.restitution = material.getRestitution();
 	
+	//filtre
+	fixtureDef.filter.categoryBits = MOVING_OBJECT;
+	fixtureDef.filter.groupIndex = default;
+
 	// Add the shape to the body and store the fixture address.
 	b2Fixture* DynamicFixture = body->CreateFixture(&fixtureDef);
-	// Add the Fixture data
+	// Add the Fixture data (sans corp ) 
 	FixtureData* data = new FixtureData(sf::Color::Green, default);
 	DynamicFixture->SetUserData(static_cast<void*>( data ));
-
+	
 	return body;
 }
 b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
@@ -80,6 +91,9 @@ b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
+	//ajout du filtre 
+	myFixtureDef.filter.categoryBits=MONSTER;
+	myFixtureDef.filter.groupIndex = Monstertype;
 
 	//create dynamic body
 	myBodyDef.position.Set(x * UNRATIO, y * UNRATIO);
@@ -90,13 +104,17 @@ b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
 	FixtureData* dataPlayer = new FixtureData(sf::Color::Green, Monstertype);
 	playerFixture->SetUserData(static_cast<void*>( dataPlayer ));
 
-
 	//add foot sensor fixture
 	b2PolygonShape LfootpolygonShape;
 	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO ), height * UNRATIO), 0);
 	b2FixtureDef LfootFixtureDef;
 	LfootFixtureDef.isSensor = true;
 	LfootFixtureDef.shape = &LfootpolygonShape;
+	
+	//filtre
+	LfootFixtureDef.filter.categoryBits = SENSOR;
+	LfootFixtureDef.filter.groupIndex = MonsterLfoot;
+
 	b2Fixture* LfootSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
 	FootData* dataLFoot = new FootData(sf::Color::Green, MonsterLfoot);
 	LfootSensorFixture->SetUserData(static_cast<void*>( dataLFoot ));
@@ -107,6 +125,11 @@ b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
 	b2FixtureDef RfootFixtureDef;
 	RfootFixtureDef.isSensor = true;
 	RfootFixtureDef.shape = &RfootpolygonShape;
+	
+	//filter 
+	RfootFixtureDef.filter.categoryBits = SENSOR;
+	RfootFixtureDef.filter.groupIndex = MonsterRfoot;
+	
 	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
 	FootData* dataRFoot = new FootData(sf::Color::Green, MonsterRfoot);
 	RfootSensorFixture->SetUserData(static_cast<void*>( dataRFoot ));
@@ -127,6 +150,10 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
 
+	//filter
+	myFixtureDef.filter.categoryBits = PLAYER;
+	myFixtureDef.filter.groupIndex = player;
+
 	//create dynamic body
 	myBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
 	b2Body* m_body = physicsWorld->CreateBody(&myBodyDef);
@@ -143,6 +170,11 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2FixtureDef footFixtureDef;
 	footFixtureDef.isSensor = true;
 	footFixtureDef.shape = &footpolygonShape;
+	
+	//filter
+	footFixtureDef.filter.categoryBits = SENSOR;
+	footFixtureDef.filter.groupIndex = foot;
+	
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	FootData * dataFoot = new FootData(sf::Color::Green, foot,0);
 	footSensorFixture->SetUserData(static_cast<void*>( dataFoot ));
@@ -153,11 +185,15 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2FixtureDef handfixture;
 	handfixture.isSensor = true;
 	handfixture.shape = &handpolygonShape;
+
+	//filter
+	footFixtureDef.filter.categoryBits = SENSOR;
+	footFixtureDef.filter.groupIndex = hand;
+
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
 	HandData* dataHand = new HandData(sf::Color::Green, hand,0);
 	handSensorFixture->SetUserData(static_cast<void*>( dataHand ));
 	
-
 	//add triangular sensor for the player 
 
 	const float radius = 8;
@@ -199,6 +235,10 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 	polygonShape.SetAsBox(width * UNRATIO, width * UNRATIO);
 	fixtureDef.shape = &polygonShape;
 
+	//filter
+	fixtureDef.filter.categoryBits = MOVING_OBJECT;
+	fixtureDef.filter.groupIndex = default;
+
 	b2Body* link = physicsWorld->CreateBody(&bodyDef);
 	b2Fixture* Fixture = link->CreateFixture(&fixtureDef);
 	FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
@@ -210,6 +250,10 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 	b2RevoluteJointDef revoluteJointDef;
 	revoluteJointDef.localAnchorA.Set(width * UNRATIO, 0);
 	revoluteJointDef.localAnchorB.Set(-width*UNRATIO, 0);
+	//filtre 
+	b2Filter link_filter;
+	link_filter.categoryBits = MOVING_OBJECT;
+	link_filter.groupIndex = default;
 
 	for (int i = 1; i < nb_links; i++) {
 		// Create a new body
@@ -217,6 +261,8 @@ std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb
 		// add userData
 		b2Fixture* newFixture = newLink->CreateFixture(&fixtureDef);
 		newFixture->SetUserData(static_cast<void*> ( data ));
+		
+		newFixture->SetFilterData(link_filter);
 
 		revoluteJointDef.bodyA = link;
 		revoluteJointDef.bodyB = newLink;
