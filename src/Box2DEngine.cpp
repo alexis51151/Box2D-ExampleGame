@@ -136,6 +136,7 @@ b2Body* Box2DEngine::addBodyMonster(int x, int y, float height, float width) {
 
 	return m_body;
 }
+/*
 b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
@@ -218,7 +219,7 @@ b2Body* Box2DEngine::addBodyPlayer(int x, int y, float height, float width) {
 
 	return m_body;
 }
-
+*/
 std::vector<b2Body*> Box2DEngine::addBodyRope(int x, int y, float length, int nb_links) {
 
 	// Link width and height
