@@ -8,7 +8,7 @@
 
 class Platform{
 public:
-	Platform(Box2DEngine* gameController);
+	Platform(Box2DEngine* gameController, int x, int y, float height, float width);
 	void draw(sf::Color color, sf::RenderWindow* window);
 private:
 	b2Body* body;

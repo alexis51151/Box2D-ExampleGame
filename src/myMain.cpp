@@ -1,5 +1,6 @@
 #include "myMain.h"
 
+
 int myMain() {
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -7,13 +8,18 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
+	//creation de la liste des platformes 
+
+	std::vector<std::unique_ptr<Platform>>platforms;
+
 	//creation de la liste des joueur 
 	std::vector<std::unique_ptr<Player>> players; 
 	std::unique_ptr<Player> player1(new Player(&gameController));
 	std::unique_ptr<Player> player2(new Player(&gameController));
 	players.push_back(std::move(player1));
 	players.push_back(std::move(player2));
-
+	
+	//body des players 
 	b2Body* player1_body = players[0]->getBody();
 	b2Body* player2_body = players[1]->getBody();
 
@@ -21,8 +27,10 @@ int myMain() {
 	std::vector<std::unique_ptr<Monster>> monsters;
 	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,300,300));
 	monsters.push_back(std::move(premier_monstre));
-
+	
+	//body du monstre 
 	b2Body* monstre_body = monsters[0]->getBody();
+	
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);
@@ -35,7 +43,7 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, player1_body);
+		HookEvents(window, &gameController, &players,&platforms);
 		window->clear(sf::Color::White);
 		
 		world->Step(timeStep, velocityIterations, positionIterations);
@@ -51,6 +59,9 @@ int myMain() {
 			monsters[i]->updatespeed();
 			monsters[i]->draw(sf::Color::Red,window);
 		}
+		for (int i = 0; i < platforms.size(); i++)
+			platforms[i]->draw(sf::Color::Red, window);
+
 		window->display();
 	}
 	return 0;

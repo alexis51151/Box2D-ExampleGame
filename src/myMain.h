@@ -15,6 +15,7 @@
 #include "MyContactListener.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Platform.h"
 #include <memory>
 #include "Rope.h"
 
