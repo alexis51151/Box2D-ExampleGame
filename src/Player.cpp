@@ -1,8 +1,7 @@
 #include "Player.h"
-#include "Rectangle.h"
 
 
-b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width) {
+b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
@@ -26,9 +25,8 @@ b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, f
 
 	//add main fixture
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
-	PlayerData* playerData = new PlayerData(sf::Color::Green, player, 0);
-	playerFixture->SetUserData(static_cast<void*>(playerData));
-
+	Player::my_playerdata= std::make_unique<PlayerData>(sf::Color::Green, player, 0);
+	playerFixture->SetUserData(static_cast<void*>(my_playerdata.get()));
 
 	//add foot sensor fixture
 	b2PolygonShape footpolygonShape;
@@ -42,9 +40,9 @@ b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, f
 	footFixtureDef.filter.groupIndex = foot;
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
-	FootData* dataFoot = new FootData(sf::Color::Green, foot, 0);
-	footSensorFixture->SetUserData(static_cast<void*>(dataFoot));
-
+	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
+	footSensorFixture->SetUserData(static_cast<void*>(my_footdata.get()));
+	
 	//add hand sensor
 	b2PolygonShape handpolygonShape;
 	handpolygonShape.SetAsBox(width * UNRATIO + 0.1, 0.1, b2Vec2(0, 0), 0);
@@ -57,8 +55,8 @@ b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, f
 	footFixtureDef.filter.groupIndex = hand;
 
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
-	HandData* dataHand = new HandData(sf::Color::Green, hand, 0);
-	handSensorFixture->SetUserData(static_cast<void*>(dataHand));
+	my_handdata= std::make_unique<HandData>(sf::Color::Green, hand, 0);
+	handSensorFixture->SetUserData(static_cast<void*>(my_handdata.get()));
 
 	//add triangular sensor for the player 
 
@@ -97,11 +95,9 @@ void Player::draw(sf::Color color, sf::RenderWindow* window) {
 
 void Player::actionLef()
 {
-	int footcount;
-	int handcount;
-	int jumptimout;
-	getvalue(body, &footcount, &handcount, &jumptimout);
-
+	int footcount = my_footdata->GetNumFootContact();
+	int handcount=my_handdata->GetNumhandContact();
+	int jumptimout = my_playerdata->GetJumpTimeout();
 	PlayerData* playerdata = (PlayerData*)body->GetUserData();
 	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair
 		if (body->GetLinearVelocity().x <= -5) {
@@ -111,7 +107,6 @@ void Player::actionLef()
 		{
 			body->ApplyLinearImpulseToCenter(b2Vec2(-10, 0), true);
 		}
-
 	}
 	else {
 		if (body->GetLinearVelocity().x <= -10) {
