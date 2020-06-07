@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include <memory>
 #include "Box2DEngine.h"
+#include "Rectangle.h"
 
 class Platform{
 public:

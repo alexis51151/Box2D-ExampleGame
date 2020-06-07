@@ -4,21 +4,16 @@
 
 Player::Player(Box2DEngine* gameController)
 {
-	body = gameController->addBodyPlayer(10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
-	shape = std::unique_ptr<Shape>(new Circle());
+	Player::body = gameController->addBodyPlayer(10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
+	Player::shape = std::unique_ptr<Circle>(new Circle());
 }
 
-
-Player::~Player()
-{
-
-}
 
 b2Body* Player::getBody()
 {
-	return body;
+	return Player::body;
 }
 
 void Player::draw(sf::Color color, sf::RenderWindow* window) {
-	shape->draw(body, color, window);
+	Player::shape->draw(body, color, window);
 }

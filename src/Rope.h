@@ -3,6 +3,7 @@
 #include "Box2DEngine.h"
 #include "Player.h"
 #include "Shape.h"
+#include "box2d/box2d.h"
 
 class Rope
 {

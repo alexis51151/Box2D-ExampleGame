@@ -5,6 +5,7 @@
 class Shape {
 public:
 	Shape();
+	Shape(sf::Color);
 	virtual void draw(b2Body*, sf::Color, sf::RenderWindow*) = 0;
 private:
 	sf::Color color;

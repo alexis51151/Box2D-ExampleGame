@@ -1,5 +1,10 @@
 #include "Circle.h"
 
+Circle::Circle() {
+}
+
+
+
 void Circle::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	std::pair<int, int> dimensions = getBodyDimensions(body);
 	float radius = dimensions.first;

@@ -6,6 +6,8 @@
 #include "Utile.h"
 
 
-class Rectangle :Shape {
+class Rectangle : public Shape {
+public:
+	Rectangle();
 	void draw(b2Body*, sf::Color, sf::RenderWindow*);
 };

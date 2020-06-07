@@ -4,7 +4,9 @@
 #include "FixtureData.h"
 #include "Utile.h"
 
-class Circle : Shape{
+class Circle : public Shape
+{
 public:
-	void draw(b2Body*, sf::Color, sf::RenderWindow*);
-}
+	Circle();
+	void draw(b2Body* body, sf::Color color, sf::RenderWindow* window);
+};

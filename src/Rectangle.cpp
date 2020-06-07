@@ -1,6 +1,10 @@
 #include "Rectangle.h"
 
 
+Rectangle::Rectangle() {
+
+}
+
 void Rectangle::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	std::pair<int, int> dimensions = getBodyDimensions(body);
 	float width = dimensions.first;
