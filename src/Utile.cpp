@@ -19,7 +19,7 @@ void getvalue(b2Body* player1, int* footcount, int* handcount, int* jumptimout) 
 			*jumptimout = ((PlayerData*)userdata)->GetJumpTimeout();
 			break;
 		default:
-			printf("attention type de features non prisent en compte ");
+			printf("attention type de features non prise en compte ");
 			break;
 		}
 		playerfixtures = playerfixtures->GetNext();
@@ -36,14 +36,18 @@ PlayerData* getPlayerData(b2Body* player1) {
 	}
 }
 
-std::pair<int, int> getBodyDimensions(b2Body* body) { // only for polygons right now :Not working:
+std::pair<float, float> getBodyDimensions(b2Body* body) { // only for polygons right now :Not working:
 	b2Fixture* fixture = body->GetFixtureList();
-	int width, height;
+	float width, height;
 	switch (fixture->GetType()) {
 	case b2Shape::e_polygon: {
-		while (fixture->GetNext() != NULL)
+		while (fixture->IsSensor() && fixture->GetNext() != NULL)
 		{
 			fixture = fixture->GetNext();
+		}
+		if (fixture->IsSensor()) {
+			printf("No drawable fixture in this body\n");
+			return std::make_pair(NULL, NULL);
 		}
 		b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
 
