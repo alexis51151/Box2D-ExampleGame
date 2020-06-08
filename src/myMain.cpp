@@ -8,31 +8,25 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
-	//creation de la liste des platformes 
 
+	// Création des plateformes 
 	std::vector<std::unique_ptr<Platform>>platforms;
 
-	//creation de la liste des joueur 
+	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players; 
-	std::unique_ptr<Player> player1(new Player(&gameController));
-	std::unique_ptr<Player> player2(new Player(&gameController));
-	players.push_back(std::move(player1));
-	players.push_back(std::move(player2));
-	
-	//body des players 
-	b2Body* player1_body = players[0]->getBody();
-	b2Body* player2_body = players[1]->getBody();
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 
+	
 	//creation d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
-	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,300,300));
-	monsters.push_back(std::move(premier_monstre));
+	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
 	
 	//body du monstre 
 	b2Body* monstre_body = monsters[0]->getBody();
 	
 	// Link the two players with a rope
-	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
+	std::unique_ptr<Rope> rope(new Rope(10 * RATIO, 30, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);
 
 	// Simulation parameters
@@ -47,25 +41,23 @@ int myMain() {
 		window->clear(sf::Color::White);
 		
 		world->Step(timeStep, velocityIterations, positionIterations);
-		//afichage et gestion des monstres 
-		for (int i = 0; i < players.size(); i++) { //gestion des player 
-			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joeur 
+		// Gestion des joueurs 
+		for (int i = 0; i < players.size(); i++) { 
+			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joueur 
 			players[i]->draw(sf::Color::Green, window);
 		}
-		//getPlayerData(player1_body)->decreaseJumpTimeout();
-		//getPlayerData(player2_body)->decreaseJumpTimeout();
 		
-		//afichage des monstres et gestion des mouvements 
+		// Gestion des monstres 
 		for (int i = 0; i < monsters.size(); i++) {
 			monsters[i]->decreace_reverspeed_timout();
 			monsters[i]->updatespeed();
 			monsters[i]->draw(sf::Color::Red,window);
 		}
-		//affichage des platformes 
+		// Gestion des plateformes 
 		for (int i = 0; i < platforms.size(); i++)
 			platforms[i]->draw(sf::Color::Red, window);
-		//affichage de la corde 
 
+		// Gestion de la corde 
 		rope->draw(sf::Color::Green, window);
 
 		window->display();
