@@ -24,7 +24,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 		{
 			float MouseX = sf::Mouse::getPosition(*window).x;
 			float MouseY = sf::Mouse::getPosition(*window).y;
-			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY, 8.0f * RATIO, 1.0f * RATIO));
+			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY,1.0f * RATIO, 8.0f * RATIO));
 		}
 		if(event.type == sf::Event::KeyPressed) {
 			switch (event.key.code)
