@@ -6,11 +6,11 @@ void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
 	{
 	case foot:
-		((FootData*)fixtureData)->DecreaceNumFootContact(); //me laise pas static cast 
+		((FootData*)fixtureData)->DecreaceNumFootContact(); //me laisse pas static cast 
 		break;
 	case viewField:
-		printf("un champ de vue a ete déactiver \n");
-		((ViewFieldData*)fixtureData)->DecreaceEntitidetected(); //me laise pas static cast 
+		printf("un champ de vue a été désactivé \n");
+		((ViewFieldData*)fixtureData)->DecreaseEntityDetected(); //me laisse pas static cast 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->DecreaceNumFootContact();
@@ -33,8 +33,8 @@ void BeginContact_action(FixtureData* fixtureData) {
 		((FootData*)fixtureData)->IncreaceNumFootContact();
 		break;
 	case viewField:
-		printf("un champ de vue a ete activer \n");
-		((ViewFieldData*)fixtureData)->increaIncreaceEntitidetected(); //me laise pas static cast 
+		printf("un champ de vue a été activé \n");
+		((ViewFieldData*)fixtureData)->increaIncreaceEntitidetected(); //me laisse pas static cast 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->IncreaceNumFootContact();

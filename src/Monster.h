@@ -3,6 +3,7 @@
 #include "Shape.h"
 #include "Rectangle.h"
 #include "ViewFieldData.h"
+#include "Polygon.h"
 
 class Monster
 {

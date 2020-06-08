@@ -9,6 +9,7 @@ Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float 
 {
 	body = addBodyMonster(gameController, x, y, height, whidth);
 	shapes.push_back(std::unique_ptr<Rectangle>(new Rectangle()));
+	shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
 
 
@@ -94,9 +95,10 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	coneFixtures.filter.categoryBits = SENSOR;
 	coneFixtures.filter.maskBits = PLAYER; // to only detect players 
 
-	b2Fixture* conseSensorFixture = m_body->CreateFixture(&coneFixtures);
+	b2Fixture* coneSensorFixture = m_body->CreateFixture(&coneFixtures);
 	Monster::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
-	conseSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
+	my_Rviewdata->setDrawable(true);
+	coneSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
 
 	return m_body;
 }
