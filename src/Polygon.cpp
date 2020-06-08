@@ -21,13 +21,14 @@ void Polygon::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 				polygon.setPointCount(poly->m_count);
 				// Setting position and drawing with SFML
 				for (int i = 0; i < poly->m_count; i++) {
-					polygon.setPoint(i, sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x) * RATIO, (bodyPosition.y + poly->m_vertices[i].y) * RATIO));
-					polygon.setOutlineColor(sf::Color::Red);
-					polygon.setFillColor(sf::Color::Blue);
+					polygon.setPoint(i, sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x*2) * RATIO, (bodyPosition.y + poly->m_vertices[i].y*2) * RATIO));
+					
+					//polygon.setFillColor(sf::Color::Blue);
 					//polygon[i].position = sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x )* RATIO, (bodyPosition.y + poly->m_vertices[i].y) * RATIO);
 					//polygon[i].color = color;
 				}
-				
+				polygon.setOutlineColor(color);
+				polygon.setOutlineThickness(5);
 				window->draw(polygon);
 			}
 			fixture = fixture->GetNext();

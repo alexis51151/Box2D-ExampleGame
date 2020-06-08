@@ -18,6 +18,7 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 		else
 		{
 			printf("il n'y a rien entre les deux \n");
+			((ViewFieldData*)fixtureDataA)->increaIncreaceEntitidetected();
 		}
 
 	}
@@ -30,15 +31,15 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 		b2RayCastOutput* output = new b2RayCastOutput();
 		if (B->RayCast(output, input, 0)) {
 			printf("il ya un element entre les deux \n");
+			
 		}
 		else
 		{
 			printf("il n'y a rien entre les deux \n");
+			((ViewFieldData*)fixtureDataB)->increaIncreaceEntitidetected();
 		}
 
 	}
-
-
 }
 void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
@@ -66,10 +67,6 @@ void BeginContact_action(FixtureData* fixtureData) {
 	case foot:
 		((FootData*)fixtureData)->IncreaceNumFootContact();
 		break;
-	case viewField:
-		printf("un champ de vue a été activé \n");
-		((ViewFieldData*)fixtureData)->increaIncreaceEntitidetected(); //me laisse pas static cast 
-		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->IncreaceNumFootContact();
 		break;
@@ -86,7 +83,6 @@ void BeginContact_action(FixtureData* fixtureData) {
 
 void MyContactListener::BeginContact(b2Contact* contact) {
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-
 
     FixtureData* fixtureData = static_cast<FixtureData*>( fixtureUserData );
     if (fixtureData != NULL) {

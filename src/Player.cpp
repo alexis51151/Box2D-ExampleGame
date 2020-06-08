@@ -18,7 +18,6 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 
 	//filter
 	myFixtureDef.filter.categoryBits = PLAYER;
-	myFixtureDef.filter.groupIndex = player;
 
 	//create dynamic body
 	myBodyDef.position.Set(x * UNRATIO, y * UNRATIO);
@@ -38,8 +37,7 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 
 	//filter
 	footFixtureDef.filter.categoryBits = SENSOR;
-	footFixtureDef.filter.groupIndex = foot;
-	footFixtureDef.filter.maskBits = PLATFORM | MONSTER;
+	footFixtureDef.filter.maskBits = PLATFORM;
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
@@ -54,41 +52,19 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 
 	//filter
 	handfixture.filter.categoryBits = SENSOR;
-	handfixture.filter.groupIndex = hand;
 	handfixture.filter.maskBits = PLATFORM;
 
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
 	my_handdata= std::make_unique<HandData>(sf::Color::Green, hand, 0);
 	handSensorFixture->SetUserData(static_cast<void*>(my_handdata.get()));
 
-	//add triangular sensor for the player 
-
-	const float radius = 8;
-	const int nbpoint = 3;
-	b2Vec2 vertices[nbpoint];
-	const float min_angle = -45;
-	const float max_angle = 45;
-	float pas = (max_angle - min_angle) / (nbpoint - 1);
-	vertices[0].Set(0, 0);
-	for (int i = 0; i < nbpoint - 1; i++) {
-		vertices[i + 1].Set(radius * cosf(i * pas * RADTODEG), -radius * sinf(i * pas * RADTODEG));
-	}
-	b2PolygonShape coneshape;
-	coneshape.Set(vertices, nbpoint);
-	myFixtureDef.shape = &polygonShape;
-	b2FixtureDef conefixtures;
-	conefixtures.isSensor = true;
-	conefixtures.shape = &coneshape;
-	b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
-	ViewFieldData* consefixturedata = new ViewFieldData(sf::Color::Green, viewField);
-	conseSensorFixture->SetUserData(static_cast<void*>(consefixturedata));
 
 	return m_body;
 }
 
-Player::Player(Box2DEngine* gameController)
+Player::Player(Box2DEngine* gameController, int x, int y, float height, float width)
 {
-	Player::body = addbodyplayer(gameController,10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
+	Player::body = addbodyplayer(gameController,x , y, height , width );
 	Player::shape = std::unique_ptr<Circle>(new Circle());
 }
 

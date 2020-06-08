@@ -28,4 +28,5 @@ private:
 	std::unique_ptr<ViewFieldData> my_Lviewdata;
 	std::unique_ptr<ViewFieldData> my_Rviewdata;
 	std::vector<std::unique_ptr<Shape>> shapes;
+	sf::Color my_color = sf::Color::Red;
 };

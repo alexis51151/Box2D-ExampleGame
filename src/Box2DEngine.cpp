@@ -19,29 +19,28 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	b2BodyDef platformeBodyDef;
 	platformeBodyDef.type = b2_staticBody;
 	platformeBodyDef.position.Set(x*UNRATIO, y*UNRATIO);
-
+	
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
-	b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
-	// Define the ground box shape.
+	
 	b2PolygonShape groundBox;
-
-	// The extents are the half-widths of the box.
 	groundBox.SetAsBox(height * UNRATIO, width * UNRATIO);
+	// Define the ground box shape.
+	
+	b2FixtureDef my_fixture_def;
+	my_fixture_def.shape = &groundBox;
+	my_fixture_def.filter.categoryBits = PLATFORM;
+	b2Body* groundBody = physicsWorld->CreateBody(&platformeBodyDef);
+
 
 	// Add the ground fixture to the ground body.
-	b2Fixture* StaticFixture = groundBody->CreateFixture(&groundBox, 0.0f);
+	b2Fixture* staticFixture = groundBody->CreateFixture(&my_fixture_def);
 	
 	// Add the Fixture data
 	FixtureData* data = new FixtureData(sf::Color::Red, platform);
-	StaticFixture->SetUserData(static_cast<void*>( data ));
+	staticFixture->SetUserData(static_cast<void*>( data ));
 	
-	//add the filter 
-	b2Filter temp;
-	temp.categoryBits = PLATFORM;
-	temp.groupIndex = platform;
-	StaticFixture->SetFilterData(temp);
 
 	return groundBody;
 }

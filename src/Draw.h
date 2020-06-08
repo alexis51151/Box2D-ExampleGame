@@ -9,5 +9,4 @@
 #include "Utile.h"
 
 
-
 void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window);
