@@ -50,6 +50,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	// filter
 	LfootFixtureDef.filter.categoryBits = SENSOR;
 	LfootFixtureDef.filter.groupIndex = MonsterLfoot;
+	LfootFixtureDef.filter.maskBits= PLATFORM;
 
 	b2Fixture* LfootSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
 	Monster::my_Lfootdata = std::make_unique< FootData>(sf::Color::Green, MonsterLfoot);
@@ -72,7 +73,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	RfootSensorFixture->SetUserData(static_cast<void*>(my_Rfootdata.get()));
 
 	//add triangular sensor for the player 
-	const float radius = 8;
+	const float radius = 3;
 	const int nbpoint = 3;
 	b2Vec2 vertices[nbpoint];
 	const float min_angle = -10;
