@@ -16,13 +16,18 @@ void Polygon::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 			if (fixtureData->getDrawable()) {
 				poly = (b2PolygonShape*)fixture->GetShape();
 				b2Vec2 position = body->GetPosition();
-				sf::ConvexShape  polygon;
-				polygon.setPointCount(poly->m_body);
+				//sf::VertexArray polygon(sf::Triangles, 3);
+				sf::ConvexShape polygon;
+				polygon.setPointCount(poly->m_count);
 				// Setting position and drawing with SFML
 				for (int i = 0; i < poly->m_count; i++) {
-					polygon[i].position = sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x )* RATIO, (bodyPosition.y + poly->m_vertices[i].y) * RATIO);
-					polygon[i].color = color;
+					polygon.setPoint(i, sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x) * RATIO, (bodyPosition.y + poly->m_vertices[i].y) * RATIO));
+					polygon.setOutlineColor(sf::Color::Red);
+					polygon.setFillColor(sf::Color::Blue);
+					//polygon[i].position = sf::Vector2f((bodyPosition.x + poly->m_vertices[i].x )* RATIO, (bodyPosition.y + poly->m_vertices[i].y) * RATIO);
+					//polygon[i].color = color;
 				}
+				
 				window->draw(polygon);
 			}
 			fixture = fixture->GetNext();

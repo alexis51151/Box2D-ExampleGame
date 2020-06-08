@@ -42,7 +42,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//add foot sensor fixture
 	b2PolygonShape LfootpolygonShape;
-	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2( height * UNRATIO, -(width * UNRATIO)), 0);
+	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO), height * UNRATIO), 0);
 	b2FixtureDef LfootFixtureDef;
 	LfootFixtureDef.isSensor = true;
 	LfootFixtureDef.shape = &LfootpolygonShape;
@@ -58,7 +58,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	LfootFixtureDef.filter.maskBits = PLATFORM;
 	//add foot sensor fixture
 	b2PolygonShape RfootpolygonShape;
-	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(height * UNRATIO,width * UNRATIO), 0);
+	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO, height * UNRATIO), 0);
 	b2FixtureDef RfootFixtureDef;
 	RfootFixtureDef.isSensor = true;
 	RfootFixtureDef.shape = &RfootpolygonShape;
@@ -74,7 +74,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//add triangular sensor for the player 
 	const float radius = 3;
-	const int nbpoint = 3;
+	const int nbpoint = 6;
 	b2Vec2 vertices[nbpoint];
 	const float min_angle = -10;
 	const float max_angle = 30;
@@ -123,7 +123,7 @@ void Monster::updateSpeed()
 	//on doit faire demi-tour 
 	printf("revers speed \n");
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
-	reverspeed_timout = 15;
+	reverspeed_timout = 60;
 }
 
 void Monster::draw(sf::Color color, sf::RenderWindow* window) {
