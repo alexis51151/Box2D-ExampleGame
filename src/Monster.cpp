@@ -75,14 +75,14 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	const float radius = 8;
 	const int nbpoint = 3;
 	b2Vec2 vertices[nbpoint];
-	const float min_angle = -45;
-	const float max_angle = 45;
-	float pas = (max_angle - min_angle) / (nbpoint - 1);
+	const float min_angle = -10;
+	const float max_angle = 30;
+	float pas = (max_angle - min_angle)*2 / (nbpoint - 1);
 
 	// Drawing the triangle
 	vertices[0].Set(0, 0);
-	for (int i = 0; i < nbpoint - 1; i++) {
-		vertices[i + 1].Set(radius * cosf(i * pas * RADTODEG), -radius * sinf(i * pas * RADTODEG));
+	for (int i = 0; i < nbpoint-1 ; i++) {
+		vertices[i + 1].Set(radius *- cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
 	}
 
 	b2PolygonShape coneShape;
