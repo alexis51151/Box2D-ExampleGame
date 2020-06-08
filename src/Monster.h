@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Shape.h"
 #include "Rectangle.h"
+#include "ViewFieldData.h"
 
 class Monster
 {
