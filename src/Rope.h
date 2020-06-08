@@ -9,7 +9,7 @@
 class Rope
 {
 public:
-	Rope(int x, int y, float length, int nb_links, Box2DEngine* gameController);
+	Rope(float length, int nb_links, Box2DEngine* gameController);
 	float getLength() const { return length; }
 	int	getNb_links() const { return nb_links; }
 	std::vector<b2Body*> getElements() const { return elements; }
@@ -21,4 +21,5 @@ private:
 	int nb_links;
 	std::vector<b2Body*> elements;
 	std::unique_ptr<Shape> shape; // Same shape for all the elements
+	std::vector<b2Body*>addBodyRope(Box2DEngine* gameController, float length, int nb_links);
 };

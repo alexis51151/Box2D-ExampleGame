@@ -1,6 +1,17 @@
 #include "Rope.h"
 
-std::vector<b2Body*>Rope::addBodyRope(Box2DEngine* gameController,int x, int y, float length, int nb_links) {
+
+
+Rope::Rope(float length, int nb_links, Box2DEngine* gameController) :
+	length(length), nb_links(nb_links)
+{
+	Rope::elements = addBodyRope(gameController, length, nb_links);
+	Rope::shape = std::unique_ptr<Circle>(new Circle());
+}
+
+
+std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length, int nb_links) {
+
 	// Link width and height
 	float width = length / nb_links;
 
@@ -55,12 +66,6 @@ std::vector<b2Body*>Rope::addBodyRope(Box2DEngine* gameController,int x, int y, 
 	return elements;
 }
 
-Rope::Rope(int x, int y,float length, int nb_links, Box2DEngine* gameController) :
-	length(length), nb_links(nb_links)
-{
-    Rope::elements = addBodyRope(gameController,x, y, length, nb_links);
-    Rope::shape = std::unique_ptr<Circle>(new Circle());
-}
 
 void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 	float width = length / nb_links;
