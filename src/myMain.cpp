@@ -8,8 +8,8 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
+	
 	//creation de la liste des platformes 
-
 	std::vector<std::unique_ptr<Platform>>platforms;
 
 	//creation de la liste des joueur 
@@ -19,18 +19,12 @@ int myMain() {
 	players.push_back(std::move(player1));
 	players.push_back(std::move(player2));
 	
-	//body des players 
-	b2Body* player1_body = players[0]->getBody();
-	b2Body* player2_body = players[1]->getBody();
-
-	//creation d'un monstre 
+	
+	//creation de la liste des monstres
 	std::vector<std::unique_ptr<Monster>> monsters;
 	std::unique_ptr <Monster> premier_monstre (new Monster(&gameController,300,300));
 	monsters.push_back(std::move(premier_monstre));
-	
-	//body du monstre 
-	b2Body* monstre_body = monsters[0]->getBody();
-	
+		
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(800,400, 10 * RATIO, 30, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);
@@ -52,8 +46,7 @@ int myMain() {
 			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joeur 
 			players[i]->draw(sf::Color::Green, window);
 		}
-		//getPlayerData(player1_body)->decreaseJumpTimeout();
-		//getPlayerData(player2_body)->decreaseJumpTimeout();
+
 		
 		//afichage des monstres et gestion des mouvements 
 		for (int i = 0; i < monsters.size(); i++) {
