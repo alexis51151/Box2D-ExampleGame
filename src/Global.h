@@ -32,10 +32,10 @@ enum DataType {
 };
 enum _entityCategory {
 	DEFAULT = 0x0001,
-	PLATFORM = 0x0002,
-	PLAYER = 0x0003,
-	SENSOR = 0x0004,
-	MOVING_OBJECT = 0x0008,
-	MONSTER = 0x0010,
+	PLATFORM = 0x02,
+	PLAYER = 0x0004,
+	SENSOR = 0x0008,
+	MOVING_OBJECT = 0x0010,
+	MONSTER = 0x0020,
 };
 

@@ -29,7 +29,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	// filter 
 	myFixtureDef.filter.categoryBits = MONSTER;
-	myFixtureDef.filter.groupIndex = Monstertype;
+
 
 	//create dynamic body
 	myBodyDef.position.Set(x * UNRATIO, y * UNRATIO);
@@ -37,25 +37,25 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//add main fixture
 	b2Fixture* playerFixture = m_body->CreateFixture(&myFixtureDef);
-	Monster::my_maindata = std::make_unique < FixtureData>(sf::Color::Green, Monstertype);
+	my_maindata = std::make_unique < FixtureData>(sf::Color::Green, Monstertype);
 	playerFixture->SetUserData(static_cast<void*>(my_maindata.get()));
 
 	//add foot sensor fixture
 	b2PolygonShape LfootpolygonShape;
-	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO), height * UNRATIO), 0);
+	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO),  height * UNRATIO), 0);
 	b2FixtureDef LfootFixtureDef;
 	LfootFixtureDef.isSensor = true;
 	LfootFixtureDef.shape = &LfootpolygonShape;
 
 	// filter
 	LfootFixtureDef.filter.categoryBits = SENSOR;
-	LfootFixtureDef.filter.groupIndex = MonsterLfoot;
+	//LfootFixtureDef.filter.groupIndex = -10;
 	LfootFixtureDef.filter.maskBits= PLATFORM;
 
 	b2Fixture* LfootSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
 	Monster::my_Lfootdata = std::make_unique< FootData>(sf::Color::Green, MonsterLfoot);
 	LfootSensorFixture->SetUserData(static_cast<void*>(my_Lfootdata.get()));
-	LfootFixtureDef.filter.maskBits = PLATFORM;
+
 	//add foot sensor fixture
 	b2PolygonShape RfootpolygonShape;
 	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO, height * UNRATIO), 0);
@@ -65,7 +65,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//filter 
 	RfootFixtureDef.filter.categoryBits = SENSOR;
-	RfootFixtureDef.filter.groupIndex = MonsterRfoot;
+	//RfootFixtureDef.filter.groupIndex = -10;
 	RfootFixtureDef.filter.maskBits = PLATFORM;
 
 	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
@@ -77,13 +77,13 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	const int nbpoint = 6;
 	b2Vec2 vertices[nbpoint];
 	const float min_angle = -10;
-	const float max_angle = 30;
+	const float max_angle = 10;
 	float pas = (max_angle - min_angle)*2 / (nbpoint - 1);
 
 	// Drawing the triangle
 	vertices[0].Set(0, 0);
 	for (int i = 0; i < nbpoint-1 ; i++) {
-		vertices[i + 1].Set(radius *- cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
+		vertices[i + 1].Set(radius *cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
 	}
 
 	b2PolygonShape coneShape;
@@ -94,12 +94,13 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	coneFixtures.shape = &coneShape;
 
 	coneFixtures.filter.categoryBits = SENSOR;
+	coneFixtures.filter.groupIndex = -10;
 	coneFixtures.filter.maskBits = PLAYER; // to only detect players 
 
 	b2Fixture* coneSensorFixture = m_body->CreateFixture(&coneFixtures);
-	Monster::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
-	my_Rviewdata->setDrawable(true);
-	coneSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
+	Monster::my_Lviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
+	my_Lviewdata->setDrawable(true);
+	coneSensorFixture->SetUserData(static_cast<void*>(my_Lviewdata.get()));
 
 	return m_body;
 }
@@ -109,8 +110,15 @@ void Monster::updateSpeed()
 {
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
-
-	if (rfootcontact > 1 && lfootcontact > 1) { //deux pieds aux sol 
+	int sensocontact = this->my_Lviewdata->getEntitidetected();
+	printf(" 1 :  l:%d ,r:%d \n\n ", lfootcontact, rfootcontact);
+	/*if (sensocontact >= 1) {
+		
+	}
+	if (sensocontact < 1) {
+		my_color = sf::Color::Green;
+	}*/
+	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
 	}
@@ -120,14 +128,15 @@ void Monster::updateSpeed()
 	}
 	if (reverspeed_timout > 0)
 		return;
-	//on doit faire demi-tour 
-	printf("revers speed \n");
+	
+
+
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
-	reverspeed_timout = 60;
+	reverspeed_timout = 15;
 }
 
 void Monster::draw(sf::Color color, sf::RenderWindow* window) {
 	for (auto& shape : shapes) {
-		shape->draw(body, color, window);
+		shape->draw(body, my_color, window);
 	}
 }
