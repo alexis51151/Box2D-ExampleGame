@@ -1,3 +1,4 @@
+#pragma once
 #include "Box2DEngine.h"
 #include "Global.h"
 #include "Shape.h"

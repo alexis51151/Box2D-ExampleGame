@@ -2,7 +2,7 @@
 #include "ViewFieldData.h"
 
 
-b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width) {
+b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
@@ -62,11 +62,13 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 	return m_body;
 }
 
-Player::Player(Box2DEngine* gameController, int x, int y, float height, float width)
-{
-	Player::body = addbodyplayer(gameController,x , y, height , width );
+
+
+Player::Player(Box2DEngine * gameController, int x, int y, float height, float width) {
+	Player::body = addBodyPlayer(gameController, x, y, height, width);
 	Player::shape = std::unique_ptr<Circle>(new Circle());
 }
+
 
 void Player::draw(sf::Color color, sf::RenderWindow* window) {
 	Player::shape->draw(body, color, window);

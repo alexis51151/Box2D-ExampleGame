@@ -7,5 +7,5 @@ Platform::Platform(Box2DEngine* gameController, int x, int y, float height, floa
 }
 
 void Platform::draw(sf::Color color, sf::RenderWindow* window) {
-	shape->draw(body, color, window);
+	shape->draw(getBody(), color, window);
 }

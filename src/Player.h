@@ -10,14 +10,15 @@
 class Player
 {
 public:
-	Player(Box2DEngine* gameController, int x =40 *RATIO, int y=40*RATIO, float height=1.f*RATIO, float width=1.f*RATIO);
+	Player(Box2DEngine* gameController, int x = 40*RATIO, int y = 40*RATIO, float height = 1.f*RATIO, float width = 1.f*RATIO);
+
 	b2Body* getBody() {return Player::body;};
 	void draw(sf::Color color, sf::RenderWindow* window);
 	void actionLef();
 	void actionRight();
 	void actionDown();
 	void actionUp();
-	b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width);
+	b2Body* addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width);
 
 private:
 	b2Body* body;

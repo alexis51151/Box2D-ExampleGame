@@ -120,21 +120,17 @@ void Monster::updateSpeed()
 	}*/
 	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
-		printf("aux sol");
-		my_color = sf::Color::Blue;
 		return;
 	}
 	if (lfootcontact < 1 && rfootcontact < 1){ //deux pieds en l'air 
 		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 10));
-		printf("en l'air ");
-		my_color = sf::Color::Green;
 		return;
 	}
 	if (reverspeed_timout > 0)
 		return;
-	my_color = sf::Color::Yellow;
-	printf("2: l:%d ,r:%d \n", lfootcontact, rfootcontact);
-	//on doit faire demi-tour 
+	
+
+
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
