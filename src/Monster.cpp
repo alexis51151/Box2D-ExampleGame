@@ -5,20 +5,28 @@ Monster::Monster()
 {
 }
 
-b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float whidth) {
+Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float whidth)
+{
+	body = addBodyMonster(gameController, x, y, height, whidth);
+	shapes.push_back(std::unique_ptr<Rectangle>(new Rectangle()));
+}
+
+
+b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
 
 	//shape definition for main fixture
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox(height * UNRATIO, whidth * UNRATIO);
+	polygonShape.SetAsBox(height * UNRATIO, width * UNRATIO);
 
 	//fixture definition
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
-	//ajout du filtre 
+
+	// filter 
 	myFixtureDef.filter.categoryBits = MONSTER;
 	myFixtureDef.filter.groupIndex = Monstertype;
 
@@ -33,12 +41,12 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//add foot sensor fixture
 	b2PolygonShape LfootpolygonShape;
-	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(whidth * UNRATIO), height * UNRATIO), 0);
+	LfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(-(width * UNRATIO), height * UNRATIO), 0);
 	b2FixtureDef LfootFixtureDef;
 	LfootFixtureDef.isSensor = true;
 	LfootFixtureDef.shape = &LfootpolygonShape;
 
-	//filtre
+	// filter
 	LfootFixtureDef.filter.categoryBits = SENSOR;
 	LfootFixtureDef.filter.groupIndex = MonsterLfoot;
 
@@ -48,7 +56,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	//add foot sensor fixture
 	b2PolygonShape RfootpolygonShape;
-	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(whidth * UNRATIO, height * UNRATIO), 0);
+	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(width * UNRATIO, height * UNRATIO), 0);
 	b2FixtureDef RfootFixtureDef;
 	RfootFixtureDef.isSensor = true;
 	RfootFixtureDef.shape = &RfootpolygonShape;
@@ -58,7 +66,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	RfootFixtureDef.filter.groupIndex = MonsterRfoot;
 
 	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
-	Monster::my_Rfootdata = std::make_unique< FootData>(sf::Color::Green, MonsterRfoot);
+	Monster::my_Rfootdata = std::make_unique<FootData>(sf::Color::Green, MonsterRfoot);
 	RfootSensorFixture->SetUserData(static_cast<void*>(my_Rfootdata.get()));
 
 	//add triangular sensor for the player 
@@ -68,55 +76,54 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	const float min_angle = -45;
 	const float max_angle = 45;
 	float pas = (max_angle - min_angle) / (nbpoint - 1);
+
+	// Drawing the triangle
 	vertices[0].Set(0, 0);
 	for (int i = 0; i < nbpoint - 1; i++) {
 		vertices[i + 1].Set(radius * cosf(i * pas * RADTODEG), -radius * sinf(i * pas * RADTODEG));
 	}
-	b2PolygonShape coneshape;
-	coneshape.Set(vertices, nbpoint);
+
+	b2PolygonShape coneShape;
+	coneShape.Set(vertices, nbpoint);
 	myFixtureDef.shape = &polygonShape;
-	b2FixtureDef conefixtures;
-	conefixtures.isSensor = true;
-	conefixtures.shape = &coneshape;
+	b2FixtureDef coneFixtures;
+	coneFixtures.isSensor = true;
+	coneFixtures.shape = &coneShape;
 
-	conefixtures.filter.categoryBits = SENSOR;
-	conefixtures.filter.maskBits = PLAYER; //ne devrais detecter que les joueur 
+	coneFixtures.filter.categoryBits = SENSOR;
+	coneFixtures.filter.maskBits = PLAYER; // to only detect players 
 
-	b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
+	b2Fixture* conseSensorFixture = m_body->CreateFixture(&coneFixtures);
 	Monster::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
 	conseSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
 
 	return m_body;
 }
 
-Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float whidth)
-{
-	body = addBodyMonster(gameController, x, y, height, whidth);
-	shape = std::unique_ptr<Rectangle>(new Rectangle());
-}
 
-
-void Monster::updatespeed()
+void Monster::updateSpeed()
 {
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
 
-	if (rfootcontact > 1 && lfootcontact > 1) { //deux pied aux sol 
+	if (rfootcontact > 1 && lfootcontact > 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
 	}
-	if (lfootcontact < 1 && rfootcontact < 1){ //deux piid en l'air 
+	if (lfootcontact < 1 && rfootcontact < 1){ //deux pieds en l'air 
 		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 10));
 		return;
 	}
 	if (reverspeed_timout > 0)
 		return;
-	//on doit faire demitour 
+	//on doit faire demi-tour 
 	printf("revers speed \n");
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
 
 void Monster::draw(sf::Color color, sf::RenderWindow* window) {
-	shape->draw(body, color, window);
+	for (auto& shape : shapes) {
+		shape->draw(body, color, window);
+	}
 }

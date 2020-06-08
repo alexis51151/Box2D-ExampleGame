@@ -13,8 +13,8 @@ public:
 	void setBody(b2Body* val) { body = val; };
 	int directionxsigne() { return (body->GetLinearVelocity().x > 0) ? 1 : -1; };
 	void draw(sf::Color color, sf::RenderWindow* window);
-	void updatespeed();
-	void decreace_reverspeed_timout() { reverspeed_timout--; }
+	void updateSpeed();
+	void decreaseReverseSpeedTimeout() { reverspeed_timout--; }
 	b2Body* addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float whidth);
 protected:
 
@@ -24,7 +24,7 @@ private:
 	std::unique_ptr<FootData> my_Lfootdata;
 	std::unique_ptr<FootData> my_Rfootdata;
 	std::unique_ptr<FixtureData> my_maindata;
-	std::unique_ptr < ViewFieldData> my_Lviewdata;
-	std::unique_ptr < ViewFieldData> my_Rviewdata;
-	std::unique_ptr<Shape> shape;
+	std::unique_ptr<ViewFieldData> my_Lviewdata;
+	std::unique_ptr<ViewFieldData> my_Rviewdata;
+	std::vector<std::unique_ptr<Shape>> shapes;
 };
