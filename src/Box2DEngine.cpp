@@ -25,7 +25,7 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	// The body is also added to the world.
 	
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(height * UNRATIO, width * UNRATIO);
+	groundBox.SetAsBox(width * UNRATIO, height * UNRATIO);
 	// Define the ground box shape.
 	
 	b2FixtureDef my_fixture_def;
