@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Shape.h"
 #include "Rectangle.h"
+#include "ViewFieldData.h"
 
 class Monster
 {
@@ -11,15 +12,19 @@ public:
 	b2Body* getBody() const { return body; };
 	void setBody(b2Body* val) { body = val; };
 	int directionxsigne() { return (body->GetLinearVelocity().x > 0) ? 1 : -1; };
-	FootData* Monster::getRightfootData();
-	FootData* Monster::getLeftfootData();
 	void draw(sf::Color color, sf::RenderWindow* window);
 	void updatespeed();
 	void decreace_reverspeed_timout() { reverspeed_timout--; }
+	b2Body* addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float whidth);
 protected:
 
 private:
 	b2Body* body;
 	int reverspeed_timout = 0;
+	std::unique_ptr<FootData> my_Lfootdata;
+	std::unique_ptr<FootData> my_Rfootdata;
+	std::unique_ptr<FixtureData> my_maindata;
+	std::unique_ptr < ViewFieldData> my_Lviewdata;
+	std::unique_ptr < ViewFieldData> my_Rviewdata;
 	std::unique_ptr<Shape> shape;
 };

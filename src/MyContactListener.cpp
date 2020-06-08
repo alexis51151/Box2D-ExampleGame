@@ -1,11 +1,16 @@
 #include "MyContactListener.h"
 #include <iostream>
 
+
 void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
 	{
 	case foot:
 		((FootData*)fixtureData)->DecreaceNumFootContact(); //me laise pas static cast 
+		break;
+	case viewField:
+		printf("un champ de vue a ete déactiver \n");
+		((ViewFieldData*)fixtureData)->DecreaceEntitidetected(); //me laise pas static cast 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->DecreaceNumFootContact();
@@ -26,6 +31,10 @@ void BeginContact_action(FixtureData* fixtureData) {
 	{
 	case foot:
 		((FootData*)fixtureData)->IncreaceNumFootContact();
+		break;
+	case viewField:
+		printf("un champ de vue a ete activer \n");
+		((ViewFieldData*)fixtureData)->increaIncreaceEntitidetected(); //me laise pas static cast 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->IncreaceNumFootContact();

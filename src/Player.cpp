@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "ViewFieldData.h"
 
 
 b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width) {
@@ -76,9 +77,9 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 	b2FixtureDef conefixtures;
 	conefixtures.isSensor = true;
 	conefixtures.shape = &coneshape;
-	//b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
-	FixtureData* consefixturedata = new FixtureData(sf::Color::Green, default);
-	//conseSensorFixture->SetUserData(static_cast<void*>(consefixturedata));
+	b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
+	ViewFieldData* consefixturedata = new ViewFieldData(sf::Color::Green, viewField);
+	conseSensorFixture->SetUserData(static_cast<void*>(consefixturedata));
 
 	return m_body;
 }

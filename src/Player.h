@@ -6,7 +6,7 @@
 #include "Rectangle.h"
 #include <memory>
 #include <SFML/Graphics.hpp>
-
+#include "ViewFieldData.h"
 class Player
 {
 public:
