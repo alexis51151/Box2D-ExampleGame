@@ -28,7 +28,7 @@ b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(height * UNRATIO, width * UNRATIO);
+	groundBox.SetAsBox(width * UNRATIO, height * UNRATIO);
 
 	// Add the ground fixture to the ground body.
 	b2Fixture* StaticFixture = groundBody->CreateFixture(&groundBox, 0.0f);
@@ -57,7 +57,7 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(height * UNRATIO, width * UNRATIO);
+	dynamicBox.SetAsBox(width * UNRATIO, height * UNRATIO);
 
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;

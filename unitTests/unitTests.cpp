@@ -7,6 +7,8 @@
 #include "Monster.h"
 #include "Platform.h"
 #include "Rope.h"
+#include "Rectangle.h"
+#include "Shape.h"
 
 
 TEST(TestAddBody, TestAddPlayer) {
@@ -85,7 +87,43 @@ TEST(TestInteractionBodies, TestPlayerPlatform1) {
 	sf::RenderWindow* window = gameController.getApp();
 
 	// adding one player
-	Player* player = new Player(&gameController, 320, 100);
+	Player* player = new Player(&gameController, 429, 250);
+
+	// adding one platform
+	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
+	
+	// Simulating over some iterations
+
+	// Simulation parameters
+	float timeStep = 1.0f / 60.0f;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+
+	b2Vec2 positions = platform->getBody()->GetPosition();
+	// 500 iterations to make the player fall (500*2 = 1000 meters high)
+	for (int i = 0; i < 500; i++) {
+		world->Step(timeStep, velocityIterations, positionIterations);
+	}
+	b2Vec2 oldPosition = player->getBody()->GetPosition();
+	// Another round of simulations to check that Player is stationary
+	for (int i = 0; i < 10; i++) {
+		world->Step(timeStep, velocityIterations, positionIterations);
+		b2Vec2 newPosition = player->getBody()->GetPosition();
+
+		EXPECT_EQ(oldPosition.x, newPosition.x);
+		EXPECT_EQ(oldPosition.y, newPosition.y);
+	}
+}
+
+// One player falls
+TEST(TestInteractionBodies, TestPlayerPlatform2) {
+	// Setting up the gameController
+	Box2DEngine gameController(WIDTH, HEIGHT);
+	b2World* world = gameController.getPhysicsWorld();
+	sf::RenderWindow* window = gameController.getApp();
+
+	// adding one player
+	Player* player = new Player(&gameController, 431, 250);
 
 	// adding one platform
 	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
@@ -97,24 +135,56 @@ TEST(TestInteractionBodies, TestPlayerPlatform1) {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	// 50 iterations to make the player fall (50*2 = 100 meters high)
-	for (int i = 0; i < 5000; i++) {
+	b2Vec2 positions = platform->getBody()->GetPosition();
+	// 500 iterations to make the player fall (500*2 = 1000 meters high)
+	for (int i = 0; i < 500; i++) {
 		world->Step(timeStep, velocityIterations, positionIterations);
-		platform->draw(sf::Color::Green, window);
-		player->draw(sf::Color::Red, window);
-		window->display();
 	}
 	b2Vec2 oldPosition = player->getBody()->GetPosition();
 	// Another round of simulations to check that Player is stationary
 	for (int i = 0; i < 10; i++) {
 		world->Step(timeStep, velocityIterations, positionIterations);
 		b2Vec2 newPosition = player->getBody()->GetPosition();
-		platform->draw(sf::Color::Green, window);
-		player->draw(sf::Color::Red, window);
-		window->display();
 
-		//EXPECT_EQ(oldPosition.x, newPosition.x);
-		//EXPECT_EQ(oldPosition.y, newPosition.y);
+		EXPECT_EQ(oldPosition.x, newPosition.x);
+		EXPECT_NE(oldPosition.y, newPosition.y);
 	}
-
 }
+
+
+// One monster over a platform (must move around x but not around y)
+TEST(TestInteractionBodies, TestMonsterPlatform) {
+	// Setting up the gameController
+	Box2DEngine gameController(WIDTH, HEIGHT);
+	b2World* world = gameController.getPhysicsWorld();
+	sf::RenderWindow* window = gameController.getApp();
+
+	// adding one monster
+	Monster* monster = new Monster(&gameController, 300, 200, 10, 10);
+
+	// adding one platform
+	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
+
+	// Simulating over some iterations
+
+	// Simulation parameters
+	float timeStep = 1.0f / 60.0f;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+
+	b2Vec2 positions = platform->getBody()->GetPosition();
+	// 500 iterations to make the monster fall (500*2 = 1000 meters high)
+	for (int i = 0; i < 500; i++) {
+		world->Step(timeStep, velocityIterations, positionIterations);
+	}
+	b2Vec2 oldPosition = monster->getBody()->GetPosition();
+	// Another round of simulations to check that Player is stationary
+	for (int i = 0; i < 10; i++) {
+		world->Step(timeStep, velocityIterations, positionIterations);
+		b2Vec2 newPosition = monster->getBody()->GetPosition();
+
+		EXPECT_NE(oldPosition.x, newPosition.x);
+		EXPECT_EQ(oldPosition.y, newPosition.y);
+	}
+}
+
