@@ -135,42 +135,13 @@ void Player::actionDown()
 
 void Player::actionUp()
 {
-	PlayerData* playerdata;
-	FootData* footData;
-	HandData* handData;
-	b2Fixture* playerfixtures = body->GetFixtureList();
-	while (playerfixtures != nullptr) {
-		FixtureData* userdata = static_cast<FixtureData*>(playerfixtures->GetUserData());
-		int datatype = userdata->getDataType();
-		switch (datatype)
-		{
-		case player:
-			playerdata = ((PlayerData*)userdata);
-			break;
-		case foot:
-			footData = ((FootData*)userdata);
-			break;
-		case hand:
-			handData = ((HandData*)userdata);
-			break;
-		default:
-			printf("attention type de features non prisent en compte ");
-			break;
-		}
-		playerfixtures = playerfixtures->GetNext();
-	}
-
-	if (footData == nullptr || handData == nullptr || playerdata == nullptr) {
-		printf("erreur dans la recuperation");
-		exit(1);
-	}
-
-	if (footData->GetNumFootContact() < 1 && handData->GetNumhandContact() < 1) {
+	
+	if (my_footdata->GetNumFootContact() < 1 && my_handdata->GetNumhandContact() < 1) {
 		return;
 
 	}
-	if (playerdata->GetJumpTimeout() > 0) return;
-	body->ApplyLinearImpulseToCenter(b2Vec2(0, -body->GetMass() * 10), true);
-	playerdata->SetJumpTimeout(15);
+	if (my_playerdata->GetJumpTimeout() > 0) return;
+	body->ApplyLinearImpulseToCenter(b2Vec2(0, -body->GetMass() * 30), true);
+	my_playerdata->SetJumpTimeout(15);
 }
 

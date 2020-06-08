@@ -23,7 +23,7 @@ int myMain() {
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
 
 	// Link the two players with a rope
-	std::unique_ptr<Rope> rope(new Rope(10 * RATIO, 30, &gameController));
+	std::unique_ptr<Rope> rope(new Rope(5 * RATIO, 15, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);
 
 	// Simulation parameters
