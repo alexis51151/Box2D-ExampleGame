@@ -26,22 +26,42 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 			float MouseY = sf::Mouse::getPosition(*window).y;
 			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY, 8.0f * RATIO, 1.0f * RATIO));
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			left->execute((players->operator[](0)).get());
+		if(event.type == sf::Event::KeyPressed) {
+			switch (event.key.code)
+			{
+				//player 1
+			case sf::Keyboard::Up:
+				jump->execute((players->operator[](0)).get());
+				break;
+			case sf::Keyboard::Left:
+				left->execute((players->operator[](0)).get());
+				break;
+			case sf::Keyboard::Right:
+				right->execute((players->operator[](0)).get());
+				break;
+			case sf::Keyboard::Down:
+				down->execute((players->operator[](0)).get());
+				break;
+				//player 2
+			case sf::Keyboard::Z:
+				jump->execute((players->operator[](1)).get());
+				break;
+			case sf::Keyboard::Q:
+				left->execute((players->operator[](1)).get());
+				break;
+			case sf::Keyboard::D:
+				right->execute((players->operator[](1)).get());
+				break;
+			case sf::Keyboard::S:
+				down->execute((players->operator[](1)).get());
+				break;
+
+			default:
+				break;
+			}
+		
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			right->execute((players->operator[](0)).get());
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			down->execute((players->operator[](0)).get());
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			jump->execute((players->operator[](0)).get());
-		}
+		
 	}
 }
 
