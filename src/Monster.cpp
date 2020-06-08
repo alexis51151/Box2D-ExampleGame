@@ -78,6 +78,10 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	b2FixtureDef conefixtures;
 	conefixtures.isSensor = true;
 	conefixtures.shape = &coneshape;
+
+	conefixtures.filter.categoryBits = SENSOR;
+	conefixtures.filter.maskBits = PLAYER; //ne devrais detecter que les joueur 
+
 	b2Fixture* conseSensorFixture = m_body->CreateFixture(&conefixtures);
 	Monster::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
 	conseSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
@@ -98,20 +102,18 @@ void Monster::updatespeed()
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
 
 	if (rfootcontact > 1 && lfootcontact > 1) { //deux pied aux sol 
-		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*10, 0));
-		printf("sol \n");
+		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
 	}
 	if (lfootcontact < 1 && rfootcontact < 1){ //deux piid en l'air 
 		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 10));
-		printf("air \n");
 		return;
 	}
 	if (reverspeed_timout > 0)
 		return;
 	//on doit faire demitour 
 	printf("revers speed \n");
-	body->SetLinearVelocity(b2Vec2(-directionxsigne()*10, body->GetLinearVelocity().y));
+	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
 

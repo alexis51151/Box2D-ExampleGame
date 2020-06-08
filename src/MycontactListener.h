@@ -5,6 +5,7 @@
 #include "HandData.h"
 #include "PlayerData.h"
 #include "FootData.h"
+#include "ViewFieldData.h"
 
 
 class MyContactListener : public b2ContactListener
