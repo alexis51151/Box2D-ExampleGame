@@ -17,13 +17,9 @@ int myMain() {
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 
-
 	//creation d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
-
-	//body du monstre 
-	b2Body* monstre_body = monsters[0]->getBody();
 
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(10 * RATIO, 30, &gameController));
