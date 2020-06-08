@@ -39,6 +39,7 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 	//filter
 	footFixtureDef.filter.categoryBits = SENSOR;
 	footFixtureDef.filter.groupIndex = foot;
+	footFixtureDef.filter.maskBits = PLATFORM | MONSTER;
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
@@ -52,8 +53,9 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 	handfixture.shape = &handpolygonShape;
 
 	//filter
-	footFixtureDef.filter.categoryBits = SENSOR;
-	footFixtureDef.filter.groupIndex = hand;
+	handfixture.filter.categoryBits = SENSOR;
+	handfixture.filter.groupIndex = hand;
+	handfixture.filter.maskBits = PLATFORM;
 
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
 	my_handdata= std::make_unique<HandData>(sf::Color::Green, hand, 0);

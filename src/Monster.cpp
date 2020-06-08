@@ -45,7 +45,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	b2Fixture* LfootSensorFixture = m_body->CreateFixture(&LfootFixtureDef);
 	Monster::my_Lfootdata = std::make_unique< FootData>(sf::Color::Green, MonsterLfoot);
 	LfootSensorFixture->SetUserData(static_cast<void*>(my_Lfootdata.get()));
-
+	LfootFixtureDef.filter.maskBits = PLATFORM;
 	//add foot sensor fixture
 	b2PolygonShape RfootpolygonShape;
 	RfootpolygonShape.SetAsBox(0.1, 0.1, b2Vec2(whidth * UNRATIO, height * UNRATIO), 0);
@@ -56,6 +56,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	//filter 
 	RfootFixtureDef.filter.categoryBits = SENSOR;
 	RfootFixtureDef.filter.groupIndex = MonsterRfoot;
+	RfootFixtureDef.filter.maskBits = PLATFORM;
 
 	b2Fixture* RfootSensorFixture = m_body->CreateFixture(&RfootFixtureDef);
 	Monster::my_Rfootdata = std::make_unique< FootData>(sf::Color::Green, MonsterRfoot);

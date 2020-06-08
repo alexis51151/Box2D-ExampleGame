@@ -1,6 +1,6 @@
 #include "Rope.h"
 
-std::vector<b2Body*>addBodyRope(Box2DEngine* gameController,int x, int y, float length, int nb_links) {
+std::vector<b2Body*>Rope::addBodyRope(Box2DEngine* gameController,int x, int y, float length, int nb_links) {
 	// Link width and height
 	float width = length / nb_links;
 

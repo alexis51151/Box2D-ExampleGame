@@ -8,7 +8,6 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
-	
 	//creation de la liste des platformes 
 	std::vector<std::unique_ptr<Platform>>platforms;
 
