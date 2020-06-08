@@ -17,7 +17,7 @@ public:
 	void actionRight();
 	void actionDown();
 	void actionUp();
-	b2Body* addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width);
+	b2Body* addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width);
 
 private:
 	b2Body* body;

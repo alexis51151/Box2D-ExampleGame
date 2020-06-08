@@ -2,7 +2,7 @@
 #include "ViewFieldData.h"
 
 
-b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float height, float width) {
+b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
@@ -88,7 +88,7 @@ b2Body* Player::addbodyplayer(Box2DEngine* gameController, int x, int y, float h
 
 Player::Player(Box2DEngine* gameController)
 {
-	Player::body = addbodyplayer(gameController,10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
+	Player::body = addBodyPlayer(gameController,10 * RATIO, 10 * RATIO, 1.0f * RATIO, 1.0f * RATIO);
 	Player::shape = std::unique_ptr<Circle>(new Circle());
 }
 
