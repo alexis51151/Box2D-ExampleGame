@@ -73,7 +73,7 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	RfootSensorFixture->SetUserData(static_cast<void*>(my_Rfootdata.get()));
 
 	//add triangular sensor for the player 
-	const float radius = 3;
+	const float radius = 6;
 	const int nbpoint = 6;
 	b2Vec2 vertices[nbpoint];
 	const float min_angle = -10;
@@ -112,12 +112,22 @@ void Monster::updateSpeed()
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
 	int sensocontact = this->my_Lviewdata->getEntitidetected();
 	printf(" 1 :  l:%d ,r:%d \n\n ", lfootcontact, rfootcontact);
-	/*if (sensocontact >= 1) {
-		
+	if (sensocontact >= 1) {
+		timedetection++;
 	}
 	if (sensocontact < 1) {
-		my_color = sf::Color::Green;
-	}*/
+		if(timedetection > 0) 
+			timedetection--;
+	}
+	if (timedetection < 60){
+		my_color = sf::Color::Blue;
+	}
+	else if (timedetection < 120) {
+		my_color = sf::Color::Yellow;
+	}
+	else if (timedetection < 120) {
+		my_color = sf::Color::Red;
+	}
 	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
