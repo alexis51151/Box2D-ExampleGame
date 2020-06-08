@@ -8,11 +8,11 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 	if (  fixtureDataA->getDataType() == viewField ){
 		printf("champ de vision activer\n");
 		b2RayCastInput input;
-		input.p1 = A->GetBody()->GetWorldCenter();
-		input.p1 = B->GetBody()->GetWorldCenter();
+		input.p1 = A->GetBody()->GetPosition();
+		input.p2 = B->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output=new b2RayCastOutput();;
-		if (A->RayCast(output, input, 0)) {
+		if (A->RayCast(output, input, 1)) {
 			printf("il ya un element entre les deux \n");
 		}
 		else
@@ -25,11 +25,11 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 	if (fixtureDataB->getDataType() == viewField) {
 		printf("champ de vision activer\n");
 		b2RayCastInput input;
-		input.p1 = B->GetBody()->GetWorldCenter();
-		input.p1 = A->GetBody()->GetWorldCenter();
+		input.p1 = B->GetBody()->GetPosition();
+		input.p2 = A->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output = new b2RayCastOutput();
-		if (B->RayCast(output, input, 0)) {
+		if (B->RayCast(output, input, 1)) {
 			printf("il ya un element entre les deux \n");
 			
 		}

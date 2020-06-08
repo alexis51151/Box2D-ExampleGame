@@ -37,7 +37,7 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float h
 
 	//filter
 	footFixtureDef.filter.categoryBits = SENSOR;
-	footFixtureDef.filter.maskBits = PLATFORM;
+	footFixtureDef.filter.maskBits = PLATFORM| MOVING_OBJECT;
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
@@ -102,10 +102,11 @@ void Player::actionLef()
 
 void Player::actionRight()
 {
-	int footcount;
-	int handcount;
-	int jumptimout;
-	getvalue(body, &footcount, &handcount, &jumptimout);
+
+	int footcount = my_footdata->GetNumFootContact();
+	int handcount = my_handdata->GetNumhandContact();
+	int jumptimout = my_playerdata->GetJumpTimeout();
+	
 
 	if (footcount < 1 && handcount < 1 && jumptimout > 0) { //enlair 
 		if (body->GetLinearVelocity().x >= 5) {

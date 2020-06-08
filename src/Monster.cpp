@@ -12,7 +12,6 @@ Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float 
 	shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
 
-
 b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float width) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
@@ -73,45 +72,70 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 	RfootSensorFixture->SetUserData(static_cast<void*>(my_Rfootdata.get()));
 
 	//add triangular sensor for the player 
+	
 	const float radius = 6;
 	const int nbpoint = 6;
 	b2Vec2 vertices[nbpoint];
+	b2Vec2 vertices2[nbpoint];
 	const float min_angle = -10;
 	const float max_angle = 10;
 	float pas = (max_angle - min_angle)*2 / (nbpoint - 1);
 
 	// Drawing the triangle
 	vertices[0].Set(0, 0);
+	vertices2[0].Set(0, 0);
 	for (int i = 0; i < nbpoint-1 ; i++) {
 		vertices[i + 1].Set(radius *cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
+		vertices2[i + 1].Set(radius * -cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
 	}
 
 	b2PolygonShape coneShape;
+	b2PolygonShape coneShape2;
+	
 	coneShape.Set(vertices, nbpoint);
-	myFixtureDef.shape = &polygonShape;
+	coneShape2.Set(vertices2, nbpoint);
+
 	b2FixtureDef coneFixtures;
+	b2FixtureDef coneFixtures2;
+
 	coneFixtures.isSensor = true;
+	coneFixtures2.isSensor = true;
+
 	coneFixtures.shape = &coneShape;
+	coneFixtures2.shape = &coneShape2;
 
 	coneFixtures.filter.categoryBits = SENSOR;
+	coneFixtures2.filter.categoryBits = SENSOR;
+
 	coneFixtures.filter.groupIndex = -10;
+	coneFixtures2.filter.groupIndex = -10;
+
 	coneFixtures.filter.maskBits = PLAYER; // to only detect players 
+	coneFixtures2.filter.maskBits = PLAYER;
 
 	b2Fixture* coneSensorFixture = m_body->CreateFixture(&coneFixtures);
+	b2Fixture* coneSensorFixture2 = m_body->CreateFixture(&coneFixtures2);
+
 	Monster::my_Lviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
+	Monster::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
+
 	my_Lviewdata->setDrawable(true);
+	my_Rviewdata->setDrawable(true);
+	
 	coneSensorFixture->SetUserData(static_cast<void*>(my_Lviewdata.get()));
+	coneSensorFixture2->SetUserData(static_cast<void*>(my_Rviewdata.get()));
 
 	return m_body;
 }
-
 
 void Monster::updateSpeed()
 {
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
+
 	int sensocontact = this->my_Lviewdata->getEntitidetected();
-	printf(" 1 :  l:%d ,r:%d \n\n ", lfootcontact, rfootcontact);
+	int sensocontact2 = this->my_Rviewdata->getEntitidetected();
+	
 	if (sensocontact >= 1) {
 		timedetection++;
 	}
@@ -125,7 +149,7 @@ void Monster::updateSpeed()
 	else if (timedetection < 120) {
 		my_color = sf::Color::Yellow;
 	}
-	else if (timedetection < 120) {
+	else if (timedetection < 180) {
 		my_color = sf::Color::Red;
 	}
 	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
@@ -139,7 +163,6 @@ void Monster::updateSpeed()
 	if (reverspeed_timout > 0)
 		return;
 	
-
 
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
