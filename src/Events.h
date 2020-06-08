@@ -7,6 +7,10 @@
 #include "Utile.h"
 #include "Player.h"
 #include "Platform.h"
+#include "newPlatformcommand.h"
+#include "playerleftcommand.h"
+#include "playerjumcomand.h"
+#include "playerdowncomand.h"
 
 void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std::unique_ptr<Player>>* players, std::vector<std::unique_ptr<Platform>>* platforms);
 

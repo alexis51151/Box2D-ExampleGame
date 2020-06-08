@@ -1,5 +1,12 @@
 #include <Events.h>
+#include "playerrightcommand.h"
 
+
+Icommand* newplatformcommand = new Newplatformcommand();
+Icommand* jump = new PlayerJumcomand();
+Icommand* left = new PlayerLeftcomand();
+Icommand* down = new PlayerDowncomand();
+Icommand* right = new PlayerRighttcomand();
 
 void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std::unique_ptr<Player>>* players, std::vector<std::unique_ptr<Platform>>* platforms) {
 	sf::Event event;
@@ -7,7 +14,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 	while (window->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
 			window->close();
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
 		{
 			float MouseX = sf::Mouse::getPosition(*window).x;
 			float MouseY = sf::Mouse::getPosition(*window).y;
@@ -21,19 +28,19 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			players->operator[](0)->actionLef();
+			left->execute((players->operator[](0)).get());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			players->operator[](0)->actionRight();
+			right->execute((players->operator[](0)).get());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			players->operator[](0)->actionDown();
+			down->execute((players->operator[](0)).get());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			players->operator[](0)->actionUp();
+			jump->execute((players->operator[](0)).get());
 		}
 	}
 }
