@@ -27,6 +27,7 @@ enum DataType {
 	Monstertype,
 	MonsterLfoot,
 	MonsterRfoot,
+	viewField,
 	end
 };
 enum _entityCategory {
