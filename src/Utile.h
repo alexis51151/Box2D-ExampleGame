@@ -5,5 +5,5 @@
 #include "PlayerData.h"
 
 
-//PlayerData* getPlayerData(b2Body* player1);
+PlayerData* getPlayerData(b2Body* player1);
 std::pair<float, float> getBodyDimensions(b2Body* body);
