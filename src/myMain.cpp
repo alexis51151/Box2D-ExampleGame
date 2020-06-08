@@ -18,7 +18,7 @@ int myMain() {
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 
-	//creation d'un monstre 
+	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
 
@@ -40,14 +40,14 @@ int myMain() {
 		world->Step(timeStep, velocityIterations, positionIterations);
 		// Gestion des joueurs 
 		for (int i = 0; i < players.size(); i++) {
-			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joueur 
+			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timeout pour les jumps de joueur 
 			players[i]->draw(sf::Color::Green, window);
 		}
 
 		// Gestion des monstres 
 		for (int i = 0; i < monsters.size(); i++) {
-			monsters[i]->decreace_reverspeed_timout();
-			monsters[i]->updatespeed();
+			monsters[i]->decreaseReverseSpeedTimeout();
+			monsters[i]->updateSpeed();
 			monsters[i]->draw(sf::Color::Red, window);
 		}
 		// Gestion des plateformes 
