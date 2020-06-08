@@ -13,18 +13,18 @@ int myMain() {
 	std::vector<std::unique_ptr<Platform>>platforms;
 
 	// Création des joueurs 
-	std::vector<std::unique_ptr<Player>> players; 
+	std::vector<std::unique_ptr<Player>> players;
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
 
-	
+
 	//creation d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
-	
+
 	//body du monstre 
 	b2Body* monstre_body = monsters[0]->getBody();
-	
+
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(10 * RATIO, 30, &gameController));
 	rope->linkPlayers(players[0].get(), players[1].get(), world);
@@ -37,21 +37,21 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, &players,&platforms);
+		HookEvents(window, &gameController, &players, &platforms);
 		window->clear(sf::Color::White);
-		
+
 		world->Step(timeStep, velocityIterations, positionIterations);
 		// Gestion des joueurs 
-		for (int i = 0; i < players.size(); i++) { 
+		for (int i = 0; i < players.size(); i++) {
 			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timout pour les jumps de joueur 
 			players[i]->draw(sf::Color::Green, window);
 		}
-		
+
 		// Gestion des monstres 
 		for (int i = 0; i < monsters.size(); i++) {
 			monsters[i]->decreace_reverspeed_timout();
 			monsters[i]->updatespeed();
-			monsters[i]->draw(sf::Color::Red,window);
+			monsters[i]->draw(sf::Color::Red, window);
 		}
 		// Gestion des plateformes 
 		for (int i = 0; i < platforms.size(); i++)
