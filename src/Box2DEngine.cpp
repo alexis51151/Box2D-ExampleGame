@@ -56,7 +56,7 @@ b2Body* Box2DEngine::addDynamicBox(int x, int y, float height, float width, Mate
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(height * UNRATIO, width * UNRATIO);
+	dynamicBox.SetAsBox(width * UNRATIO, height * UNRATIO);
 
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;
