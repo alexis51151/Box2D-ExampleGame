@@ -9,7 +9,8 @@ int myMain() {
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
 
-	// Création des plateformes 
+	//creation de la liste des platformes 
+
 	std::vector<std::unique_ptr<Platform>>platforms;
 
 	// Création des joueurs 
