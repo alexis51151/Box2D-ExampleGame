@@ -8,7 +8,6 @@ int myMain() {
 	XMLParser configParser("C:/Users/aigle/Desktop/projet_jhin/test/Jeu_jin/resources/config.xml");
 	configParser.readConfig();
 
-
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
@@ -28,7 +27,6 @@ int myMain() {
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2 / 3, HEIGHT * 5 / 10)));
-
 
 
 	// Création des joueurs 
