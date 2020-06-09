@@ -8,7 +8,7 @@ Icommand* left = new PlayerLeftcomand();
 Icommand* down = new PlayerDowncomand();
 Icommand* right = new PlayerRighttcomand();
 
-void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std::unique_ptr<Player>>* players, std::vector<std::unique_ptr<Platform>>* platforms) {
+void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std::unique_ptr<Player>>* players, std::vector<std::unique_ptr<Platform>>* platforms, std::map<std::string, int>*	keyboardCommandsPlayer1, std::map<std::string, int>* keyboardCommandsPlayer2) {
 	sf::Event event;
 	float impulse = players->operator[](1)->getBody()->GetMass() * 10;
 	while (window->pollEvent(event)) {
@@ -24,9 +24,37 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 		{
 			float MouseX = sf::Mouse::getPosition(*window).x;
 			float MouseY = sf::Mouse::getPosition(*window).y;
-			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY,1.0f * RATIO, 8.0f * RATIO));
+			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY,8.0f * RATIO, 1.0f * RATIO));
 		}
 		if(event.type == sf::Event::KeyPressed) {
+			if (event.key.code == keyboardCommandsPlayer1->operator[]("Up")) {
+				jump->execute((players->operator[](0)).get());
+			}
+			else if(event.key.code == keyboardCommandsPlayer1->operator[]("Left")) {
+				left->execute((players->operator[](0)).get());
+			}
+			else if (event.key.code == keyboardCommandsPlayer1->operator[]("Right")) {
+				right->execute((players->operator[](0)).get());
+			}
+			else if (event.key.code == keyboardCommandsPlayer1->operator[]("Down")) {
+				down->execute((players->operator[](0)).get());
+			}
+			// player 2
+			else if (event.key.code == keyboardCommandsPlayer2->operator[]("Up")) {
+				jump->execute((players->operator[](1)).get());
+			}
+			else if (event.key.code == keyboardCommandsPlayer2->operator[]("Left")) {
+				left->execute((players->operator[](1)).get());
+			}
+			else if (event.key.code == keyboardCommandsPlayer2->operator[]("Right")) {
+				right->execute((players->operator[](1)).get());
+			}
+			else if (event.key.code == keyboardCommandsPlayer2->operator[]("Down")) {
+				down->execute((players->operator[](1)).get());
+			}
+
+			
+			/**
 			switch (event.key.code)
 			{
 				//player 1
@@ -59,7 +87,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 			default:
 				break;
 			}
-		
+			/*/
 		}
 		
 	}

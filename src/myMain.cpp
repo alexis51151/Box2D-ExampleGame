@@ -3,6 +3,10 @@
 
 int myMain() {
 
+	// Retrieve game config
+	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+	configParser.readConfig();
+
 
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -38,7 +42,7 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, &players, &platforms);
+		HookEvents(window, &gameController, &players, &platforms, &(configParser.getKeyboardCommandsPlayer1()), &(configParser.getKeyboardCommandsPlayer2()));
 		window->clear(sf::Color::White);
 
 		world->Step(timeStep, velocityIterations, positionIterations);

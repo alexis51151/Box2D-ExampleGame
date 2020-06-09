@@ -164,7 +164,7 @@ TEST(TestInteractionBodies, TestMonsterPlatform) {
 	Monster* monster = new Monster(&gameController, 300, 200, 20, 20);
 
 	// adding one platform
-	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
+	Platform* platform = new Platform(&gameController, 300, 300, 100, 10);
 
 	// Simulating over some iterations
 
