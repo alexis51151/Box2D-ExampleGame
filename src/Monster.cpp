@@ -161,7 +161,10 @@ void Monster::updateSpeed()
 		if(timedetection > 0) 
 			timedetection--;
 	}
-	
+	if (timedetection > 30) {
+		Monster::my_playerdetected = true;
+	}
+
 	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
@@ -177,9 +180,6 @@ void Monster::updateSpeed()
 	}
 	else {
 		body->SetLinearVelocity(b2Vec2(-directionxsigne() * 5, body->GetLinearVelocity().y));
-	}
-	if (timedetection > 30) {
-		my_playerdetected = true;
 	}
 	reverspeed_timout = 15;
 }
