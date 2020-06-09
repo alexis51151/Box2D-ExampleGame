@@ -52,7 +52,14 @@ int myMain() {
 		window->clear(sf::Color::White);
 
 		world->Step(timeStep, velocityIterations, positionIterations);
-		// Gestion des joueurs 
+		//couleur du joueur 1 si detection
+		if (players[0]->isplayerdetected()){
+			playercolor[0] = sf::Color::Red;
+		}
+		else {
+			playercolor[0] = sf::Color::Green;
+		}
+			// Gestion des joueurs 
 		for (int i = 0; i < players.size(); i++) {
 			players[i]->decreasejumptimout();// decrease le timeout pour les jumps 
 			players[i]->draw(playercolor[i], window);
