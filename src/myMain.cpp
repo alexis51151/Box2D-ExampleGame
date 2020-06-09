@@ -16,6 +16,7 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
+	bool gameOver = false;
 
 
 	// Textures loading
@@ -23,23 +24,20 @@ int myMain() {
 	sf::Texture background_texture;
 	sf::Sprite background_sprite;
 	background_texture.loadFromFile("C:/Users/alexi/source/repos/Jeu_jin/resources/fond.jpg", sf::IntRect(0, 0, WIDTH, HEIGHT));
-	background_sprite.setPosition(WIDTH / 2, HEIGHT / 2);
+	background_sprite.setPosition(0, 0);
 	background_sprite.setTexture(background_texture);
-	window->draw(background_sprite);
-
 	//creation de la liste des platformes 
 
 	std::vector<std::unique_ptr<Platform>>platforms;
 
-	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT* 3/10, WIDTH / 8, HEIGHT / 30)); //platform 
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2/ 3, HEIGHT * 6 / 10, WIDTH / 6, HEIGHT / 30)); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2, HEIGHT, WIDTH / 2, HEIGHT / 10)); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT * 3 / 10, WIDTH / 8, HEIGHT / 30)); //platform 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 6 / 10, WIDTH / 6, HEIGHT / 30)); //sol 
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 4 / 10, WIDTH / 12, HEIGHT / 35)); //platform esquive monstre
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 3.7 / 10, WIDTH /40, HEIGHT / 15));
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 3.7 / 10, WIDTH / 40, HEIGHT / 15));
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT * 8 / 10, WIDTH / 15, HEIGHT / 30));
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 3, HEIGHT * 7 / 10, WIDTH / 15, HEIGHT / 30));
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2, HEIGHT * 6 / 10, WIDTH / 15, HEIGHT / 30));
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2, HEIGHT/2, 10, HEIGHT));//mure gauche
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2 - WIDTH / 13, HEIGHT / 2, WIDTH / 50, HEIGHT / 8)); //sol
 
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
@@ -68,26 +66,13 @@ int myMain() {
 		HookEvents(window, &gameController, &players, &platforms, &(configParser.getKeyboardCommandsPlayer1()), &(configParser.getKeyboardCommandsPlayer2()));
 		window->clear(sf::Color::White);
 
+		// Affichage du fond
+		window->draw(background_sprite);
+
 		world->Step(timeStep, velocityIterations, positionIterations);
 		//couleur du joueur 1 si detection
 		if (players[0]->isplayerdetected()){
-			playercolor[0] = sf::Color::Red;
-			sf::Font font;
-			font.loadFromFile("C:/Users/alexi/source/repos/Jeu_jin/resources/DIOGENES.ttf");
-			sf::Text text;
-			text.setFont(font);
-			text.setString("GAME OVER");
-			text.setCharacterSize(200);
-			text.setFillColor(sf::Color::Red);
-			text.setStyle(sf::Text::Bold);
-			text.setPosition(WIDTH / 2 - 500, HEIGHT / 2 - 200);
-			window->clear(sf::Color::Black);
-			window->draw(text);
-			window->display();
-			Sleep(5000);
-			window->close();
-			return 0;
-
+			gameOver = true;
 		}
 		else {
 			playercolor[0] = sf::Color::Green;
@@ -103,6 +88,9 @@ int myMain() {
 			monsters[i]->decreaseReverseSpeedTimeout();
 			monsters[i]->updateSpeed();
 			monsters[i]->draw(sf::Color::Magenta, window);
+			if (monsters[i]->isplayerdetected()) {
+				gameOver = true;
+			}
 		}
 		// Gestion des plateformes 
 		for (int i = 0; i < platforms.size(); i++)
@@ -111,6 +99,24 @@ int myMain() {
 		// Gestion de la corde 
 		rope->draw(sf::Color::Green, window);
 
+		if (gameOver) {
+			playercolor[0] = sf::Color::Red;
+			sf::Font font;
+			font.loadFromFile("C:/Users/alexi/source/repos/Jeu_jin/resources/DIOGENES.ttf");
+			sf::Text text;
+			text.setFont(font);
+			text.setString("GAME OVER");
+			text.setCharacterSize(200);
+			text.setFillColor(sf::Color::Red);
+			text.setStyle(sf::Text::Bold);
+			text.setPosition(WIDTH / 2 - 500, HEIGHT / 2 - 200);
+			window->clear(sf::Color::Black);
+			window->draw(text);
+			window->display();
+			Sleep(3000);
+			window->close();
+			return 0;
+		}
 
 		window->display();
 	}
