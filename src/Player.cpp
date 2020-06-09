@@ -70,8 +70,8 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float w
 	vertices[0].Set(0, 0);
 	vertices2[0].Set(0, 0);
 	for (int i = 0; i < nbpoint - 1; i++) {
-		vertices[i + 1].Set(radius * cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
-		vertices2[i + 1].Set(radius * -cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
+		vertices[i + 1].Set(radius * cosf((i * pas + min_angle) * DEGTORAD), -radius * sinf((i * pas + min_angle) * DEGTORAD));
+		vertices2[i + 1].Set(radius * -cosf((i * pas + min_angle) * DEGTORAD), -radius * sinf((i * pas + min_angle) * DEGTORAD));
 	}
 
 	b2PolygonShape coneShape;
