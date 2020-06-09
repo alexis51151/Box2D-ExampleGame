@@ -1,3 +1,5 @@
+#pragma once
+
 class PlayerRighttcomand : public Icommand
 {
 public:

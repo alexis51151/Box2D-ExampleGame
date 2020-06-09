@@ -1,3 +1,6 @@
+#pragma once
+
+
 class PlayerJumcomand : public Icommand
 {
 public:
