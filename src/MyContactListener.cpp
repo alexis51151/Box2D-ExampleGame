@@ -1,8 +1,8 @@
 #include "MyContactListener.h"
 #include <iostream>
 
-
-void viewdetextion(b2Fixture * A, b2Fixture* B) {
+//gestion des champs de vue 
+void binginviewdetextion(b2Fixture * A, b2Fixture* B) {
 	FixtureData* fixtureDataA = static_cast<FixtureData*> (A->GetUserData());
 	FixtureData* fixtureDataB = static_cast<FixtureData*> (B->GetUserData());
 	if (  fixtureDataA->getDataType() == viewField ){
@@ -40,6 +40,45 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 
 	}
 }
+void endviewdetextion(b2Fixture* A, b2Fixture* B) {
+	FixtureData* fixtureDataA = static_cast<FixtureData*> (A->GetUserData());
+	FixtureData* fixtureDataB = static_cast<FixtureData*> (B->GetUserData());
+	if (fixtureDataA->getDataType() == viewField) {
+		printf("champ de vision activer\n");
+		b2RayCastInput input;
+		input.p1 = A->GetBody()->GetPosition();
+		input.p2 = B->GetBody()->GetPosition();
+		input.maxFraction = 1;
+		b2RayCastOutput* output = new b2RayCastOutput();;
+		if (A->RayCast(output, input, 1)) {
+			printf("il ya un element entre les deux \n");
+		}
+		else
+		{
+			printf("il n'y a rien entre les deux \n");
+			((ViewFieldData*)fixtureDataA)->DecreaseEntityDetected();
+		}
+
+	}
+	if (fixtureDataB->getDataType() == viewField) {
+		printf("champ de vision activer\n");
+		b2RayCastInput input;
+		input.p1 = B->GetBody()->GetPosition();
+		input.p2 = A->GetBody()->GetPosition();
+		input.maxFraction = 1;
+		b2RayCastOutput* output = new b2RayCastOutput();
+		if (B->RayCast(output, input, 1)) {
+			printf("il ya un element entre les deux \n");
+		}
+		else
+		{
+			printf("il n'y a rien entre les deux \n");
+			((ViewFieldData*)fixtureDataB)->DecreaseEntityDetected();
+		}
+
+	}
+}
+
 void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
 	{
@@ -95,7 +134,7 @@ void MyContactListener::BeginContact(b2Contact* contact) {
     }
 	
 	if (contact->GetFixtureA() != NULL && contact->GetFixtureB() != NULL) {
-		viewdetextion(contact->GetFixtureA(), contact->GetFixtureB());
+		binginviewdetextion(contact->GetFixtureA(), contact->GetFixtureB());
 	}
 
 }
@@ -113,6 +152,9 @@ void MyContactListener::EndContact(b2Contact* contact) {
     if (fixtureData != NULL) {
         end_contact_action(fixtureData);
     }
+	if (contact->GetFixtureA() != NULL && contact->GetFixtureB() != NULL) {
+		endviewdetextion(contact->GetFixtureA(), contact->GetFixtureB());
+	}
 }
 
 MyContactListener::MyContactListener()

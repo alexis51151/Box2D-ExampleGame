@@ -17,7 +17,7 @@ public:
 	void draw(sf::Color color, sf::RenderWindow* window);
 	void updateSpeed();
 	void decreaseReverseSpeedTimeout() { reverspeed_timout--; }
-	b2Body* addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float whidth);
+	b2Body* addBodyMonster(Box2DEngine* gameController, int x, int y,float whidth, float height);
 protected:
 
 private:
