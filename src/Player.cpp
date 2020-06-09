@@ -37,7 +37,7 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float w
 
 	//filter
 	footFixtureDef.filter.categoryBits = SENSOR;
-	footFixtureDef.filter.maskBits = PLATFORM; // |MOVINGOBJECT  pour sauter sur la rope 
+	footFixtureDef.filter.maskBits = PLATFORM | MOVING_OBJECT; // |MOVINGOBJECT  pour sauter sur la rope 
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
