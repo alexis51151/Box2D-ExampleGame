@@ -138,11 +138,18 @@ void Player::update()
 		my_Lviewdata->setDrawable(true);
 		my_Rviewdata->setDrawable(false);
 	}
-	playerdetected = (my_Rviewdata->getEntityDetected() >= 1 && directionsigne == 1)
-					|| (my_Lviewdata->getEntityDetected() >= 1 && directionsigne == -1);
-	if (playerdetected) {
-		//todebug  raycast
+	bool detect = (my_Rviewdata->getEntityDetected() >= 1 && directionsigne == 1)
+					|| (my_Lviewdata->getEntityDetected() >= 1 && directionsigne == -1); //un joueur est detecter
+	if (detect) {
+		timerdetection++;
 	}
+	else
+	{
+		if (timerdetection > 0)
+			timerdetection--;
+	}
+	if (timerdetection > 30)
+		playerdetected = true;
 }
 
 void Player::actionLef()

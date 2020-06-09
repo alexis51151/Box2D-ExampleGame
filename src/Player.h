@@ -36,4 +36,5 @@ private:
 	std::vector<std::unique_ptr<Shape>> shapes;
 	int directionsigne = 1;
 	bool playerdetected = false;
+	int timerdetection = 0;
 };
