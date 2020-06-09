@@ -5,7 +5,7 @@ int myMain() {
 
 	// Retrieve game config
 	
-	XMLParser configParser("C:/Users/aigle/Desktop/projet_jhin/test/Jeu_jin/resources/config.xml");
+	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
 	configParser.readConfig();
 
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp

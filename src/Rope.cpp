@@ -67,7 +67,7 @@ std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length,
 }
 
 
-void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
+void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 	float width = length / nb_links;
 
 
@@ -80,7 +80,7 @@ void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 
     // Revolution Joints
 	b2RevoluteJointDef revoluteJointDef1;
-	revoluteJointDef1.localAnchorA.Set((player1_width + 1)* UNRATIO, 0);
+	revoluteJointDef1.localAnchorA.Set((player1_width - 1)* UNRATIO, 0);
 	revoluteJointDef1.localAnchorB.Set((-width-1)* UNRATIO, 0);
 
 	
@@ -91,7 +91,7 @@ void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 
 	// Revolution Joints
 	b2RevoluteJointDef revoluteJointDef2;
-	revoluteJointDef2.localAnchorA.Set((player2_width + 1) * UNRATIO, 0);
+	revoluteJointDef2.localAnchorA.Set((player2_width -1) * UNRATIO, 0);
 	revoluteJointDef2.localAnchorB.Set((-width - 1) * UNRATIO, 0);
 
     // Link player2 to endBody
