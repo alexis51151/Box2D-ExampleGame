@@ -27,6 +27,7 @@ void HookEvents(sf::Window* window, Box2DEngine* gameController, std::vector<std
 			platforms->push_back(std::make_unique<Platform>(gameController,MouseX, MouseY,8.0f * RATIO, 1.0f * RATIO));
 		}
 		if(event.type == sf::Event::KeyPressed) {
+			int mykey = keyboardCommandsPlayer1->operator[]("Up");
 			if (event.key.code == keyboardCommandsPlayer1->operator[]("Up")) {
 				jump->execute((players->operator[](0)).get());
 			}

@@ -1,10 +1,11 @@
 #include "myMain.h"
-
+#include <direct.h>
 
 int myMain() {
 
 	// Retrieve game config
-	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+	
+	XMLParser configParser("C:/Users/aigle/Desktop/projet_jhin/test/Jeu_jin/resources/config.xml");
 	configParser.readConfig();
 
 
