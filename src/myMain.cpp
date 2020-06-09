@@ -42,7 +42,7 @@ int myMain() {
 	while (window->isOpen())
 	{
 		// Events.cpp : handle mouse and keyboard events
-		HookEvents(window, &gameController, &players, &platforms, &(configParser.getKeyboardCommandsPlayer1()), &(configParser.getKeyboardCommandsPlayer1()));
+		HookEvents(window, &gameController, &players, &platforms, &(configParser.getKeyboardCommandsPlayer1()), &(configParser.getKeyboardCommandsPlayer2()));
 		window->clear(sf::Color::White);
 
 		world->Step(timeStep, velocityIterations, positionIterations);
