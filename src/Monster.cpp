@@ -110,7 +110,7 @@ void Monster::updateSpeed()
 {
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
-	int sensocontact = this->my_Lviewdata->getEntitidetected();
+	int sensocontact = this->my_Lviewdata->getEntityDetected();
 	printf(" 1 :  l:%d ,r:%d \n\n ", lfootcontact, rfootcontact);
 	if (sensocontact >= 1) {
 		timedetection++;
