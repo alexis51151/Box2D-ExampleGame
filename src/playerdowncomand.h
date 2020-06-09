@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Icomand.h"
 
 class PlayerDowncomand : public Icommand
 {
