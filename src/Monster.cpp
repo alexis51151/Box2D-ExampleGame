@@ -121,9 +121,10 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 	my_Lviewdata->setDrawable(true);
 	my_Rviewdata->setDrawable(true);
+
+	coneSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
+	coneSensorFixture2->SetUserData(static_cast<void*>(my_Lviewdata.get()));
 	
-	coneSensorFixture->SetUserData(static_cast<void*>(my_Lviewdata.get()));
-	coneSensorFixture2->SetUserData(static_cast<void*>(my_Rviewdata.get()));
 
 	return m_body;
 }
@@ -135,7 +136,17 @@ void Monster::updateSpeed()
 
 	int sensocontact = this->my_Lviewdata->getEntitidetected();
 	int sensocontact2 = this->my_Rviewdata->getEntitidetected();
-	
+	if (directionxsigne() == 1) {
+		my_Rviewdata->setDrawable(true);
+		my_Lviewdata->setDrawable(false);
+	}
+	else
+	{
+		my_Rviewdata->setDrawable(false);
+		my_Lviewdata->setDrawable(true);
+	}
+
+
 	if (sensocontact >= 1) {
 		timedetection++;
 	}
