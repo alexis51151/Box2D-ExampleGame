@@ -1,8 +1,8 @@
 #include "Platform.h"
 
 
-Platform::Platform(Box2DEngine* gameController, int x, int y, float height, float width) {
-	body = gameController->addStaticBox(x, y, height, width);
+Platform::Platform(Box2DEngine* gameController, int x, int y,float width, float height) {
+	body = gameController->addStaticBox(x, y, width, height);
 	shape = std::unique_ptr<Rectangle>(new Rectangle());
 }
 

@@ -50,7 +50,7 @@ TEST(TestAddBody, TestAddPlatform) {
 	Box2DEngine gameController(WIDTH, HEIGHT);
 	b2World* world = gameController.getPhysicsWorld();
 	// adding one platform
-	Platform* platform = new Platform(&gameController, 300, 300, 10,100);
+	Platform* platform = new Platform(&gameController, 300, 300, 100, 10);
 	b2Body* platform_body = platform->getBody();
 	// Going through the box2D bodies list
 	int found = 0;
@@ -90,7 +90,7 @@ TEST(TestInteractionBodies, TestPlayerPlatform1) {
 	Player* player = new Player(&gameController, 429, 250);
 
 	// adding one platform
-	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
+	Platform* platform = new Platform(&gameController, 300, 300, 100, 10);
 	
 	// Simulating over some iterations
 
@@ -126,7 +126,7 @@ TEST(TestInteractionBodies, TestPlayerPlatform2) {
 	Player* player = new Player(&gameController, 431, 250);
 
 	// adding one platform
-	Platform* platform = new Platform(&gameController, 300, 300, 10, 100);
+	Platform* platform = new Platform(&gameController, 300, 300,  100, 10 );
 
 	// Simulating over some iterations
 
