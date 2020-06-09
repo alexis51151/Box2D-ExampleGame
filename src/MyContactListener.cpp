@@ -11,8 +11,8 @@ void binginviewdetextion(b2Fixture * A, b2Fixture* B) {
 		input.p1 = A->GetBody()->GetPosition();
 		input.p2 = B->GetBody()->GetPosition();
 		input.maxFraction = 1;
-		b2RayCastOutput* output=new b2RayCastOutput();;
-		if (!A->RayCast(output, input, 1)) {
+		std::unique_ptr< b2RayCastOutput> output= std::make_unique<b2RayCastOutput>();
+		if (!A->RayCast(output.get(), input, 1)) {
 			((ViewFieldData*)fixtureDataA)->increaIncreaceEntitidetected();
 		}
 	}
@@ -22,8 +22,8 @@ void binginviewdetextion(b2Fixture * A, b2Fixture* B) {
 		input.p1 = B->GetBody()->GetPosition();
 		input.p2 = A->GetBody()->GetPosition();
 		input.maxFraction = 1;
-		b2RayCastOutput* output = new b2RayCastOutput();
-		if (! B->RayCast(output, input, 1)) {
+		std::unique_ptr< b2RayCastOutput> output = std::make_unique<b2RayCastOutput>();
+		if (! B->RayCast(output.get(), input, 1)) {
 			((ViewFieldData*)fixtureDataB)->increaIncreaceEntitidetected();
 		}
 	}
@@ -36,8 +36,8 @@ void endviewdetextion(b2Fixture* A, b2Fixture* B) {
 		input.p1 = A->GetBody()->GetPosition();
 		input.p2 = B->GetBody()->GetPosition();
 		input.maxFraction = 1;
-		b2RayCastOutput* output = new b2RayCastOutput();;
-		if (! A->RayCast(output, input, 1)) {
+		std::unique_ptr< b2RayCastOutput> output = std::make_unique<b2RayCastOutput>();
+		if (! A->RayCast(output.get(), input, 1)) {
 			((ViewFieldData*)fixtureDataA)->DecreaseEntityDetected();
 		}
 
@@ -47,8 +47,8 @@ void endviewdetextion(b2Fixture* A, b2Fixture* B) {
 		input.p1 = B->GetBody()->GetPosition();
 		input.p2 = A->GetBody()->GetPosition();
 		input.maxFraction = 1;
-		b2RayCastOutput* output = new b2RayCastOutput();
-		if (! B->RayCast(output, input, 1)) {
+		std::unique_ptr<b2RayCastOutput> output = std::make_unique<b2RayCastOutput>();
+		if (! B->RayCast(output.get(), input, 1)) {
 			((ViewFieldData*)fixtureDataB)->DecreaseEntityDetected();
 		}
 	}
