@@ -6,76 +6,51 @@ void binginviewdetextion(b2Fixture * A, b2Fixture* B) {
 	FixtureData* fixtureDataA = static_cast<FixtureData*> (A->GetUserData());
 	FixtureData* fixtureDataB = static_cast<FixtureData*> (B->GetUserData());
 	if (  fixtureDataA->getDataType() == viewField ){
-		printf("champ de vision activer\n");
+		
 		b2RayCastInput input;
 		input.p1 = A->GetBody()->GetPosition();
 		input.p2 = B->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output=new b2RayCastOutput();;
-		if (A->RayCast(output, input, 1)) {
-			printf("il ya un element entre les deux \n");
-		}
-		else
-		{
-			printf("il n'y a rien entre les deux \n");
+		if (!A->RayCast(output, input, 1)) {
 			((ViewFieldData*)fixtureDataA)->increaIncreaceEntitidetected();
 		}
-
 	}
 	if (fixtureDataB->getDataType() == viewField) {
-		printf("champ de vision activer\n");
+
 		b2RayCastInput input;
 		input.p1 = B->GetBody()->GetPosition();
 		input.p2 = A->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output = new b2RayCastOutput();
-		if (B->RayCast(output, input, 1)) {
-			printf("il ya un element entre les deux \n");
-		}
-		else
-		{
-			printf("il n'y a rien entre les deux \n");
+		if (! B->RayCast(output, input, 1)) {
 			((ViewFieldData*)fixtureDataB)->increaIncreaceEntitidetected();
 		}
-
 	}
 }
 void endviewdetextion(b2Fixture* A, b2Fixture* B) {
 	FixtureData* fixtureDataA = static_cast<FixtureData*> (A->GetUserData());
 	FixtureData* fixtureDataB = static_cast<FixtureData*> (B->GetUserData());
 	if (fixtureDataA->getDataType() == viewField) {
-		printf("champ de vision activer\n");
 		b2RayCastInput input;
 		input.p1 = A->GetBody()->GetPosition();
 		input.p2 = B->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output = new b2RayCastOutput();;
-		if (A->RayCast(output, input, 1)) {
-			printf("il ya un element entre les deux \n");
-		}
-		else
-		{
-			printf("il n'y a rien entre les deux \n");
+		if (! A->RayCast(output, input, 1)) {
 			((ViewFieldData*)fixtureDataA)->DecreaseEntityDetected();
 		}
 
 	}
 	if (fixtureDataB->getDataType() == viewField) {
-		printf("champ de vision activer\n");
 		b2RayCastInput input;
 		input.p1 = B->GetBody()->GetPosition();
 		input.p2 = A->GetBody()->GetPosition();
 		input.maxFraction = 1;
 		b2RayCastOutput* output = new b2RayCastOutput();
-		if (B->RayCast(output, input, 1)) {
-			printf("il ya un element entre les deux \n");
-		}
-		else
-		{
-			printf("il n'y a rien entre les deux \n");
+		if (! B->RayCast(output, input, 1)) {
 			((ViewFieldData*)fixtureDataB)->DecreaseEntityDetected();
 		}
-
 	}
 }
 
