@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Shape.h"
 #include "box2d/box2d.h"
-#include "Utile.cpp"
+#include "Utile.h"
 
 
 class Rope
@@ -17,7 +17,6 @@ public:
 	std::vector<b2Body*> getElements() const { return elements; }
 	void linkPlayers(Player* player1, Player* player2, b2World* world);
 	void Rope::draw(sf::Color color, sf::RenderWindow* window);
-	std::vector<b2Body*>addBodyRope(Box2DEngine* gameController, int x, int y, float length, int nb_links);
 private:
 	float length;
 	int nb_links;
