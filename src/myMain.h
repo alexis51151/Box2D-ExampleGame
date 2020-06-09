@@ -18,6 +18,7 @@
 #include "Platform.h"
 #include <memory>
 #include "Rope.h"
+#include "XMLParser.h"
 
 
 int myMain();

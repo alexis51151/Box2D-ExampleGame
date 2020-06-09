@@ -4,12 +4,12 @@ class ViewFieldData : public FixtureData
 {
 public:
 	ViewFieldData::ViewFieldData(sf::Color color, int dataType);
-	void increaIncreaceEntitidetected() { entitidetected++; printf("view incresed "); };
-	void DecreaseEntityDetected() { entitidetected--; };
-	int getEntitidetected() const { return entitidetected; }
-	void setEntitidetected(int val) { entitidetected = val; }
+	void increaIncreaceEntitidetected() { entityDetected++; printf("view increased "); };
+	void DecreaseEntityDetected() { entityDetected--; };
+	int getEntityDetected() const { return entityDetected; }
+	void setEntityDetected(int val) { entityDetected = val; }
 protected:
 
 private:
-	int entitidetected = 0;
+	int entityDetected = 0;
 };
