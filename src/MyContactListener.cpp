@@ -31,7 +31,6 @@ void viewdetextion(b2Fixture * A, b2Fixture* B) {
 		b2RayCastOutput* output = new b2RayCastOutput();
 		if (B->RayCast(output, input, 1)) {
 			printf("il ya un element entre les deux \n");
-			
 		}
 		else
 		{

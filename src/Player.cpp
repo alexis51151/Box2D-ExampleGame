@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "ViewFieldData.h"
+
 
 
 b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width) {
@@ -57,7 +57,58 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float h
 	b2Fixture* handSensorFixture = m_body->CreateFixture(&handfixture);
 	my_handdata= std::make_unique<HandData>(sf::Color::Green, hand, 0);
 	handSensorFixture->SetUserData(static_cast<void*>(my_handdata.get()));
+	
+	const float radius = 6;
+	const int nbpoint = 6;
+	b2Vec2 vertices[nbpoint];
+	b2Vec2 vertices2[nbpoint];
+	const float min_angle = -10;
+	const float max_angle = 10;
+	float pas = (max_angle - min_angle) * 2 / (nbpoint - 1);
 
+	// Drawing the triangle
+	vertices[0].Set(0, 0);
+	vertices2[0].Set(0, 0);
+	for (int i = 0; i < nbpoint - 1; i++) {
+		vertices[i + 1].Set(radius * cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
+		vertices2[i + 1].Set(radius * -cosf((i * pas + min_angle) * RADTODEG), -radius * sinf((i * pas + min_angle) * RADTODEG));
+	}
+
+	b2PolygonShape coneShape;
+	b2PolygonShape coneShape2;
+
+	coneShape.Set(vertices, nbpoint);
+	coneShape2.Set(vertices2, nbpoint);
+
+	b2FixtureDef coneFixtures;
+	b2FixtureDef coneFixtures2;
+
+	coneFixtures.isSensor = true;
+	coneFixtures2.isSensor = true;
+
+	coneFixtures.shape = &coneShape;
+	coneFixtures2.shape = &coneShape2;
+
+	coneFixtures.filter.categoryBits = SENSOR;
+	coneFixtures2.filter.categoryBits = SENSOR;
+
+	coneFixtures.filter.groupIndex = -10;
+	coneFixtures2.filter.groupIndex = -10;
+
+	coneFixtures.filter.maskBits = PLAYER; // to only detect players 
+	coneFixtures2.filter.maskBits = PLAYER;
+
+	b2Fixture* coneSensorFixture = m_body->CreateFixture(&coneFixtures);
+	b2Fixture* coneSensorFixture2 = m_body->CreateFixture(&coneFixtures2);
+
+	Player::my_Lviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
+	Player::my_Rviewdata = std::make_unique<ViewFieldData>(sf::Color::Green, viewField);
+
+	my_Lviewdata->setDrawable(true);
+	my_Rviewdata->setDrawable(true);
+
+	coneSensorFixture->SetUserData(static_cast<void*>(my_Rviewdata.get()));
+	coneSensorFixture2->SetUserData(static_cast<void*>(my_Lviewdata.get()));
 
 	return m_body;
 }
@@ -66,12 +117,50 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float h
 
 Player::Player(Box2DEngine * gameController, int x, int y, float height, float width) {
 	Player::body = addBodyPlayer(gameController, x, y, height, width);
-	Player::shape = std::unique_ptr<Circle>(new Circle());
+	Player::shapes.push_back(std::unique_ptr<Circle>(new Circle()));
+	Player::shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
 
 
 void Player::draw(sf::Color color, sf::RenderWindow* window) {
-	Player::shape->draw(body, color, window);
+	update();
+	for (auto& shape : shapes) {
+		shape->draw(body, color, window);
+	}
+}
+
+void Player::updatedirectionxsigne()
+{
+	float xvelocity = body->GetLinearVelocity().x;
+	if (xvelocity > 1) {
+		directionsigne = 1;
+	}
+	else if (xvelocity < -1) {
+		directionsigne = -1;
+	}
+	// si non on garde la meme valeur evite de trop changer 
+}
+
+void Player::update()
+{
+	updatedirectionxsigne();
+	if (directionsigne == 1) {
+		my_Lviewdata->setDrawable(false);
+		my_Rviewdata->setDrawable(true);
+	}
+	else
+	{
+		my_Lviewdata->setDrawable(true);
+		my_Rviewdata->setDrawable(false);
+	}
+	playerdetected = (my_Rviewdata->getEntitidetected() >= 1 && directionsigne == 1)
+					|| (my_Lviewdata->getEntitidetected() >= 1 && directionsigne == -1);
+	if (playerdetected) {
+		printf("joueur detecter  \n");
+	}
+
+
+
 }
 
 void Player::actionLef()

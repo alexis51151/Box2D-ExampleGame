@@ -15,16 +15,16 @@ int myMain() {
 
 	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players;
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 40 * RATIO,  10 * RATIO)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 20 * RATIO, 10 * RATIO)));
 
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 300, 300)));
 
 	// Link the two players with a rope
-	std::unique_ptr<Rope> rope(new Rope(5 * RATIO, 15, &gameController));
-	rope->linkPlayers(players[0].get(), players[1].get(), world);
+	/*std::unique_ptr<Rope> rope(new Rope(5 * RATIO, 15, &gameController));
+	rope->linkPlayers(players[0].get(), players[1].get(), world);*/
 
 	// Simulation parameters
 	float timeStep = 1.0f / 60.0f;
@@ -55,7 +55,7 @@ int myMain() {
 			platforms[i]->draw(sf::Color::Red, window);
 
 		// Gestion de la corde 
-		rope->draw(sf::Color::Green, window);
+		/*rope->draw(sf::Color::Green, window);*/
 
 		window->display();
 	}
