@@ -32,7 +32,7 @@ std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length,
 
 	b2Body* link = gameController->getPhysicsWorld()->CreateBody(&bodyDef);
 	b2Fixture* Fixture = link->CreateFixture(&fixtureDef);
-	FixtureData* data = new FixtureData(sf::Color::Cyan, rope);
+	FixtureData* data = std::unique_ptr<FixtureData>(new FixtureData(sf::Color::Cyan, rope)).get();
 	Fixture->SetUserData(static_cast<void*>(data));
 
 	elements.push_back(link);
