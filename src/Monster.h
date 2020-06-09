@@ -17,7 +17,7 @@ public:
 	void draw(sf::Color color, sf::RenderWindow* window);
 	void updateSpeed();
 	void decreaseReverseSpeedTimeout() { reverspeed_timout--; }
-
+	bool isplayerdetected() { return my_playerdetected; }
 	b2Body* addBodyMonster(Box2DEngine* gameController, int x, int y,float whidth, float height);
 	ViewFieldData* getMy_Lviewdata() const { return my_Lviewdata.get(); }
 
@@ -34,4 +34,5 @@ private:
 	std::vector<std::unique_ptr<Shape>> shapes;
 	sf::Color my_color = sf::Color::Red;
 	int timedetection = 0;
+	bool my_playerdetected = false;
 };

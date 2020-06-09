@@ -178,6 +178,9 @@ void Monster::updateSpeed()
 	else {
 		body->SetLinearVelocity(b2Vec2(-directionxsigne() * 5, body->GetLinearVelocity().y));
 	}
+	if (timedetection > 30) {
+		my_playerdetected = true;
+	}
 	reverspeed_timout = 15;
 }
 
