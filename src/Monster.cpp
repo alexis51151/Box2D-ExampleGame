@@ -5,9 +5,9 @@ Monster::Monster()
 {
 }
 
-Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float whidth)
+Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float width)
 {
-	body = addBodyMonster(gameController, x, y, height, whidth);
+	body = addBodyMonster(gameController, x, y, height, width);
 	shapes.push_back(std::unique_ptr<Rectangle>(new Rectangle()));
 	shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
@@ -133,9 +133,9 @@ void Monster::updateSpeed()
 {
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
-
-	int Leftdetection = this->my_Lviewdata->getEntitidetected();
-	int Rigdetection = this->my_Rviewdata->getEntitidetected();
+	
+	int Leftdetection = this->my_Lviewdata->getEntityDetected();
+	int Rigdetection = this->my_Rviewdata->getEntityDetected();
 	//si un joueur est detecter 
 	bool playerdetected = (Leftdetection >= 1 && directionxsigne() == -1) || (Rigdetection >= 1 && directionxsigne() == 1);
 	

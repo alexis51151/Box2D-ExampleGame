@@ -153,8 +153,8 @@ void Player::update()
 		my_Lviewdata->setDrawable(true);
 		my_Rviewdata->setDrawable(false);
 	}
-	playerdetected = (my_Rviewdata->getEntitidetected() >= 1 && directionsigne == 1)
-					|| (my_Lviewdata->getEntitidetected() >= 1 && directionsigne == -1);
+	playerdetected = (my_Rviewdata->getEntityDetected() >= 1 && directionsigne == 1)
+					|| (my_Lviewdata->getEntityDetected() >= 1 && directionsigne == -1);
 	if (playerdetected) {
 		printf("joueur detecter  \n");
 	}
