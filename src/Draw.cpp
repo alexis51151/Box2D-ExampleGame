@@ -77,7 +77,7 @@ void DrawShape(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	}
 	// Setting position and drawing with SFML
 	shape->setPosition((position.x - width / 2) * RATIO, (position.y - height / 2) * RATIO);
-	shape->rotate(body->GetAngle() * DEGTORAD);
+	shape->rotate(body->GetAngle() * RADTODEG);
 
 	window->draw(*shape);
 }

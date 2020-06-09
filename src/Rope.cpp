@@ -54,7 +54,6 @@ std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length,
 		newFixture->SetUserData(static_cast<void*> (data));
 
 		newFixture->SetFilterData(link_filter);
-
 		revoluteJointDef.bodyA = link;
 		revoluteJointDef.bodyB = newLink;
 		gameController->getPhysicsWorld()->CreateJoint(&revoluteJointDef);
@@ -80,23 +79,24 @@ void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 
     // Revolution Joints
 	b2RevoluteJointDef revoluteJointDef1;
-	revoluteJointDef1.localAnchorA.Set((player1_width - 1)* UNRATIO, 0);
-	revoluteJointDef1.localAnchorB.Set((-width-1)* UNRATIO, 0);
+	revoluteJointDef1.localAnchorA.Set(-(player1_width*2 - 1)* UNRATIO, 0);
+	revoluteJointDef1.localAnchorB.Set((width/2+1)* UNRATIO, 0);
+
 
 	
     // Link player1 to beginBody
+    revoluteJointDef1.bodyA = endBody;
     revoluteJointDef1.bodyB = body_player1;
-    revoluteJointDef1.bodyA = beginBody;
 	world->CreateJoint(&revoluteJointDef1);
 
 	// Revolution Joints
 	b2RevoluteJointDef revoluteJointDef2;
-	revoluteJointDef2.localAnchorA.Set((player2_width -1) * UNRATIO, 0);
-	revoluteJointDef2.localAnchorB.Set((-width - 1) * UNRATIO, 0);
+	revoluteJointDef2.localAnchorA.Set((player2_width*2 -1)*UNRATIO, 0);
+	revoluteJointDef2.localAnchorB.Set((-width/2 - 1)* UNRATIO, 0);
 
     // Link player2 to endBody
-	revoluteJointDef2.bodyA = endBody;
-	revoluteJointDef2.bodyB = body_player2;
+	revoluteJointDef2.bodyA = body_player2;
+	revoluteJointDef2.bodyB = beginBody;
 	world->CreateJoint(&revoluteJointDef2);
 }
 

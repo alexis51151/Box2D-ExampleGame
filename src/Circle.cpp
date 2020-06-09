@@ -15,7 +15,7 @@ void Circle::draw(b2Body* body, sf::Color color, sf::RenderWindow* window) {
 	
 	// Setting position and drawing with SFML
 	shape.setPosition((position.x - radius / 2) * RATIO, (position.y - radius / 2) * RATIO);
-	shape.rotate(body->GetAngle() * DEGTORAD);
+	shape.rotate(body->GetAngle() * RADTODEG);
 
 	window->draw(shape);
 }

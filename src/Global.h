@@ -9,8 +9,8 @@
 #define METERS_PER_PIXEL UNRATIO
 
 //1 degrees = (radians * (pi/180))
-#define RADTODEG (b2_pi / 180.0)
-#define DEGTORAD (180.0 / b2_pi)
+#define DEGTORAD (b2_pi / 180.0)
+#define RADTODEG (180.0 / b2_pi)
 
 #define WIDTH 1920
 #define HEIGHT 1080
