@@ -134,8 +134,13 @@ void Monster::updateSpeed()
 	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
 	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
 
-	int sensocontact = this->my_Lviewdata->getEntitidetected();
-	int sensocontact2 = this->my_Rviewdata->getEntitidetected();
+	int Leftdetection = this->my_Lviewdata->getEntitidetected();
+	int Rigdetection = this->my_Rviewdata->getEntitidetected();
+	//si un joueur est detecter 
+	bool playerdetected = (Leftdetection >= 1 && directionxsigne() == -1) || (Rigdetection >= 1 && directionxsigne() == 1);
+	
+
+	//affichage en fonction de la dirrection du deplacement 
 	if (directionxsigne() == 1) {
 		my_Rviewdata->setDrawable(true);
 		my_Lviewdata->setDrawable(false);
@@ -146,11 +151,10 @@ void Monster::updateSpeed()
 		my_Lviewdata->setDrawable(true);
 	}
 
-
-	if (sensocontact >= 1) {
+	if (playerdetected) {
 		timedetection++;
 	}
-	if (sensocontact < 1) {
+	else{
 		if(timedetection > 0) 
 			timedetection--;
 	}
@@ -174,7 +178,6 @@ void Monster::updateSpeed()
 	if (reverspeed_timout > 0)
 		return;
 	
-
 	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
 	reverspeed_timout = 15;
 }
