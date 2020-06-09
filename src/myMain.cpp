@@ -4,9 +4,11 @@
 int myMain() {
 
 	// Retrieve game config
-	
 	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
 	configParser.readConfig();
+
+
+	
 
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -14,6 +16,16 @@ int myMain() {
 	sf::RenderWindow* window = gameController.getApp();
 	MyContactListener myContactListenerInstance;
 	world->SetContactListener(&myContactListenerInstance);
+
+
+	// Textures loading
+	// Background
+	sf::Texture background_texture;
+	sf::Sprite background_sprite;
+	background_texture.loadFromFile("C:/Users/alexi/source/repos/Jeu_jin/resources/fond.jpg", sf::IntRect(0, 0, WIDTH, HEIGHT));
+	background_sprite.setPosition(WIDTH / 2, HEIGHT / 2);
+	background_sprite.setTexture(background_texture);
+	window->draw(background_sprite);
 
 	//creation de la liste des platformes 
 
@@ -60,6 +72,22 @@ int myMain() {
 		//couleur du joueur 1 si detection
 		if (players[0]->isplayerdetected()){
 			playercolor[0] = sf::Color::Red;
+			sf::Font font;
+			font.loadFromFile("C:/Users/alexi/source/repos/Jeu_jin/resources/DIOGENES.ttf");
+			sf::Text text;
+			text.setFont(font);
+			text.setString("GAME OVER");
+			text.setCharacterSize(200);
+			text.setFillColor(sf::Color::Red);
+			text.setStyle(sf::Text::Bold);
+			text.setPosition(WIDTH / 2 - 500, HEIGHT / 2 - 200);
+			window->clear(sf::Color::Black);
+			window->draw(text);
+			window->display();
+			Sleep(5000);
+			window->close();
+			return 0;
+
 		}
 		else {
 			playercolor[0] = sf::Color::Green;

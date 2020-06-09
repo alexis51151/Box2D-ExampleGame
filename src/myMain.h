@@ -19,6 +19,7 @@
 #include <memory>
 #include "Rope.h"
 #include "XMLParser.h"
+#include <windows.h>
 
 
 int myMain();
