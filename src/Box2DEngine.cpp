@@ -13,7 +13,7 @@ Box2DEngine::~Box2DEngine()
 {
 }
 
-b2Body* Box2DEngine::addStaticBox(int x, int y, float height, float width)
+b2Body* Box2DEngine::addStaticBox(int x, int y, float width, float height)
 {
 	// Define the ground body.
 	b2BodyDef platformeBodyDef;
