@@ -13,7 +13,8 @@
 #include "Rectangle.h"
 #include "Shape.h"
 #include "XMLParser.h"
-
+#include <filesystem>
+namespace fs = std::filesystem;
 
 TEST(TestAddBody, TestAddPlayer) {
 	// Setting up the gameController
@@ -274,7 +275,7 @@ TEST(TestReadXML, TestFileReadWorld) {
 TEST(TestReadXML, TestFileReadCommands) {
 	// Getting the config file (I can't manage to set a relative path, so I will fail at first for you)
 	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
-
+	std::cout << "Current path : " << fs::current_path() << std::endl;
 	configParser.readConfig();
 
 	// Player1

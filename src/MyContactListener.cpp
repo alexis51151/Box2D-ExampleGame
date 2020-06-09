@@ -20,7 +20,6 @@ void binginviewdetextion(b2Fixture * A, b2Fixture* B) {
 			printf("il n'y a rien entre les deux \n");
 			((ViewFieldData*)fixtureDataA)->increaIncreaceEntitidetected();
 		}
-
 	}
 	if (fixtureDataB->getDataType() == viewField) {
 		printf("champ de vision activer\n");

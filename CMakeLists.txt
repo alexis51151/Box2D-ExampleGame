@@ -37,5 +37,6 @@ add_subdirectory(src)
 add_subdirectory(unitTests)
 add_subdirectory(HelloWorld)
 
-
+set_property(GLOBAL PROPERTY
+  MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 

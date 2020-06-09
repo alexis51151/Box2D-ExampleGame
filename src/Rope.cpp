@@ -67,7 +67,7 @@ std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length,
 }
 
 
-void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
+void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 	float width = length / nb_links;
 
 
@@ -85,8 +85,8 @@ void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
 
 	
     // Link player1 to beginBody
-    revoluteJointDef1.bodyA = body_player1;
-    revoluteJointDef1.bodyB = beginBody;
+    revoluteJointDef1.bodyB = body_player1;
+    revoluteJointDef1.bodyA = beginBody;
 	world->CreateJoint(&revoluteJointDef1);
 
 	// Revolution Joints

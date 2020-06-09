@@ -31,8 +31,8 @@ int myMain() {
 
 	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players;
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 15 * RATIO, HEIGHT * 3 / 10)));
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 10 * RATIO, HEIGHT * 3 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController,15 * RATIO, HEIGHT * 3 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController,10 * RATIO, HEIGHT * 3 / 10)));
 
 
 	// Link the two players with a rope
@@ -75,5 +75,6 @@ int myMain() {
 		window->display();
 	}
 	return 0;
+
 }
 
