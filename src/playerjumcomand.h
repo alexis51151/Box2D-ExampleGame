@@ -1,4 +1,5 @@
 #pragma once
+#include "Icomand.h"
 class PlayerJumcomand : public Icommand
 {
 public:
