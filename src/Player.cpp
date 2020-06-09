@@ -132,10 +132,10 @@ void Player::draw(sf::Color color, sf::RenderWindow* window) {
 void Player::updatedirectionxsigne()
 {
 	float xvelocity = body->GetLinearVelocity().x;
-	if (xvelocity > 1) {
+	if (xvelocity > 0) {
 		directionsigne = 1;
 	}
-	else if (xvelocity < -1) {
+	else if (xvelocity < 0) {
 		directionsigne = -1;
 	}
 	// si non on garde la meme valeur evite de trop changer 
@@ -158,8 +158,6 @@ void Player::update()
 	if (playerdetected) {
 		printf("joueur detecter  \n");
 	}
-
-
 
 }
 
