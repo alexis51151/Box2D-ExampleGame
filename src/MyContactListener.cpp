@@ -83,7 +83,7 @@ void end_contact_action(FixtureData* fixtureData) {
 	switch (fixtureData->getDataType())
 	{
 	case foot:
-		((FootData*)fixtureData)->DecreaceNumFootContact(); //me laisse pas static cast 
+		((FootData*)fixtureData)->DecreaceNumFootContact(); 
 		break;
 	case MonsterLfoot:
 		((FootData*)fixtureData)->DecreaceNumFootContact();

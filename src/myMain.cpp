@@ -1,12 +1,12 @@
 #include "myMain.h"
-
+#include <direct.h>
 
 int myMain() {
 
 	// Retrieve game config
-	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+	
+	XMLParser configParser("C:/Users/aigle/Desktop/projet_jhin/test/Jeu_jin/resources/config.xml");
 	configParser.readConfig();
-
 
 	// Box2D world creation using Box2DEngine class form Box2DEngine.cpp
 	Box2DEngine gameController(WIDTH, HEIGHT);
@@ -18,16 +18,22 @@ int myMain() {
 	//creation de la liste des platformes 
 
 	std::vector<std::unique_ptr<Platform>>platforms;
-	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 4, HEIGHT*  8/10, WIDTH / 8, HEIGHT / 20)); //sol 
-	// Création des joueurs 
-	std::vector<std::unique_ptr<Player>> players;
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 40 * RATIO,  HEIGHT * 7 / 10)));
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 30 * RATIO, HEIGHT * 7 / 10)));
 
+	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT* 3/10, WIDTH / 8, HEIGHT / 30)); //platform 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2/ 3, HEIGHT * 6 / 10, WIDTH / 6, HEIGHT / 30)); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 4 / 10, WIDTH / 12, HEIGHT / 35)); //platform esquive monstre  
+	
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
-	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 900, 600)));
+	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2 / 3, HEIGHT * 5 / 10)));
+
+
+	// Création des joueurs 
+	std::vector<std::unique_ptr<Player>> players;
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 15 * RATIO, HEIGHT * 3 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 10 * RATIO, HEIGHT * 3 / 10)));
+
 
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(5 * RATIO, 15, &gameController));
@@ -48,7 +54,7 @@ int myMain() {
 		world->Step(timeStep, velocityIterations, positionIterations);
 		// Gestion des joueurs 
 		for (int i = 0; i < players.size(); i++) {
-			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timeout pour les jumps de joueur 
+			players[i]->decreasejumptimout();// decrease le timeout pour les jumps 
 			players[i]->draw(playercolor[i], window);
 		}
 
@@ -64,6 +70,7 @@ int myMain() {
 
 		// Gestion de la corde 
 		rope->draw(sf::Color::Green, window);
+
 
 		window->display();
 	}

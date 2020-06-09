@@ -172,16 +172,20 @@ void Monster::updateSpeed()
 	}
 	if (reverspeed_timout > 0)
 		return;
-	
-	body->SetLinearVelocity(b2Vec2(-directionxsigne()*5, body->GetLinearVelocity().y));
+	if(playerdetected ){
+		body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+	}
+	else {
+		body->SetLinearVelocity(b2Vec2(-directionxsigne() * 5, body->GetLinearVelocity().y));
+	}
 	reverspeed_timout = 15;
 }
 
 void Monster::draw(sf::Color color, sf::RenderWindow* window) {
-	if (timedetection > 120 && timedetection <180) {
+	if (timedetection > 0 && timedetection <30) {
 		color = sf::Color::Yellow;
 	}
-	else if (timedetection > 180) {
+	else if (timedetection > 30) {
 		color = sf::Color::Red;
 	}
 	for (auto& shape : shapes) {
