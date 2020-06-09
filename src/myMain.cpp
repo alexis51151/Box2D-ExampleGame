@@ -19,16 +19,23 @@ int myMain() {
 	//creation de la liste des platformes 
 
 	std::vector<std::unique_ptr<Platform>>platforms;
-	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 4, HEIGHT*  8/10, WIDTH / 8, HEIGHT / 20)); //sol 
-	// Création des joueurs 
-	std::vector<std::unique_ptr<Player>> players;
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 20 * RATIO,  HEIGHT * 5 / 10)));
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 10 * RATIO, HEIGHT * 5 / 10)));
 
+	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT* 3/10, WIDTH / 8, HEIGHT / 30)); //platform 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2/ 3, HEIGHT * 6 / 10, WIDTH / 6, HEIGHT / 30)); //sol 
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 4 / 10, WIDTH / 12, HEIGHT / 35)); //platform esquive monstre  
+	
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
-	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, 900, 600)));
+	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2 / 3, HEIGHT * 5 / 10)));
+
+
+
+	// Création des joueurs 
+	std::vector<std::unique_ptr<Player>> players;
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 15 * RATIO, HEIGHT * 3 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 10 * RATIO, HEIGHT * 3 / 10)));
+
 
 	// Link the two players with a rope
 	std::unique_ptr<Rope> rope(new Rope(5 * RATIO, 15, &gameController));
