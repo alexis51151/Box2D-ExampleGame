@@ -5,14 +5,16 @@ Monster::Monster()
 {
 }
 
-Monster::Monster(Box2DEngine* gameController, int x, int y, float height, float width)
+
+Monster::Monster(Box2DEngine* gameController, int x, int y, float whidth, float height )
 {
-	body = addBodyMonster(gameController, x, y, height, width);
+	body = addBodyMonster(gameController, x, y, whidth,  height );
+
 	shapes.push_back(std::unique_ptr<Rectangle>(new Rectangle()));
 	shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
 
-b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float height, float width) {
+b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float width, float height) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
@@ -131,15 +133,16 @@ b2Body* Monster::addBodyMonster(Box2DEngine* gameController, int x, int y, float
 
 void Monster::updateSpeed()
 {
-	int lfootcontact = this->my_Lfootdata->GetNumFootContact();
-	int rfootcontact = this->my_Rfootdata->GetNumFootContact();
-	
-	int Leftdetection = this->my_Lviewdata->getEntityDetected();
-	int Rigdetection = this->my_Rviewdata->getEntityDetected();
+
+	int lfootcontact = Monster::my_Lfootdata->GetNumFootContact();
+	int rfootcontact = Monster::my_Rfootdata->GetNumFootContact();
+
+	int Leftdetection = Monster::my_Lviewdata->getEntityDetected();
+	int Rigdetection = Monster::my_Rviewdata -> getEntityDetected();
+
 	//si un joueur est detecter 
 	bool playerdetected = (Leftdetection >= 1 && directionxsigne() == -1) || (Rigdetection >= 1 && directionxsigne() == 1);
 	
-
 	//affichage en fonction de la dirrection du deplacement 
 	if (directionxsigne() == 1) {
 		my_Rviewdata->setDrawable(true);
@@ -158,15 +161,7 @@ void Monster::updateSpeed()
 		if(timedetection > 0) 
 			timedetection--;
 	}
-	if (timedetection < 60){
-		my_color = sf::Color::Blue;
-	}
-	else if (timedetection < 120) {
-		my_color = sf::Color::Yellow;
-	}
-	else if (timedetection < 180) {
-		my_color = sf::Color::Red;
-	}
+	
 	if (rfootcontact >= 1 && lfootcontact >= 1) { //deux pieds aux sol 
 		body->SetLinearVelocity(b2Vec2(this->directionxsigne()*5, 0));
 		return;
@@ -183,7 +178,13 @@ void Monster::updateSpeed()
 }
 
 void Monster::draw(sf::Color color, sf::RenderWindow* window) {
+	if (timedetection > 120 && timedetection <180) {
+		color = sf::Color::Yellow;
+	}
+	else if (timedetection > 180) {
+		color = sf::Color::Red;
+	}
 	for (auto& shape : shapes) {
-		shape->draw(body, my_color, window);
+		shape->draw(body, color, window);
 	}
 }

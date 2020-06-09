@@ -2,7 +2,7 @@
 
 
 
-b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float height, float width) {
+b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float width, float height) {
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.fixedRotation = true;
@@ -115,8 +115,8 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float h
 
 
 
-Player::Player(Box2DEngine * gameController, int x, int y, float height, float width) {
-	Player::body = addBodyPlayer(gameController, x, y, height, width);
+Player::Player(Box2DEngine * gameController, int x, int y, float width, float height ) {
+	Player::body = addBodyPlayer(gameController, x, y,  width, height);
 	Player::shapes.push_back(std::unique_ptr<Circle>(new Circle()));
 	Player::shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
@@ -132,10 +132,10 @@ void Player::draw(sf::Color color, sf::RenderWindow* window) {
 void Player::updatedirectionxsigne()
 {
 	float xvelocity = body->GetLinearVelocity().x;
-	if (xvelocity > 0) {
+	if (xvelocity > 1) {
 		directionsigne = 1;
 	}
-	else if (xvelocity < 0) {
+	else if (xvelocity < 1) {
 		directionsigne = -1;
 	}
 	// si non on garde la meme valeur evite de trop changer 
@@ -156,9 +156,8 @@ void Player::update()
 	playerdetected = (my_Rviewdata->getEntityDetected() >= 1 && directionsigne == 1)
 					|| (my_Lviewdata->getEntityDetected() >= 1 && directionsigne == -1);
 	if (playerdetected) {
-		printf("joueur detecter  \n");
+		//todebug  raycast
 	}
-
 }
 
 void Player::actionLef()
