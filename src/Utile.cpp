@@ -1,14 +1,5 @@
 #include "Utile.h"
 
-PlayerData* getPlayerData(b2Body* player1) {
-	b2Fixture* playerfixtures = player1->GetFixtureList();
-	while (playerfixtures != nullptr) {
-		FixtureData* userdata = ((FixtureData*)playerfixtures->GetUserData());
-		if (userdata->getDataType() == player)
-			return (PlayerData*)userdata;
-		playerfixtures = playerfixtures->GetNext();
-	}
-}
 
 std::pair<float, float> getBodyDimensions(b2Body* body) { // only for squares right now 
 	b2Fixture* fixture = body->GetFixtureList();

@@ -17,7 +17,7 @@ public:
 	Player(Box2DEngine* gameController, int x = 40*RATIO, int y = 10*RATIO,float width = 1.f*RATIO, float height = 1.f * RATIO);
 	b2Body* getBody() {return Player::body;};
 	void draw(sf::Color color, sf::RenderWindow* window);
-	void updatedirectionxsigne();
+	void decreasejumptimout() { my_playerdata->decreaseJumpTimeout(); };
 	void update();
 	void actionLef();
 	void actionRight();

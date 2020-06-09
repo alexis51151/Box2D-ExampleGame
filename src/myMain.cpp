@@ -56,7 +56,7 @@ int myMain() {
 		world->Step(timeStep, velocityIterations, positionIterations);
 		// Gestion des joueurs 
 		for (int i = 0; i < players.size(); i++) {
-			getPlayerData(players[i]->getBody())->decreaseJumpTimeout();// decrease le timeout pour les jumps de joueur 
+			players[i]->decreasejumptimout();// decrease le timeout pour les jumps 
 			players[i]->draw(playercolor[i], window);
 		}
 
