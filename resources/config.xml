@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- Config file for our game -->
+
+<!-- World parameters -->
+<World width="1920" height="1080" />
+
+<!-- Keyboard commands config -->
+<Commands>
+    <Player1>
+        <Up code="73" val="arrow_top"/>
+        <Left code="71" val="arrow_left"/>
+        <Right code="72" val="arrow_right"/>
+        <Down code="74" val="arrow_down"/>
+    </Player1>
+    <Player2>
+        <Up code="25" val="Z"/>
+        <Left code="16" val="Q"/>
+        <Right code="3" val="D"/>
+        <Down code="18" val="S"/>
+    </Player2>
+
+</Commands>
+
+
+

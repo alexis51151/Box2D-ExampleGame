@@ -9,6 +9,7 @@
 #include "Rope.h"
 #include "Rectangle.h"
 #include "Shape.h"
+#include "XMLParser.h"
 
 
 TEST(TestAddBody, TestAddPlayer) {
@@ -218,6 +219,7 @@ TEST(TestInteractionBodies, TestMonsterPlayer) {
 
 }
 
+/*
 // One monster cannot detects a player at his left because of a wall
 TEST(TestInteractionBodies, TestMonsterPlayer2) {
 	// Setting up the gameController
@@ -245,4 +247,43 @@ TEST(TestInteractionBodies, TestMonsterPlayer2) {
 
 	EXPECT_EQ(monster->getMy_Lviewdata()->getEntityDetected(), 0);
 
+}
+*/
+
+
+TEST(TestReadXML, TestFileOpened) {
+	// Getting the config file (I can't manage to set a relative path, so I will fail at first for you)
+	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+
+	// Is the file opened ?
+	EXPECT_NE(configParser.getConfig(), "");
+}
+
+TEST(TestReadXML, TestFileReadWorld) {
+	// Getting the config file (I can't manage to set a relative path, so I will fail at first for you)
+	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+
+	configParser.readConfig();
+	EXPECT_EQ(configParser.getWorldParameters()["width"], 1920);
+	EXPECT_EQ(configParser.getWorldParameters()["height"], 1080);
+}
+
+TEST(TestReadXML, TestFileReadCommands) {
+	// Getting the config file (I can't manage to set a relative path, so I will fail at first for you)
+	XMLParser configParser("C:/Users/alexi/source/repos/Jeu_jin/resources/config.xml");
+
+	configParser.readConfig();
+
+	// Player1
+	
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer1()["Up"], 73);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer1()["Left"], 71);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer1()["Right"], 72);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer1()["Down"], 74);
+	
+	// Player2
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer2()["Up"], 25);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer2()["Left"], 16);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer2()["Right"], 3);
+	EXPECT_EQ(configParser.getKeyboardCommandsPlayer2()["Down"], 18);
 }
