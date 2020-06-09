@@ -37,7 +37,7 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float w
 
 	//filter
 	footFixtureDef.filter.categoryBits = SENSOR;
-	footFixtureDef.filter.maskBits = PLATFORM| MOVING_OBJECT;
+	footFixtureDef.filter.maskBits = PLATFORM; // |MOVINGOBJECT  pour sauter sur la rope 
 
 	b2Fixture* footSensorFixture = m_body->CreateFixture(&footFixtureDef);
 	my_footdata = std::make_unique<FootData>(sf::Color::Green, foot, 0);
@@ -129,21 +129,11 @@ void Player::draw(sf::Color color, sf::RenderWindow* window) {
 	}
 }
 
-void Player::updatedirectionxsigne()
-{
-	float xvelocity = body->GetLinearVelocity().x;
-	if (xvelocity > 1) {
-		directionsigne = 1;
-	}
-	else if (xvelocity < 1) {
-		directionsigne = -1;
-	}
-	// si non on garde la meme valeur evite de trop changer 
-}
+
 
 void Player::update()
 {
-	updatedirectionxsigne();
+	
 	if (directionsigne == 1) {
 		my_Lviewdata->setDrawable(false);
 		my_Rviewdata->setDrawable(true);
@@ -162,6 +152,7 @@ void Player::update()
 
 void Player::actionLef()
 {
+	directionsigne = -1;
 	int footcount = my_footdata->GetNumFootContact();
 	int handcount=my_handdata->GetNumhandContact();
 	int jumptimout = my_playerdata->GetJumpTimeout();
@@ -188,7 +179,7 @@ void Player::actionLef()
 
 void Player::actionRight()
 {
-
+	directionsigne = 1;
 	int footcount = my_footdata->GetNumFootContact();
 	int handcount = my_handdata->GetNumhandContact();
 	int jumptimout = my_playerdata->GetJumpTimeout();

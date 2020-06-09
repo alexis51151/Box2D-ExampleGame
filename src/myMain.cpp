@@ -18,8 +18,8 @@ int myMain() {
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 4, HEIGHT*  8/10, WIDTH / 8, HEIGHT / 20)); //sol 
 	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players;
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 40 * RATIO,  HEIGHT * 7 / 10)));
-	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 30 * RATIO, HEIGHT * 7 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 20 * RATIO,  HEIGHT * 5 / 10)));
+	players.push_back(std::unique_ptr<Player>(new Player(&gameController, 10 * RATIO, HEIGHT * 5 / 10)));
 
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
@@ -60,6 +60,7 @@ int myMain() {
 
 		// Gestion de la corde 
 		rope->draw(sf::Color::Green, window);
+
 
 		window->display();
 	}
