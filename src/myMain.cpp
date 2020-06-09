@@ -27,7 +27,7 @@ int myMain() {
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2 / 3, HEIGHT * 5 / 10)));
-
+	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2, HEIGHT * 9 / 10)));
 
 	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players;

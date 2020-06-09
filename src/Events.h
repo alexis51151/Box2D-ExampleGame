@@ -7,7 +7,6 @@
 #include "Utile.h"
 #include "Player.h"
 #include "Platform.h"
-#include "newPlatformcommand.h"
 #include "playerleftcommand.h"
 #include "playerjumcomand.h"
 #include "playerdowncomand.h"
