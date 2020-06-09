@@ -67,29 +67,37 @@ std::vector<b2Body*> Rope::addBodyRope(Box2DEngine* gameController,float length,
 }
 
 
-void Rope::linkPlayers(Player* player2, Player* player1, b2World* world) {
+void Rope::linkPlayers(Player* player1, Player* player2, b2World* world) {
 	float width = length / nb_links;
 
+
     b2Body* body_player1 = player1->getBody();
+	float player1_width = getBodyDimensions(body_player1).first;
     b2Body* body_player2 = player2->getBody();
+	float player2_width = getBodyDimensions(body_player2).first;
     b2Body* beginBody = Rope::getElements()[0];
     b2Body* endBody = Rope::getElements()[nb_links-1];
 
-    // Revolution Joint
-	b2RevoluteJointDef revoluteJointDef;
-	revoluteJointDef.localAnchorA.Set(0.8 * width * UNRATIO, 0);
-	revoluteJointDef.localAnchorB.Set(-1.2 * width * UNRATIO, 0);
+    // Revolution Joints
+	b2RevoluteJointDef revoluteJointDef1;
+	revoluteJointDef1.localAnchorA.Set((player1_width + 1)* UNRATIO, 0);
+	revoluteJointDef1.localAnchorB.Set((-width-1)* UNRATIO, 0);
 
-
+	
     // Link player1 to beginBody
-    revoluteJointDef.bodyA = body_player1;
-    revoluteJointDef.bodyB = beginBody;
-	world->CreateJoint(&revoluteJointDef);
+    revoluteJointDef1.bodyA = body_player1;
+    revoluteJointDef1.bodyB = beginBody;
+	world->CreateJoint(&revoluteJointDef1);
+
+	// Revolution Joints
+	b2RevoluteJointDef revoluteJointDef2;
+	revoluteJointDef2.localAnchorA.Set((player2_width + 1) * UNRATIO, 0);
+	revoluteJointDef2.localAnchorB.Set((-width - 1) * UNRATIO, 0);
 
     // Link player2 to endBody
-	revoluteJointDef.bodyA = endBody;
-	revoluteJointDef.bodyB = body_player2;
-	world->CreateJoint(&revoluteJointDef);
+	revoluteJointDef2.bodyA = endBody;
+	revoluteJointDef2.bodyB = body_player2;
+	world->CreateJoint(&revoluteJointDef2);
 }
 
 void Rope::draw(sf::Color color, sf::RenderWindow* window) {

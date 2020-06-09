@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include <gtest/gtest.h>
 #include <pugixml.hpp>
 #include <stdio.h>
