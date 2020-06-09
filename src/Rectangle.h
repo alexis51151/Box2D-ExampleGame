@@ -10,4 +10,5 @@ class Rectangle : public Shape {
 public:
 	Rectangle();
 	void draw(b2Body*, sf::Color, sf::RenderWindow*);
+
 };
