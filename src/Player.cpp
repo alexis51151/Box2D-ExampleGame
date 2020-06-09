@@ -113,14 +113,11 @@ b2Body* Player::addBodyPlayer(Box2DEngine* gameController, int x, int y, float w
 	return m_body;
 }
 
-
-
 Player::Player(Box2DEngine * gameController, int x, int y, float width, float height ) {
 	Player::body = addBodyPlayer(gameController, x, y,  width, height);
 	Player::shapes.push_back(std::unique_ptr<Circle>(new Circle()));
 	Player::shapes.push_back(std::unique_ptr<Polygon>(new Polygon()));
 }
-
 
 void Player::draw(sf::Color color, sf::RenderWindow* window) {
 	update();
@@ -128,8 +125,6 @@ void Player::draw(sf::Color color, sf::RenderWindow* window) {
 		shape->draw(body, color, window);
 	}
 }
-
-
 
 void Player::update()
 {

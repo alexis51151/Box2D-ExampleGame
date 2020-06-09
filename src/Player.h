@@ -18,6 +18,7 @@ public:
 	b2Body* getBody() {return Player::body;};
 	void draw(sf::Color color, sf::RenderWindow* window);
 	void decreasejumptimout() { my_playerdata->decreaseJumpTimeout(); };
+	bool isplayerdetected() { return playerdetected; };
 	void update();
 	void actionLef();
 	void actionRight();
