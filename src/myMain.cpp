@@ -22,12 +22,17 @@ int myMain() {
 	platforms.push_back(std::make_unique<Platform>(&gameController,WIDTH / 2, HEIGHT, WIDTH/2, HEIGHT / 10 )); //sol 
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT* 3/10, WIDTH / 8, HEIGHT / 30)); //platform 
 	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2/ 3, HEIGHT * 6 / 10, WIDTH / 6, HEIGHT / 30)); //sol 
-	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 4 / 10, WIDTH / 12, HEIGHT / 35)); //platform esquive monstre  
-	
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 4 / 10, WIDTH / 12, HEIGHT / 35)); //platform esquive monstre
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH * 2 / 3, HEIGHT * 3.7 / 10, WIDTH /40, HEIGHT / 15));
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 6, HEIGHT * 8 / 10, WIDTH / 15, HEIGHT / 30));
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 3, HEIGHT * 7 / 10, WIDTH / 15, HEIGHT / 30));
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2, HEIGHT * 6 / 10, WIDTH / 15, HEIGHT / 30));
+	platforms.push_back(std::make_unique<Platform>(&gameController, WIDTH / 2, HEIGHT/2, 10, HEIGHT));//mure gauche
+
 	// Création d'un monstre 
 	std::vector<std::unique_ptr<Monster>> monsters;
 	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2 / 3, HEIGHT * 5 / 10)));
-	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH * 2, HEIGHT * 9 / 10)));
+	monsters.push_back(std::unique_ptr <Monster>(new Monster(&gameController, WIDTH / 2, HEIGHT * 9 / 10)));
 
 	// Création des joueurs 
 	std::vector<std::unique_ptr<Player>> players;
