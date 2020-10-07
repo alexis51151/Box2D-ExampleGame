@@ -1,4 +1,8 @@
-JIN course game
+JIN project game
+---------------
+By Alexis LE GLAUNEC & Bastien PORTE
+
+=====================================
 
 What is it ? 
 ------------
