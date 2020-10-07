@@ -2,8 +2,6 @@ JIN project game
 ---------------
 By Alexis LE GLAUNEC & Bastien PORTE
 
-=====================================
-
 What is it ? 
 ------------
 Just a simple platform game where two players are linked with a rope and have to get out of hell avoiding its many monsters.
